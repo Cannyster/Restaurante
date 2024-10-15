@@ -1,10 +1,10 @@
 {
   "restaurantes": [
     {
-      "id": "1a2b3c4d5e6f7g8h9i",
       "nome": "Dona cidinha",
       "localizacao": "Rua H-113 Qd 224 Lt 10, Cidade Vera Cruz",
-      "cozinha": "Brasileira"
+      "cozinha": "Brasileira",
+      "id": "1a2b3c4d5e6f7g8h9i"
     },
     {
       "nome": "Restaurante Quero Mais",
@@ -17,9 +17,23 @@
       "localizacao": "Avanida Solimões, nº 485, Bairro Setor Central ",
       "cozinha": "Italiana",
       "id": "0310b841-d595-4adb-95a7-2195efe544eb"
+    },
+    {
+      "nome": "Restaurante da Laurinha",
+      "localizacao": "Avenida Transbrasiliana, Nº 528, Bairro Cruzeiro do Sul",
+      "cozinha": "Portuguesa",
+      "id": "876802f7-2db6-4a4e-bfe9-1fe8a9293ebb"
     }
   ],
   "avaliacoes": [
+    {
+      "id": "asdasdawasda252163",
+      "restauranteId": "1a2b3c4d5e6f7g8h9i",
+      "usuario": "Aline Elias",
+      "comentario": "Restaurante òtimo, recomendo !!!!!",
+      "avaliacao": 5,
+      "datahora": "2024-10-15T13:45:30.123Z"
+    },
     {
       "restauranteId": "1ee58dc3-7f74-441d-aa43-ca6fd8da87f9",
       "usuario": "Sandro Mabel",

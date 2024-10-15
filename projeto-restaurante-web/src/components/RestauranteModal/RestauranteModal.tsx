@@ -8,12 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CloseButton, Content, Overlay } from "./styles";
 import { useContextSelector } from "use-context-selector";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
-import { restauranteSchema } from "../../validation/validation";
+import { novoRestauranteFormSchema } from "../../validation/validation";
 import { useEffect, useState } from "react";
 import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
 import { obterRestaurante } from "../../api/obter-restaurante";
 
-type restauranteFormInputs = z.infer<typeof restauranteSchema>;
+type novoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 
 export interface PropriedadesDetalhesRestaurante {
   id: string;
@@ -43,7 +43,7 @@ export function RestauranteModalDetalhes({
     //ela foi construida fora do contexto pois este eo único local, que precisará dela
   });
 
-  const editarrestaurante = useContextSelector(
+  const editarRestaurante = useContextSelector(
     RestauranteContext,
     (context) => {
       return context.editarRestauranteFn;
@@ -56,8 +56,8 @@ export function RestauranteModalDetalhes({
     formState: { isSubmitting, errors },
     reset,
     setValue,
-  } = useForm<restauranteFormInputs>({
-    resolver: zodResolver(restauranteSchema),
+  } = useForm<novoRestauranteFormInputs>({
+    resolver: zodResolver(novoRestauranteFormSchema),
     defaultValues: {
       nome: restaurante?.nome || "",
       localizacao: restaurante?.localizacao || "",
@@ -86,14 +86,8 @@ export function RestauranteModalDetalhes({
     setValue("cozinha", "");
   }
 
-  async function handleEditarrestaurante(dados: restauranteFormInputs) {
-    const { nome, localizacao, cozinha } = dados;
-    await editarrestaurante({
-      id,
-      nome,
-      localizacao,
-      cozinha,
-    });
+  async function handleEditarRestaurante(dados: novoRestauranteFormInputs) {
+    editarRestaurante(dados);
     LimparFomulário();
   }
 
@@ -115,7 +109,7 @@ export function RestauranteModalDetalhes({
           <X size={24} />
         </CloseButton>
 
-        <form onSubmit={handleSubmit(handleEditarrestaurante)}>
+        <form onSubmit={handleSubmit(handleEditarRestaurante)}>
           <input
             type="Text"
             placeholder="Nome do Restaurante"

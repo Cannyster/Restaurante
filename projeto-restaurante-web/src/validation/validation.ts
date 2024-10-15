@@ -6,6 +6,10 @@ export const restauranteSchema = z.object({
     cozinha: z.string().min(5, 'O detalhe deve ter pelo menos 5 caracteres.')
 });
 
+export const novoRestauranteFormSchema = restauranteSchema.extend({
+    id: z.string()
+});
+
 export const avaliacaoSchema = z.object({
     usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
     comentario:  z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),

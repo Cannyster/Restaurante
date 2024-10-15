@@ -10,8 +10,12 @@ import {
   editarRestaurante,
   EditarRestauranteInput,
 } from "../api/editar-restaurante";
-import { api } from "../lib/axios";
 import { obterRestaurantes } from "../api/obter-restaurantes";
+import { queryClient } from "../lib/react-query";
+import {
+  deletarRestaurante,
+  DeletarRestauranteInput,
+} from "../api/deletar-restaurante";
 
 export interface Restaurante {
   id: string;
@@ -25,6 +29,7 @@ interface RestauranteContextType {
   // buscaRestaurantes: (query?: string) => Promise<void>;
   criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<void>;
   editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<void>;
+  deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
 }
 interface RestauranteProviderProps {
   children: ReactNode;
@@ -37,8 +42,8 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
 
   const buscaRestaurantes = useCallback(() => {
     const response = obterRestaurantes();
-    setRestaurantes(response);
-  }, []);
+    // setRestaurantes(response);
+  }, [setRestaurantes]);
 
   // const { data: RestaurantesCache, isFetching } = useQuery({
   //   queryKey: ["restaurante"],
@@ -49,6 +54,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     mutationFn: criarRestaurante,
     onSuccess: () => {
       toast.success("Restaurante Criado com sucesso");
+      queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
@@ -60,6 +66,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     mutationFn: editarRestaurante,
     onSuccess: () => {
       toast.success("Restaurante alterado com sucesso");
+      queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
@@ -67,10 +74,17 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     },
   });
 
-  // const deletarRestaurante = useCallback(async (dados: deletarRestauranteInput) => {
-  //   const { id } = dados;
-  //   const response = await api.delete(`/Restaurantes/${id}`);
-  // }, []);
+  const { mutateAsync: deletarRestauranteFn } = useMutation({
+    mutationFn: deletarRestaurante,
+    onSuccess: () => {
+      toast.success("Restaurante Excluído com sucesso");
+      queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
+    },
+    onError: (error) => {
+      console.log(`Erro: ${error}`);
+      toast.error("Falha na exclusão do Restaurante");
+    },
+  });
 
   //Busca inicial de Restaurantes
   useEffect(() => {
@@ -83,6 +97,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
         restaurantes,
         editarRestauranteFn,
         criarRestauranteFn,
+        deletarRestauranteFn,
       }}
     >
       {children}
