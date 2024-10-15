@@ -23,6 +23,18 @@
       "localizacao": "Avenida Transbrasiliana, Nº 528, Bairro Cruzeiro do Sul",
       "cozinha": "Portuguesa",
       "id": "876802f7-2db6-4a4e-bfe9-1fe8a9293ebb"
+    },
+    {
+      "nome": "Restaurante Comida Caseira",
+      "localizacao": "Rua Dos Patos Loucos",
+      "cozinha": "Baiana",
+      "id": "cfef01b8-dcf2-4ed9-8fad-aa787cc8b4b8"
+    },
+    {
+      "nome": "Restaurante Comida Caseira",
+      "localizacao": "Rua Dos Patos Loucos",
+      "cozinha": "Goiâna",
+      "id": "f9f75447-e38b-4c4e-b259-2ca9fce537f8"
     }
   ],
   "avaliacoes": [

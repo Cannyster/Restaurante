@@ -130,14 +130,21 @@ export function RestauranteModalDetalhes({
             disabled={isNotEditable}
           />
 
-          <input
-            type="Text"
-            placeholder="Tipo de Cozinha"
-            required
+          <select
+            id="cozinha"
             {...register("cozinha")}
-            onBlur={() => errors.cozinha && toast.error(errors.cozinha.message)}
+            required
             disabled={isNotEditable}
-          />
+          >
+            <option value="Baiana">Baiana</option>
+            <option value="Mineira">Mineira</option>
+            <option value="Goiâna">Goiâna</option>
+            <option value="Paraense">Paraense</option>
+            <option value="Cearense">Cearense</option>
+            <option value="Catarinense">Catarinense</option>
+            <option value="Pernanbucana">Pernanbucana</option>
+            <option value="Amazonense">Amazonense</option>
+          </select>
 
           {isNotEditable ? (
             <button type="button" onClick={toggleEdit}>

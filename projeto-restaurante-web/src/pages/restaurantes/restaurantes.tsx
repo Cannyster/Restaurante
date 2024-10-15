@@ -14,7 +14,7 @@ export function Restaurantes() {
   >(null);
 
   const restaurantes = useContextSelector(RestauranteContext, (context) => {
-    return context.restaurantes;
+    return context.restaurantesCache;
   });
 
   return (
@@ -31,32 +31,36 @@ export function Restaurantes() {
               <td>Localização</td>
               <td>Tipo Cozinha</td>
             </tr>
-            {restaurantes.map((restaurante) => {
-              return (
-                <tr key={restaurante.id}>
-                  <td>
-                    <DialogRoot
-                      open={selectedrestauranteId === restaurante.id}
-                      onOpenChange={(isOpen) =>
-                        setSelectedrestauranteId(isOpen ? restaurante.id : null)
-                      }
-                    >
-                      <DialogTrigger asChild>
-                        <Search className="h-3 w-3" />
-                      </DialogTrigger>
-                      <RestauranteModalDetalhes
-                        key={restaurante.id} // Força re-renderização
-                        open={selectedrestauranteId === restaurante.id}
-                        id={restaurante.id}
-                      />
-                    </DialogRoot>
-                  </td>
-                  <td>{restaurante.nome}</td>
-                  <td>{restaurante.localizacao}</td>
-                  <td>{restaurante.cozinha}</td>
-                </tr>
-              );
-            })}
+            {restaurantes !== undefined
+              ? restaurantes.map((restaurante) => {
+                  return (
+                    <tr key={restaurante.id}>
+                      <td>
+                        <DialogRoot
+                          open={selectedrestauranteId === restaurante.id}
+                          onOpenChange={(isOpen) =>
+                            setSelectedrestauranteId(
+                              isOpen ? restaurante.id : null
+                            )
+                          }
+                        >
+                          <DialogTrigger asChild>
+                            <Search className="h-3 w-3" />
+                          </DialogTrigger>
+                          <RestauranteModalDetalhes
+                            key={restaurante.id} // Força re-renderização
+                            open={selectedrestauranteId === restaurante.id}
+                            id={restaurante.id}
+                          />
+                        </DialogRoot>
+                      </td>
+                      <td>{restaurante.nome}</td>
+                      <td>{restaurante.localizacao}</td>
+                      <td>{restaurante.cozinha}</td>
+                    </tr>
+                  );
+                })
+              : undefined}
           </tbody>
         </RestauranteTable>
       </RestauranteContainer>

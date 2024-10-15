@@ -8,6 +8,7 @@ import { CloseButton, Content, Overlay } from "./styles";
 import { restauranteSchema } from "../../validation/validation";
 import { useContextSelector } from "use-context-selector";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
+// import { SelectMenu } from "../Select";
 
 type NovoRestauranteFormInputs = z.infer<typeof restauranteSchema>;
 
@@ -70,13 +71,21 @@ export function NovoRestauranteModal() {
             }
           />
 
-          <input
-            type="Text"
-            placeholder="Tipo de Cozinha"
-            required
-            {...register("cozinha")}
-            onBlur={() => errors.cozinha && toast.error(errors.cozinha.message)}
-          />
+          {/* <SelectMenu {...register("cozinha")} required /> */}
+
+          <select id="cozinha" {...register("cozinha")} required>
+            <option value="" selected disabled hidden>
+              Tipo de Cozinha
+            </option>
+            <option value="Baiana">Baiana</option>
+            <option value="Mineira">Mineira</option>
+            <option value="Goiâna">Goiâna</option>
+            <option value="Paraense">Paraense</option>
+            <option value="Cearense">Cearense</option>
+            <option value="Catarinense">Catarinense</option>
+            <option value="Pernanbucana">Pernanbucana</option>
+            <option value="Amazonense">Amazonense</option>
+          </select>
 
           <button type="submit" disabled={isSubmitting}>
             Cadastrar

@@ -62,6 +62,28 @@ export const Content = styled(Dialog.Content)`
         transition: background-color 0.2s;
       }
     }
+
+    select{
+      border-radius: 6px;
+      border: 0;
+      background: ${(props) => props.theme["gray-900"]};
+      color: ${(props) => props.theme["gray-300"]};
+      padding: 1.5rem;
+
+      &::placeholder {
+        color: ${(props) => props.theme["gray-500"]};
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        background: ${(props) => props.theme["gray-700"]};
+      }
+
+      option{
+        color: ${(props) => props.theme["gray-300"]};
+      }
+    }
   }
 `;
 

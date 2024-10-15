@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { toast } from "sonner";
 import { createContext } from "use-context-selector";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -24,9 +24,8 @@ export interface Restaurante {
   cozinha: string;
 }
 interface RestauranteContextType {
-  restaurantes: Restaurante[];
-  // isFetching: boolean;
-  // buscaRestaurantes: (query?: string) => Promise<void>;
+  restaurantesCache: Restaurante[] | undefined;
+  isFetching: boolean;
   criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<void>;
   editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<void>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
@@ -38,17 +37,10 @@ interface RestauranteProviderProps {
 export const RestauranteContext = createContext({} as RestauranteContextType);
 
 export function RestaurantesProvider({ children }: RestauranteProviderProps) {
-  const [restaurantes, setRestaurantes] = useState<Restaurante[]>([]);
-
-  const buscaRestaurantes = useCallback(() => {
-    const response = obterRestaurantes();
-    // setRestaurantes(response);
-  }, [setRestaurantes]);
-
-  // const { data: RestaurantesCache, isFetching } = useQuery({
-  //   queryKey: ["restaurante"],
-  //   queryFn: () => buscaRestaurantes(),
-  // });
+  const { data: restaurantesCache, isFetching } = useQuery({
+    queryKey: ["restaurante"],
+    queryFn: () => obterRestaurantes(),
+  });
 
   const { mutateAsync: criarRestauranteFn } = useMutation({
     mutationFn: criarRestaurante,
@@ -86,15 +78,11 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     },
   });
 
-  //Busca inicial de Restaurantes
-  useEffect(() => {
-    buscaRestaurantes();
-  }, []);
-
   return (
     <RestauranteContext.Provider
       value={{
-        restaurantes,
+        restaurantesCache,
+        isFetching,
         editarRestauranteFn,
         criarRestauranteFn,
         deletarRestauranteFn,
