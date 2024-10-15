@@ -1,0 +1,6 @@
+{
+    "/restaurantes": "/restaurantes",
+    "/restaurantes/:id": "/restaurantes/:id",
+    "/avaliacoes": "/avaliacoes",
+    "/avaliacoes/:id": "/avaliacoes/:id"
+}

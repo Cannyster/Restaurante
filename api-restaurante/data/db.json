@@ -1,0 +1,64 @@
+{
+  "restaurantes": [
+    {
+      "id": "1a2b3c4d5e6f7g8h9i",
+      "nome": "Dona cidinha",
+      "localizacao": "Rua H-113 Qd 224 Lt 10, Cidade Vera Cruz",
+      "cozinha": "Brasileira"
+    },
+    {
+      "nome": "Restaurante Quero Mais",
+      "localizacao": "Rua Dos Coqueiraos Qd 25 Lt 50, Vila Alzira",
+      "cozinha": "Brasileira",
+      "id": "1ee58dc3-7f74-441d-aa43-ca6fd8da87f9"
+    },
+    {
+      "nome": "Restaurante Comida Regional",
+      "localizacao": "Avanida Solimões, nº 485, Bairro Setor Central ",
+      "cozinha": "Italiana",
+      "id": "0310b841-d595-4adb-95a7-2195efe544eb"
+    }
+  ],
+  "avaliacoes": [
+    {
+      "restauranteId": "1ee58dc3-7f74-441d-aa43-ca6fd8da87f9",
+      "usuario": "Sandro Mabel",
+      "comentario": "Gostei da Comida do local",
+      "avaliacao": 5,
+      "id": "9773f823-4edf-41ef-89cd-e1ac69b3eece",
+      "datahora": "2024-10-15T12:52:49.319Z"
+    },
+    {
+      "restauranteId": "1ee58dc3-7f74-441d-aa43-ca6fd8da87f9",
+      "usuario": "Ana hickman",
+      "comentario": "Amei a Comida",
+      "avaliacao": 5,
+      "id": "2848c335-1b24-4b73-88f8-9e701871fb38",
+      "datahora": "2024-10-15T12:54:20.786Z"
+    },
+    {
+      "restauranteId": "1ee58dc3-7f74-441d-aa43-ca6fd8da87f9",
+      "usuario": "Justino Fletcher",
+      "comentario": "Da pro gasto",
+      "avaliacao": 5,
+      "id": "189814fe-a35c-475b-8cdd-e6c9f1aafaa8",
+      "datahora": "2024-10-15T12:54:39.238Z"
+    },
+    {
+      "restauranteId": "1a2b3c4d5e6f7g8h9i",
+      "usuario": "Harry Potter",
+      "comentario": "A comida é mágica",
+      "avaliacao": 5,
+      "id": "f451c200-9d62-4b3b-834d-9e3b9a3d863a",
+      "datahora": "2024-10-15T12:58:31.630Z"
+    },
+    {
+      "restauranteId": "1a2b3c4d5e6f7g8h9i",
+      "usuario": "Hermione Granger",
+      "comentario": "Amei o local",
+      "avaliacao": 5,
+      "id": "0895e3b5-20a2-46af-bc28-a381e8a4f85d",
+      "datahora": "2024-10-15T12:58:47.796Z"
+    }
+  ]
+}
