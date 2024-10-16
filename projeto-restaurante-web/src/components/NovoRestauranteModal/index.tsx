@@ -5,12 +5,12 @@ import { useForm } from "react-hook-form";
 import * as Dialog from "@radix-ui/react-dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CloseButton, Content, Overlay } from "./styles";
-import { restauranteSchema } from "../../validation/validation";
+import { novoRestauranteFormSchema } from "../../validation/validation";
 import { useContextSelector } from "use-context-selector";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
 // import { SelectMenu } from "../Select";
 
-type NovoRestauranteFormInputs = z.infer<typeof restauranteSchema>;
+type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 
 export function NovoRestauranteModal() {
   // Usando o use-context-selector, para selecionar unicamente uma informação que deve ser acompanhada
@@ -26,7 +26,7 @@ export function NovoRestauranteModal() {
     reset,
     setValue,
   } = useForm<NovoRestauranteFormInputs>({
-    resolver: zodResolver(restauranteSchema),
+    resolver: zodResolver(novoRestauranteFormSchema),
   });
 
   //console.log(errors)
@@ -38,7 +38,7 @@ export function NovoRestauranteModal() {
     setValue("cozinha", "");
   }
 
-  async function handleCriarNovoEvento(dados: NovoRestauranteFormInputs) {
+  async function handleCriarNovoRestaurante(dados: NovoRestauranteFormInputs) {
     criarRestaurante(dados);
   }
 
@@ -52,7 +52,7 @@ export function NovoRestauranteModal() {
           <X size={24} />
         </CloseButton>
 
-        <form onSubmit={handleSubmit(handleCriarNovoEvento)}>
+        <form onSubmit={handleSubmit(handleCriarNovoRestaurante)}>
           <input
             type="Text"
             placeholder="Nome do Restaurante"

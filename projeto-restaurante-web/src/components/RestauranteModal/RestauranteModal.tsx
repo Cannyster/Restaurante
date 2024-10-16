@@ -8,14 +8,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CloseButton, Content, Overlay } from "./styles";
 import { useContextSelector } from "use-context-selector";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
-import { novoRestauranteFormSchema } from "../../validation/validation";
+import { editarRestauranteSchema } from "../../validation/validation";
 import { useEffect, useState } from "react";
 import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
 import { obterRestaurante } from "../../api/obter-restaurante";
 import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 import { queryClient } from "../../lib/react-query";
 
-type novoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
+type EditarRestauranteFormInputs = z.infer<typeof editarRestauranteSchema>;
 
 export interface PropriedadesDetalhesRestaurante {
   id: string;
@@ -65,9 +65,8 @@ export function RestauranteModalDetalhes({
     handleSubmit,
     formState: { isSubmitting, errors },
     reset,
-    setValue,
-  } = useForm<novoRestauranteFormInputs>({
-    resolver: zodResolver(novoRestauranteFormSchema),
+  } = useForm<EditarRestauranteFormInputs>({
+    resolver: zodResolver(editarRestauranteSchema),
     defaultValues: {
       nome: restaurante?.nome || "",
       localizacao: restaurante?.localizacao || "",
@@ -77,11 +76,14 @@ export function RestauranteModalDetalhes({
 
   useEffect(() => {
     if (open && restaurante) {
-      setValue("nome", restaurante.nome || "");
-      setValue("localizacao", restaurante.localizacao || "");
-      setValue("cozinha", restaurante.cozinha || "");
+      reset({
+        nome: restaurante.nome || "",
+        localizacao: restaurante.localizacao || "",
+        cozinha: restaurante.cozinha || "",
+      });
+      console.log("Limpando o formulário");
     }
-  }, [open, restaurante, setValue, toggleEdit]);
+  }, [open, restaurante, reset]);
 
   useEffect(() => {
     if (!open) {
@@ -89,23 +91,14 @@ export function RestauranteModalDetalhes({
     }
   }, [open, reset]);
 
-  function LimparFomulário() {
-    reset();
-    setValue("nome", "");
-    setValue("localizacao", "");
-    setValue("cozinha", "");
-  }
-
-  async function handleEditarRestaurante(dados: novoRestauranteFormInputs) {
+  async function handleEditarRestaurante(dados: EditarRestauranteFormInputs) {
     editarRestaurante(dados);
-    LimparFomulário();
     console.log("Aqui caralho EditarRestaurante");
   }
 
   async function handleDeletarRestaurante(id: DeletarRestauranteInput) {
-    //Alterando o estado para fechar o modal
     setSelectedrestauranteId(null);
-    LimparFomulário();
+    reset();
     deletarRestaurante(id);
   }
 
@@ -148,12 +141,7 @@ export function RestauranteModalDetalhes({
             disabled={isNotEditable}
           />
 
-          <select
-            id="cozinha"
-            {...register("cozinha")}
-            required
-            disabled={isNotEditable}
-          >
+          <select {...register("cozinha")} disabled={isNotEditable} required>
             <option value="Baiana">Baiana</option>
             <option value="Mineira">Mineira</option>
             <option value="Goiâna">Goiâna</option>
@@ -180,7 +168,7 @@ export function RestauranteModalDetalhes({
           ) : (
             <>
               <button type="submit" disabled={isSubmitting}>
-                Salvar
+                {isSubmitting ? "Salvando..." : "Salvar"}
               </button>
 
               <button type="button" onClick={toggleEdit}>

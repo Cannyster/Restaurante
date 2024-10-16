@@ -1,7 +1,13 @@
-import { ReactNode, useState } from "react";
 import { toast } from "sonner";
+import { ReactNode, useState } from "react";
+import { queryClient } from "../lib/react-query";
 import { createContext } from "use-context-selector";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { obterRestaurantes } from "../api/obter-restaurantes";
+import {
+  deletarRestaurante,
+  DeletarRestauranteInput,
+} from "../api/deletar-restaurante";
 import {
   criarRestaurante,
   CriarRestauranteInput,
@@ -10,14 +16,6 @@ import {
   editarRestaurante,
   EditarRestauranteInput,
 } from "../api/editar-restaurante";
-import { obterRestaurantes } from "../api/obter-restaurantes";
-import { queryClient } from "../lib/react-query";
-import {
-  deletarRestaurante,
-  DeletarRestauranteInput,
-} from "../api/deletar-restaurante";
-// import { obterRestaurante } from "../api/obter-restaurante";
-
 export interface Restaurante {
   id: string;
   nome: string;
