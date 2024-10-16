@@ -40,7 +40,7 @@ export function RestauranteModalDetalhes({
   };
 
   const { data: restaurante, isFetching } = useQuery({
-    queryKey: ["restaurantes", id],
+    queryKey: ["restaurante", id],
     queryFn: () => obterRestaurante({ id }),
     staleTime: 1000 * 60 * 5, // 5 minutos de "freshness"
     gcTime: 1000 * 60 * 10, // 10 minutos de cache
