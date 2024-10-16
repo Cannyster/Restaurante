@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
 import { obterRestaurante } from "../../api/obter-restaurante";
 import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
+import { queryClient } from "../../lib/react-query";
 
 type novoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 
@@ -39,7 +40,10 @@ export function RestauranteModalDetalhes({
   const { data: restaurante, isFetching } = useQuery({
     queryKey: ["restaurantes", id],
     queryFn: () => obterRestaurante({ id }),
-    enabled: open,
+    staleTime: 1000 * 60 * 5, // 5 minutos de "freshness"
+    gcTime: 1000 * 60 * 10, // 10 minutos de cache
+    refetchOnWindowFocus: false, // Evita refetch ao focar a janela do navegador
+    enabled: open && !queryClient.getQueryData(["restaurante", id]), // Apenas requisita se os dados não estão no cache
   });
 
   const editarRestaurante = useContextSelector(

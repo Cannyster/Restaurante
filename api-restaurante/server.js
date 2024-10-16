@@ -21,7 +21,31 @@ server.post('/avaliacoes', (req, res, next) => {
     next();
 });
 
-// Middleware para excluir avaliações vinculadas ao excluir um restaurante
+// Rota personalizada para retornar restaurante com suas avaliações
+server.get('/restaurantesComAvaliacoes/:id', (req, res) => {
+  const db = router.db; // Acessa o banco de dados JSON
+  const restauranteId = req.params.id;
+
+  // Busca o restaurante pelo id
+  const restaurante = db.get('restaurantes').find({ id: restauranteId }).value();
+
+  if (!restaurante) {
+    return res.status(404).json({ message: 'Restaurante não encontrado' });
+  }
+
+  // Busca todas as avaliações relacionadas ao restauranteId
+  const avaliacoes = db.get('avaliacoes').filter({ restauranteId }).value();
+
+  // Combina o restaurante com suas avaliações
+  const resultado = {
+    ...restaurante,
+    avaliacoes: avaliacoes || []
+  };
+
+  res.json(resultado);
+});
+
+// Rota personalizada para excluir avaliações vinculadas ao excluir um restaurante
 server.delete('/restaurantes/:id', (req, res) => {
     const restauranteId = req.params.id;
     const db = router.db;

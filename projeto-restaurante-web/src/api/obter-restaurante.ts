@@ -9,9 +9,17 @@ export interface ObterRestauranteResponse{
     nome: string;
     localizacao: string;
     cozinha: string;
+    avaliacoes:{
+        id: string,
+        restauranteId: string,
+        usuario: string,
+        comentario: string,
+        avaliacao: number,
+        datahora: string
+    }[]
 }
 
 export async function obterRestaurante({id}: ObterRestauranteInput){
-    const response = await api.get<ObterRestauranteResponse>(`/restaurantes/${id}`)
+    const response = await api.get<ObterRestauranteResponse>(`/restaurantesComAvaliacoes/${id}`)
     return response.data
 }

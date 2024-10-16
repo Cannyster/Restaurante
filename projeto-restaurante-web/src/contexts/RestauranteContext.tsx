@@ -51,12 +51,6 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     queryFn: () => obterRestaurantes(),
   });
 
-  // const { data: restaurante } = useQuery({
-  //   queryKey: ["restaurantes", id],
-  //   queryFn: () => obterRestaurante({ id }),
-  //   enabled: open,
-  // });
-
   const { mutateAsync: criarRestauranteFn } = useMutation({
     mutationFn: criarRestaurante,
     onSuccess: () => {
