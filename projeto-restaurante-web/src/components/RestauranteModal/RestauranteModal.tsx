@@ -12,6 +12,7 @@ import { novoRestauranteFormSchema } from "../../validation/validation";
 import { useEffect, useState } from "react";
 import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
 import { obterRestaurante } from "../../api/obter-restaurante";
+import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 
 type novoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 
@@ -24,29 +25,34 @@ export function RestauranteModalDetalhes({
   id,
   open,
 }: PropriedadesDetalhesRestaurante) {
-  // (Flag) estado para controlar se o input pode ser editado
+  const setSelectedrestauranteId = useContextSelector(
+    RestauranteContext,
+    (context) => context.setSelectedrestauranteId
+  );
+
   const [isNotEditable, setIsNotEditable] = useState(true);
 
-  // Função que alterna a flag de edição do input
   const toggleEdit = () => {
     setIsNotEditable((prevState) => !prevState);
   };
 
   const { data: restaurante, isFetching } = useQuery({
-    queryKey: ["restaurante", id],
+    queryKey: ["restaurantes", id],
     queryFn: () => obterRestaurante({ id }),
     enabled: open,
-    //vai ser ativo apenas se a propriedade open for true, desativa a busca automatica
-    //por isso vai ser true apenas quando um modal for aberto na página restaurantes.
-    //controlado pelo estado - isModalOpen - que inicia com valor false
-    //decidi usar useQuery devido ao cacheamento de informações e outras vantagens que ela possui em relação a  useCallback
-    //ela foi construida fora do contexto pois este eo único local, que precisará dela
   });
 
   const editarRestaurante = useContextSelector(
     RestauranteContext,
     (context) => {
       return context.editarRestauranteFn;
+    }
+  );
+
+  const deletarRestaurante = useContextSelector(
+    RestauranteContext,
+    (context) => {
+      return context.deletarRestauranteFn;
     }
   );
 
@@ -89,6 +95,14 @@ export function RestauranteModalDetalhes({
   async function handleEditarRestaurante(dados: novoRestauranteFormInputs) {
     editarRestaurante(dados);
     LimparFomulário();
+    console.log("Aqui caralho EditarRestaurante");
+  }
+
+  async function handleDeletarRestaurante(id: DeletarRestauranteInput) {
+    //Alterando o estado para fechar o modal
+    setSelectedrestauranteId(null);
+    LimparFomulário();
+    deletarRestaurante(id);
   }
 
   //Aplicando SkeletonModal se os dados estiverem em  carregamento
@@ -147,9 +161,18 @@ export function RestauranteModalDetalhes({
           </select>
 
           {isNotEditable ? (
-            <button type="button" onClick={toggleEdit}>
-              Editar
-            </button>
+            <>
+              <button type="button" onClick={toggleEdit}>
+                Editar
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDeletarRestaurante({ id })}
+              >
+                Excluir
+              </button>
+            </>
           ) : (
             <>
               <button type="submit" disabled={isSubmitting}>

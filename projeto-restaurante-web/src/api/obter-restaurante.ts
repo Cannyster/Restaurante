@@ -12,6 +12,6 @@ export interface ObterRestauranteResponse{
 }
 
 export async function obterRestaurante({id}: ObterRestauranteInput){
-    const response = await api.get<ObterRestauranteResponse>(`/eventos/${id}`)
+    const response = await api.get<ObterRestauranteResponse>(`/restaurantes/${id}`)
     return response.data
 }

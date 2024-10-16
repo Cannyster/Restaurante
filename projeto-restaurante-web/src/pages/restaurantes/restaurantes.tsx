@@ -6,12 +6,17 @@ import { RestauranteContainer, RestauranteTable } from "./styles";
 import { DialogTrigger, Root as DialogRoot } from "@radix-ui/react-dialog";
 import { RestauranteModalDetalhes } from "../../components/RestauranteModal/RestauranteModal";
 import { Search } from "lucide-react";
-import { useState } from "react";
 
 export function Restaurantes() {
-  const [selectedrestauranteId, setSelectedrestauranteId] = useState<
-    string | null
-  >(null);
+  const selectedrestauranteId = useContextSelector(
+    RestauranteContext,
+    (context) => context.selectedrestauranteId
+  );
+
+  const setSelectedrestauranteId = useContextSelector(
+    RestauranteContext,
+    (context) => context.setSelectedrestauranteId
+  );
 
   const restaurantes = useContextSelector(RestauranteContext, (context) => {
     return context.restaurantesCache;

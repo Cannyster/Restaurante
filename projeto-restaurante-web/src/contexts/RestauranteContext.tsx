@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { toast } from "sonner";
 import { createContext } from "use-context-selector";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -16,6 +16,7 @@ import {
   deletarRestaurante,
   DeletarRestauranteInput,
 } from "../api/deletar-restaurante";
+// import { obterRestaurante } from "../api/obter-restaurante";
 
 export interface Restaurante {
   id: string;
@@ -26,9 +27,12 @@ export interface Restaurante {
 interface RestauranteContextType {
   restaurantesCache: Restaurante[] | undefined;
   isFetching: boolean;
+  // restaurante: Restaurante;
   criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<void>;
   editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<void>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
+  selectedrestauranteId: string | null;
+  setSelectedrestauranteId: (id: string | null) => void;
 }
 interface RestauranteProviderProps {
   children: ReactNode;
@@ -37,10 +41,21 @@ interface RestauranteProviderProps {
 export const RestauranteContext = createContext({} as RestauranteContextType);
 
 export function RestaurantesProvider({ children }: RestauranteProviderProps) {
+  //Estado Para Controlar Abertura e fechamento do modal de edição de restaurante
+  const [selectedrestauranteId, setSelectedrestauranteId] = useState<
+    string | null
+  >(null);
+
   const { data: restaurantesCache, isFetching } = useQuery({
-    queryKey: ["restaurante"],
+    queryKey: ["restaurantes"],
     queryFn: () => obterRestaurantes(),
   });
+
+  // const { data: restaurante } = useQuery({
+  //   queryKey: ["restaurantes", id],
+  //   queryFn: () => obterRestaurante({ id }),
+  //   enabled: open,
+  // });
 
   const { mutateAsync: criarRestauranteFn } = useMutation({
     mutationFn: criarRestaurante,
@@ -86,6 +101,8 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
         editarRestauranteFn,
         criarRestauranteFn,
         deletarRestauranteFn,
+        selectedrestauranteId,
+        setSelectedrestauranteId,
       }}
     >
       {children}

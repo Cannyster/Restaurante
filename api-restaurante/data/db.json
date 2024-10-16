@@ -3,31 +3,25 @@
     {
       "nome": "Dona cidinha",
       "localizacao": "Rua H-113 Qd 224 Lt 10, Cidade Vera Cruz",
-      "cozinha": "Brasileira",
+      "cozinha": "Amazonense",
       "id": "1a2b3c4d5e6f7g8h9i"
     },
     {
       "nome": "Restaurante Quero Mais",
       "localizacao": "Rua Dos Coqueiraos Qd 25 Lt 50, Vila Alzira",
-      "cozinha": "Brasileira",
+      "cozinha": "Pernanbucana",
       "id": "1ee58dc3-7f74-441d-aa43-ca6fd8da87f9"
     },
     {
       "nome": "Restaurante Comida Regional",
       "localizacao": "Avanida Solimões, nº 485, Bairro Setor Central ",
-      "cozinha": "Italiana",
+      "cozinha": "Catarinense",
       "id": "0310b841-d595-4adb-95a7-2195efe544eb"
-    },
-    {
-      "nome": "Restaurante da Laurinha",
-      "localizacao": "Avenida Transbrasiliana, Nº 528, Bairro Cruzeiro do Sul",
-      "cozinha": "Portuguesa",
-      "id": "876802f7-2db6-4a4e-bfe9-1fe8a9293ebb"
     },
     {
       "nome": "Restaurante Comida Caseira",
       "localizacao": "Rua Dos Patos Loucos",
-      "cozinha": "Baiana",
+      "cozinha": "Paraense",
       "id": "cfef01b8-dcf2-4ed9-8fad-aa787cc8b4b8"
     },
     {
@@ -35,6 +29,18 @@
       "localizacao": "Rua Dos Patos Loucos",
       "cozinha": "Goiâna",
       "id": "f9f75447-e38b-4c4e-b259-2ca9fce537f8"
+    },
+    {
+      "nome": "Resataurante do Marcelinho",
+      "localizacao": "Avenida Goiás Qd 35",
+      "cozinha": "Mineira",
+      "id": "ffe668e0-009a-4569-a3c5-90744813e38e"
+    },
+    {
+      "nome": "Restaurante da Aline ",
+      "localizacao": "Avenida Brasil",
+      "cozinha": "Goiâna",
+      "id": "dcc39752-2c9a-4e70-8044-b1d823ee5354"
     }
   ],
   "avaliacoes": [
