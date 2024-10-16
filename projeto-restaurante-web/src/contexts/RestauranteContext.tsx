@@ -25,7 +25,6 @@ export interface Restaurante {
 interface RestauranteContextType {
   restaurantesCache: Restaurante[] | undefined;
   isFetching: boolean;
-  // restaurante: Restaurante;
   criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<void>;
   editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<void>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;

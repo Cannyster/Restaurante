@@ -21,7 +21,6 @@ server.post('/avaliacoes', (req, res, next) => {
     next();
 });
 
-// Rota personalizada para retornar restaurante com suas avaliações
 server.get('/restaurantesComAvaliacoes/:id', (req, res) => {
   const db = router.db; // Acessa o banco de dados JSON
   const restauranteId = req.params.id;
@@ -33,13 +32,17 @@ server.get('/restaurantesComAvaliacoes/:id', (req, res) => {
     return res.status(404).json({ message: 'Restaurante não encontrado' });
   }
 
-  // Busca todas as avaliações relacionadas ao restauranteId
-  const avaliacoes = db.get('avaliacoes').filter({ restauranteId }).value();
+  // Busca e ordena as avaliações pela data em ordem decrescente
+  const avaliacoes = db
+    .get('avaliacoes')
+    .filter({ restauranteId })
+    .orderBy(['datahora'], ['desc']) // lodash-style orderBy
+    .value();
 
   // Combina o restaurante com suas avaliações
   const resultado = {
     ...restaurante,
-    avaliacoes: avaliacoes || []
+    avaliacoes: avaliacoes || [],
   };
 
   res.json(resultado);

@@ -79,7 +79,7 @@ export function NovoRestauranteModal() {
             </option>
             <option value="Baiana">Baiana</option>
             <option value="Mineira">Mineira</option>
-            <option value="Goiâna">Goiâna</option>
+            <option value="Goiâna">Goiana</option>
             <option value="Paraense">Paraense</option>
             <option value="Cearense">Cearense</option>
             <option value="Catarinense">Catarinense</option>

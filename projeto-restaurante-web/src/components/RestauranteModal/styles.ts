@@ -1,17 +1,17 @@
 import * as Dialog from "@radix-ui/react-dialog"; //https://www.radix-ui.com/primitives/docs/components/dialog
 import styled from "styled-components";
 
-
 export const Overlay = styled(Dialog.Overlay)`
   position: fixed;
   width: 100vw;
   height: 100vh;
   inset: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.75);
 `;
 
 export const Content = styled(Dialog.Content)`
   min-width: 32rem;
+  max-height: 80vh;
   border-radius: 6px;
   padding: 2.5rem 3rem;
   background: ${(props) => props.theme["gray-800"]};
@@ -24,7 +24,6 @@ export const Content = styled(Dialog.Content)`
 
   form {
     margin-top: 2rem;
-
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -47,7 +46,15 @@ export const Content = styled(Dialog.Content)`
       }
     }
 
+    div{
+      display: flex;
+      justify-content: space-around;
+      gap: 0.5rem;
+    }
+
     button[type="submit"],button[type="button"] {
+      display: inline;
+      width: 50%;
       height: 58px;
       border: 0;
       background: ${(props) => props.theme["green-500"]};
@@ -55,7 +62,7 @@ export const Content = styled(Dialog.Content)`
       font-weight: bold;
       padding: 0 1.25rem;
       border-radius: 6px;
-      margin-top: 1.5rem;
+      margin-top: 0.5rem;
       cursor: pointer;
 
       &:disabled {
@@ -90,6 +97,7 @@ export const Content = styled(Dialog.Content)`
         color: ${(props) => props.theme["gray-300"]};
       }
     }
+
   }
 `;
 
@@ -102,4 +110,11 @@ export const CloseButton = styled(Dialog.Close)`
   line-height: 0;
   cursor: pointer;
   color: ${(props) => props.theme["gray-500"]};
+`;
+
+export const AvaliacaoBox = styled.div`
+  margin-top: 1rem;
+  max-height: 30vh;
+  overflow-y: auto;
+  color: ${(props) => props.theme["gray-300"]};
 `;

@@ -1,5 +1,7 @@
 export const formatarData = new Intl.DateTimeFormat("pt-BR",{
-  dateStyle: 'short'
+  dateStyle: 'short',
+  timeStyle: "short",
+  hour12: false
 });
 
 export const formatarHora = new Intl.DateTimeFormat("pt-BR", {

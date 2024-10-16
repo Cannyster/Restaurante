@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import * as Dialog from "@radix-ui/react-dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CloseButton, Content, Overlay } from "./styles";
+import { AvaliacaoBox, CloseButton, Content, Overlay } from "./styles";
 import { useContextSelector } from "use-context-selector";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
 import { editarRestauranteSchema } from "../../validation/validation";
@@ -14,6 +14,7 @@ import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
 import { obterRestaurante } from "../../api/obter-restaurante";
 import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 import { queryClient } from "../../lib/react-query";
+import { Avaliacao } from "../Avaliacao/Avaliacao";
 
 type EditarRestauranteFormInputs = z.infer<typeof editarRestauranteSchema>;
 
@@ -35,6 +36,7 @@ export function RestauranteModalDetalhes({
 
   const toggleEdit = () => {
     setIsNotEditable((prevState) => !prevState);
+    console.log("teste de botão editar");
   };
 
   const { data: restaurante, isFetching } = useQuery({
@@ -107,6 +109,10 @@ export function RestauranteModalDetalhes({
     return <SkeletonRestauranteModal />;
   }
 
+  const testebotao = () => {
+    console.log("teste de botão salvar kralho");
+  };
+
   return (
     <Dialog.Portal>
       <Overlay />
@@ -144,7 +150,7 @@ export function RestauranteModalDetalhes({
           <select {...register("cozinha")} disabled={isNotEditable} required>
             <option value="Baiana">Baiana</option>
             <option value="Mineira">Mineira</option>
-            <option value="Goiâna">Goiâna</option>
+            <option value="Goiâna">Goiana</option>
             <option value="Paraense">Paraense</option>
             <option value="Cearense">Cearense</option>
             <option value="Catarinense">Catarinense</option>
@@ -152,31 +158,52 @@ export function RestauranteModalDetalhes({
             <option value="Amazonense">Amazonense</option>
           </select>
 
-          {isNotEditable ? (
-            <>
-              <button type="button" onClick={toggleEdit}>
-                Editar
-              </button>
+          <div>
+            {isNotEditable ? (
+              <>
+                <button type="button" onClick={toggleEdit}>
+                  Editar
+                </button>
 
-              <button
-                type="button"
-                onClick={() => handleDeletarRestaurante({ id })}
-              >
-                Excluir
-              </button>
-            </>
-          ) : (
-            <>
-              <button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Salvando..." : "Salvar"}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => handleDeletarRestaurante({ id })}
+                >
+                  Excluir
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  onClick={testebotao}
+                >
+                  {isSubmitting ? "Salvando..." : "Salvar"}
+                </button>
 
-              <button type="button" onClick={toggleEdit}>
-                Cancelar
-              </button>
-            </>
-          )}
+                <button type="button" onClick={toggleEdit}>
+                  Cancelar
+                </button>
+              </>
+            )}
+          </div>
         </form>
+        <AvaliacaoBox>
+          {restaurante?.avaliacoes.map((avaliacao) => {
+            return (
+              <Avaliacao
+                key={avaliacao.id}
+                id={avaliacao.id}
+                avaliacao={avaliacao.avaliacao}
+                datahora={avaliacao.datahora}
+                comentario={avaliacao.comentario}
+                restauranteId={avaliacao.restauranteId}
+                usuario={avaliacao.usuario}
+              />
+            );
+          })}
+        </AvaliacaoBox>
       </Content>
     </Dialog.Portal>
   );
