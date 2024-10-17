@@ -1,5 +1,5 @@
 import { Header } from "../../components/Header";
-import { SearchForm } from "./components/SearchForm";
+import { SearchForm } from "../../components/SearchForm/index";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
 import { useContextSelector } from "use-context-selector";
 import { RestauranteContainer, RestauranteTable } from "./styles";
@@ -39,13 +39,15 @@ export function Restaurantes() {
             {restaurantes !== undefined
               ? restaurantes.map((restaurante) => {
                   return (
-                    <tr key={restaurante.id}>
+                    <tr key={restaurante.restauranteId}>
                       <td>
                         <DialogRoot
-                          open={selectedrestauranteId === restaurante.id}
+                          open={
+                            selectedrestauranteId === restaurante.restauranteId
+                          }
                           onOpenChange={(isOpen) =>
                             setSelectedrestauranteId(
-                              isOpen ? restaurante.id : null
+                              isOpen ? restaurante.restauranteId : null
                             )
                           }
                         >
@@ -53,9 +55,12 @@ export function Restaurantes() {
                             <Search className="h-3 w-3" />
                           </DialogTrigger>
                           <RestauranteModalDetalhes
-                            key={restaurante.id} // Força re-renderização
-                            open={selectedrestauranteId === restaurante.id}
-                            id={restaurante.id}
+                            key={restaurante.restauranteId} // Força re-renderização
+                            open={
+                              selectedrestauranteId ===
+                              restaurante.restauranteId
+                            }
+                            restauranteId={restaurante.restauranteId}
                           />
                         </DialogRoot>
                       </td>

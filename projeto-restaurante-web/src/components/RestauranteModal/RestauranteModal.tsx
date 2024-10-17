@@ -1,30 +1,29 @@
 import * as z from "zod";
+import { toast } from "sonner";
 import { X } from "phosphor-react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import * as Dialog from "@radix-ui/react-dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AvaliacaoBox, CloseButton, Content, Overlay } from "./styles";
-import { useContextSelector } from "use-context-selector";
-import { RestauranteContext } from "../../contexts/RestauranteContext";
-import { editarRestauranteSchema } from "../../validation/validation";
-import { useEffect, useState } from "react";
-import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
-import { obterRestaurante } from "../../api/obter-restaurante";
-import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
-import { queryClient } from "../../lib/react-query";
 import { Avaliacao } from "../Avaliacao/Avaliacao";
+import { queryClient } from "../../lib/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useContextSelector } from "use-context-selector";
+import { obterRestaurante } from "../../api/obter-restaurante";
+import { editarRestauranteSchema } from "../../validation/validation";
+import { RestauranteContext } from "../../contexts/RestauranteContext";
+import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
+import { AvaliacaoBox, CloseButton, Content, Overlay } from "./styles";
+import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 
 type EditarRestauranteFormInputs = z.infer<typeof editarRestauranteSchema>;
-
 export interface PropriedadesDetalhesRestaurante {
-  id: string;
+  restauranteId: string;
   open: boolean;
 }
 
 export function RestauranteModalDetalhes({
-  id,
+  restauranteId,
   open,
 }: PropriedadesDetalhesRestaurante) {
   const setSelectedrestauranteId = useContextSelector(
@@ -36,16 +35,15 @@ export function RestauranteModalDetalhes({
 
   const toggleEdit = () => {
     setIsNotEditable((prevState) => !prevState);
-    console.log("teste de botão editar");
   };
 
   const { data: restaurante, isFetching } = useQuery({
-    queryKey: ["restaurante", id],
-    queryFn: () => obterRestaurante({ id }),
+    queryKey: ["restaurante", restauranteId],
+    queryFn: () => obterRestaurante({ restauranteId }),
     staleTime: 1000 * 60 * 5, // 5 minutos de "freshness"
     gcTime: 1000 * 60 * 10, // 10 minutos de cache
     refetchOnWindowFocus: false, // Evita refetch ao focar a janela do navegador
-    enabled: open && !queryClient.getQueryData(["restaurante", id]), // Apenas requisita se os dados não estão no cache
+    enabled: open && !queryClient.getQueryData(["restaurante", restauranteId]), // Apenas requisita se os dados não estão no cache
   });
 
   const editarRestaurante = useContextSelector(
@@ -69,39 +67,34 @@ export function RestauranteModalDetalhes({
     reset,
   } = useForm<EditarRestauranteFormInputs>({
     resolver: zodResolver(editarRestauranteSchema),
-    defaultValues: {
-      nome: restaurante?.nome || "",
-      localizacao: restaurante?.localizacao || "",
-      cozinha: restaurante?.cozinha || "",
-    },
   });
+
+  if (Object.keys(errors).length > 0) {
+    console.log("Erros no formulário:", errors); // Log de erros
+  }
 
   useEffect(() => {
     if (open && restaurante) {
+      console.log("Restaurante data:", restaurante); // Adicione este log para debugar
       reset({
+        restauranteId: restaurante.restauranteId || "",
         nome: restaurante.nome || "",
         localizacao: restaurante.localizacao || "",
         cozinha: restaurante.cozinha || "",
       });
-      console.log("Limpando o formulário");
     }
   }, [open, restaurante, reset]);
 
-  useEffect(() => {
-    if (!open) {
-      reset();
-    }
-  }, [open, reset]);
-
   async function handleEditarRestaurante(dados: EditarRestauranteFormInputs) {
-    editarRestaurante(dados);
-    console.log("Aqui caralho EditarRestaurante");
+    await editarRestaurante(dados);
   }
 
-  async function handleDeletarRestaurante(id: DeletarRestauranteInput) {
+  async function handleDeletarRestaurante(
+    restauranteId: DeletarRestauranteInput
+  ) {
     setSelectedrestauranteId(null);
+    await deletarRestaurante(restauranteId);
     reset();
-    deletarRestaurante(id);
   }
 
   //Aplicando SkeletonModal se os dados estiverem em  carregamento
@@ -109,17 +102,13 @@ export function RestauranteModalDetalhes({
     return <SkeletonRestauranteModal />;
   }
 
-  const testebotao = () => {
-    console.log("teste de botão salvar kralho");
-  };
-
   return (
     <Dialog.Portal>
       <Overlay />
       <Content onPointerDownOutside={!isNotEditable ? toggleEdit : undefined}>
         <Dialog.Title>Detalhes Do Restaurante</Dialog.Title>
         <Dialog.DialogDescription>
-          Restaurante Id: {id}
+          Restaurante Id: {restauranteId}
         </Dialog.DialogDescription>
 
         <CloseButton onClick={!isNotEditable ? toggleEdit : undefined}>
@@ -128,6 +117,11 @@ export function RestauranteModalDetalhes({
 
         <form onSubmit={handleSubmit(handleEditarRestaurante)}>
           <input
+            type="hidden"
+            value={restauranteId}
+            {...register("restauranteId")}
+          />
+          <input
             type="Text"
             placeholder="Nome do Restaurante"
             required
@@ -135,7 +129,6 @@ export function RestauranteModalDetalhes({
             onBlur={() => errors.nome && toast.error(errors.nome.message)}
             disabled={isNotEditable}
           />
-
           <input
             type="Text"
             placeholder="Localização Do Restaurante"
@@ -146,18 +139,16 @@ export function RestauranteModalDetalhes({
             }
             disabled={isNotEditable}
           />
-
           <select {...register("cozinha")} disabled={isNotEditable} required>
             <option value="Baiana">Baiana</option>
             <option value="Mineira">Mineira</option>
-            <option value="Goiâna">Goiana</option>
+            <option value="Goiana">Goiana</option>
             <option value="Paraense">Paraense</option>
             <option value="Cearense">Cearense</option>
             <option value="Catarinense">Catarinense</option>
             <option value="Pernanbucana">Pernanbucana</option>
             <option value="Amazonense">Amazonense</option>
           </select>
-
           <div>
             {isNotEditable ? (
               <>
@@ -167,7 +158,7 @@ export function RestauranteModalDetalhes({
 
                 <button
                   type="button"
-                  onClick={() => handleDeletarRestaurante({ id })}
+                  onClick={() => handleDeletarRestaurante({ restauranteId })}
                 >
                   Excluir
                 </button>
@@ -177,9 +168,9 @@ export function RestauranteModalDetalhes({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  onClick={testebotao}
+                  onClick={() => console.log()}
                 >
-                  {isSubmitting ? "Salvando..." : "Salvar"}
+                  Salvar
                 </button>
 
                 <button type="button" onClick={toggleEdit}>
@@ -189,7 +180,7 @@ export function RestauranteModalDetalhes({
             )}
           </div>
         </form>
-        <AvaliacaoBox>
+        {/* <AvaliacaoBox>
           {restaurante?.avaliacoes.map((avaliacao) => {
             return (
               <Avaliacao
@@ -203,7 +194,7 @@ export function RestauranteModalDetalhes({
               />
             );
           })}
-        </AvaliacaoBox>
+        </AvaliacaoBox> */}
       </Content>
     </Dialog.Portal>
   );

@@ -73,18 +73,18 @@ export function NovoRestauranteModal() {
 
           {/* <SelectMenu {...register("cozinha")} required /> */}
 
-          <select id="cozinha" {...register("cozinha")} required>
-            <option value="" selected disabled hidden>
+          <select {...register("cozinha")} required>
+            <option value="" hidden>
               Tipo de Cozinha
             </option>
-            <option value="Baiana">Baiana</option>
-            <option value="Mineira">Mineira</option>
-            <option value="Goiâna">Goiana</option>
-            <option value="Paraense">Paraense</option>
-            <option value="Cearense">Cearense</option>
-            <option value="Catarinense">Catarinense</option>
-            <option value="Pernanbucana">Pernanbucana</option>
-            <option value="Amazonense">Amazonense</option>
+            <option defaultValue="Baiana">Baiana</option>
+            <option defaultValue="Mineira">Mineira</option>
+            <option defaultValue="Goiana">Goiana</option>
+            <option defaultValue="Paraense">Paraense</option>
+            <option defaultValue="Cearense">Cearense</option>
+            <option defaultValue="Catarinense">Catarinense</option>
+            <option defaultValue="Pernanbucana">Pernanbucana</option>
+            <option defaultValue="Amazonense">Amazonense</option>
           </select>
 
           <button type="submit" disabled={isSubmitting}>

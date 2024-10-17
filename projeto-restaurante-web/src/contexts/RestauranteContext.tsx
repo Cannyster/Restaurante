@@ -17,7 +17,7 @@ import {
   EditarRestauranteInput,
 } from "../api/editar-restaurante";
 export interface Restaurante {
-  id: string;
+  restauranteId: string;
   nome: string;
   localizacao: string;
   cozinha: string;
@@ -25,8 +25,9 @@ export interface Restaurante {
 interface RestauranteContextType {
   restaurantesCache: Restaurante[] | undefined;
   isFetching: boolean;
-  criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<void>;
-  editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<void>;
+  filtrarRestaurantes: (query: string) => Promise<void>;
+  criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<Restaurante>;
+  editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<Restaurante>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
   selectedrestauranteId: string | null;
   setSelectedrestauranteId: (id: string | null) => void;
@@ -43,12 +44,23 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     string | null
   >(null);
 
-  const { data: restaurantesCache, isFetching } = useQuery({
-    queryKey: ["restaurantes"],
-    queryFn: () => obterRestaurantes(),
+  const [buscaQuery, setBuscaQuery] = useState<string | undefined>(undefined);
+
+  const filtrarRestaurantes = async (query: string) => {
+    setBuscaQuery(query);
+  };
+
+  const { data: restaurantesCache, isFetching } = useQuery<Restaurante[]>({
+    queryKey: ["restaurantes", buscaQuery],
+    queryFn: () => obterRestaurantes(buscaQuery),
+    enabled: true,
   });
 
-  const { mutateAsync: criarRestauranteFn } = useMutation({
+  const { mutateAsync: criarRestauranteFn } = useMutation<
+    Restaurante,
+    Error,
+    CriarRestauranteInput
+  >({
     mutationFn: criarRestaurante,
     onSuccess: () => {
       toast.success("Restaurante Criado com sucesso");
@@ -60,7 +72,11 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     },
   });
 
-  const { mutateAsync: editarRestauranteFn } = useMutation({
+  const { mutateAsync: editarRestauranteFn } = useMutation<
+    Restaurante,
+    Error,
+    EditarRestauranteInput
+  >({
     mutationFn: editarRestaurante,
     onSuccess: () => {
       toast.success("Restaurante alterado com sucesso");
@@ -72,7 +88,11 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     },
   });
 
-  const { mutateAsync: deletarRestauranteFn } = useMutation({
+  const { mutateAsync: deletarRestauranteFn } = useMutation<
+    void,
+    Error,
+    DeletarRestauranteInput
+  >({
     mutationFn: deletarRestaurante,
     onSuccess: () => {
       toast.success("Restaurante Excluído com sucesso");
@@ -92,6 +112,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
         editarRestauranteFn,
         criarRestauranteFn,
         deletarRestauranteFn,
+        filtrarRestaurantes,
         selectedrestauranteId,
         setSelectedrestauranteId,
       }}

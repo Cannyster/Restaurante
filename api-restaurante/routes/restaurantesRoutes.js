@@ -4,17 +4,17 @@ import { z } from 'zod';
 const restauranteSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
   localizacao: z.string().min(1, 'Localização é obrigatória'),
-  tipoCozinha: z.string().min(1, 'Tipo de cozinha é obrigatório'),
+  cozinha: z.string().min(1, 'Tipo de cozinha é obrigatório'),
 });
 
 export const restaurantesRoutes = (server) => {
   const db = router.db; 
 
   server.get('/restaurantes', (req, res) => {
-    const { tipoCozinha, localizacao } = req.query;
+    const { cozinha, localizacao } = req.query;
     let restaurantes = db.get('restaurantes').value();
-    if (tipoCozinha) {
-      restaurantes = restaurantes.filter(r => r.tipoCozinha === tipoCozinha);
+    if (cozinha) {
+      restaurantes = restaurantes.filter(r => r.cozinha === cozinha);
     }
     if (localizacao) {
       restaurantes = restaurantes.filter(r => r.localizacao === localizacao);
@@ -22,57 +22,53 @@ export const restaurantesRoutes = (server) => {
     res.json(restaurantes);
   });
 
-  server.get('/restaurantesComAvaliacoes/:id', (req, res) => {
-    const db = router.db; // Acessa o banco de dados JSON
-    const restauranteId = req.params.id;
+  server.get('/restaurantes/:restauranteId', (req, res) => {
+    const { restauranteId } = req.params;
+    const restauranteExistente = db.get('restaurantes').find({ restauranteId }).value();
   
-    const restaurante = db.get('restaurantes').find({ id: restauranteId }).value();
-  
-    if (!restaurante) {
-      return res.status(404).json({ message: 'Restaurante não encontrado' });
+    if (!restauranteExistente) {
+      return res.status(404).json({ error: 'Restaurante não encontrado' });
     }
-  
-    const avaliacoes = db
-      .get('avaliacoes')
-      .filter({ restauranteId })
-      .orderBy(['datahora'], ['desc'])
-      .value();
 
-    const resultado = {
-      ...restaurante,
-      avaliacoes: avaliacoes || [],
-    };
-  
-    res.json(resultado);
+    res.json(restauranteExistente);
   });
+  
 
   server.post('/restaurantes', (req, res) => {
     const validationResult = restauranteSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ errors: validationResult.error.format() });
+      return res.status(400).json({ errors: validationResult.error.message() });
+      // return res.status(400).json({ errors: validationResult.error.format() });
     }
-    const novoRestaurante = { id: uuidv4(), ...req.body };
+    const novoRestaurante = { restauranteId: uuidv4(), ...req.body };
     db.get('restaurantes').push(novoRestaurante).write();
     res.status(201).json(novoRestaurante);
   });
 
-  server.put('/restaurantes/:idrestaurante', (req, res) => {
+  server.put('/restaurantes/:restauranteId', (req, res) => {
+    const { restauranteId } = req.params;
     const validationResult = restauranteSchema.safeParse(req.body);
+    const restauranteExistente = db.get('restaurantes').find({ restauranteId }).value();
+
+    if (!restauranteExistente) {
+    return res.status(404).json({ error: 'Restaurante não encontrado' });
+    }
+
     if (!validationResult.success) {
       return res.status(400).json({ errors: validationResult.error.format() });
     }
-    const { idrestaurante } = req.params;
+
     const restauranteAtualizado = db.get('restaurantes')
-      .find({ id: idrestaurante })
+      .find({ restauranteId })
       .assign(req.body)
       .write();
 
     res.json(restauranteAtualizado);
   });
 
-  server.delete('/restaurantes/:idrestaurante', (req, res) => {
-    const { idrestaurante } = req.params;
-    db.get('restaurantes').remove({ id: idrestaurante }).write();
+  server.delete('/restaurantes/:restauranteId', (req, res) => {
+    const { restauranteId } = req.params;
+    db.get('restaurantes').remove({ id: restauranteId }).write();
     res.status(204).send();
   });
 };

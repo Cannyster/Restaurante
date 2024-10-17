@@ -1,10 +1,10 @@
 import { api } from "../lib/axios";
 
 export interface DeletarRestauranteInput{
-    id: string;
+    restauranteId: string;
 }
 
-export async function deletarRestaurante({id}: DeletarRestauranteInput){
-    const response = await api.delete(`/restaurantes/${id}`)
+export async function deletarRestaurante({restauranteId}: DeletarRestauranteInput): Promise<void>{
+    const response = await api.delete<void>(`/restaurantes/${restauranteId}`)
     return response.data
 }

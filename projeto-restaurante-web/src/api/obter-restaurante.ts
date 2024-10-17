@@ -1,25 +1,17 @@
 import { api } from "../lib/axios";
 
 export interface ObterRestauranteInput{
-    id: string;
+    restauranteId: string;
 }
 
 export interface ObterRestauranteResponse{
-    id: string;
+    restauranteId: string;
     nome: string;
     localizacao: string;
     cozinha: string;
-    avaliacoes:{
-        id: string,
-        restauranteId: string,
-        usuario: string,
-        comentario: string,
-        avaliacao: number,
-        datahora: string
-    }[]
 }
 
-export async function obterRestaurante({id}: ObterRestauranteInput){
-    const response = await api.get<ObterRestauranteResponse>(`/restaurantesComAvaliacoes/${id}`)
+export async function obterRestaurante({restauranteId}: ObterRestauranteInput){
+    const response = await api.get<ObterRestauranteResponse>(`/restaurantes/${restauranteId}`)
     return response.data
 }

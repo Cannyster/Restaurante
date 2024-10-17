@@ -7,8 +7,12 @@ export const novoRestauranteFormSchema = z.object({
 });
 
 export const editarRestauranteSchema = novoRestauranteFormSchema.extend({
-    id: z.string()
+    restauranteId: z.string()
 });
+
+export const filtrarRestauranteSchema = z.object({
+    query: z.string(),
+  });
 
 export const avaliacaoSchema = z.object({
     usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),

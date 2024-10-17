@@ -3,36 +3,34 @@ import { SearchFormContainer } from "./styles";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RestauranteContext } from "../../../../contexts/RestauranteContext";
+import { RestauranteContext } from "../../contexts/RestauranteContext";
 import { useContextSelector } from "use-context-selector";
+import { filtrarRestauranteSchema } from "../../validation/validation";
 
-const SearchFormSchema = z.object({
-  query: z.string(),
-});
-
-type SearchFormInputs = z.infer<typeof SearchFormSchema>;
+type SearchFormInputs = z.infer<typeof filtrarRestauranteSchema>;
 
 export function SearchForm() {
-  const buscarEventos = useContextSelector(RestauranteContext, (context) => {
-    return context.buscaEventos;
-  });
+  const filtrarRestaurantes = useContextSelector(
+    RestauranteContext,
+    (context) => {
+      return context.filtrarRestaurantes;
+    }
+  );
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<SearchFormInputs>({
-    resolver: zodResolver(SearchFormSchema),
+    resolver: zodResolver(filtrarRestauranteSchema),
   });
 
-  async function handleBuscarEventos(data: SearchFormInputs) {
-    // para a query buscar corretamente foi preciso instalar a versão 0.17.0 do Json Server
-    await buscarEventos(data.query);
-    //console.log(data);
+  async function handleBuscarRestaurantes(data: SearchFormInputs) {
+    await filtrarRestaurantes(data.query);
   }
 
   return (
-    <SearchFormContainer onSubmit={handleSubmit(handleBuscarEventos)}>
+    <SearchFormContainer onSubmit={handleSubmit(handleBuscarRestaurantes)}>
       <input
         type="text"
         placeholder="Busque um Restaurante"
