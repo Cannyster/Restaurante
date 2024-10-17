@@ -180,21 +180,6 @@ export function RestauranteModalDetalhes({
             )}
           </div>
         </form>
-        {/* <AvaliacaoBox>
-          {restaurante?.avaliacoes.map((avaliacao) => {
-            return (
-              <Avaliacao
-                key={avaliacao.id}
-                id={avaliacao.id}
-                avaliacao={avaliacao.avaliacao}
-                datahora={avaliacao.datahora}
-                comentario={avaliacao.comentario}
-                restauranteId={avaliacao.restauranteId}
-                usuario={avaliacao.usuario}
-              />
-            );
-          })}
-        </AvaliacaoBox> */}
       </Content>
     </Dialog.Portal>
   );

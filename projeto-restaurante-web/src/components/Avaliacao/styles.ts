@@ -81,7 +81,7 @@ export const Header = styled.header`
     align-items: center;
     justify-content: space-between;
 
-    /* button{
+    button{
         background: transparent;
         border: 0;
         color: var(--gray-400);
@@ -92,7 +92,7 @@ export const Header = styled.header`
         :hover{
             color: var(--red-500);
         }
-    } */
+    }
 
 `
 
