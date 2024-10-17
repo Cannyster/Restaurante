@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
       { path: "/", element: <Restaurantes /> },
       {
         path: "restaurante/:id",
-        element: <RestauranteDetalhes restaurante={undefined} />,
+        element: <RestauranteDetalhes />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const RestauranteContainer = styled.main`
   width: 100%;
@@ -47,7 +48,9 @@ export const RestauranteItem = styled.main`
   p{
     margin: 0.5rem 0 0.5rem 0; 
   }
-
-
-
 `;
+
+export const StyledLink = styled(Link)`
+  color: ${(props) => props.theme["gray-300"]};
+  text-decoration: none;
+`

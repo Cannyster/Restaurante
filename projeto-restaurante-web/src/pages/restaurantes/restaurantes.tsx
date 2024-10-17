@@ -1,7 +1,7 @@
 import { SearchForm } from "../../components/SearchForm/index";
 import { RestauranteContext } from "../../contexts/RestauranteContext";
 import { useContextSelector } from "use-context-selector";
-import { RestauranteTable } from "./styles";
+import { RestauranteTable, StyledLink } from "./styles";
 import { DialogTrigger, Root as DialogRoot } from "@radix-ui/react-dialog";
 import { RestauranteModalDetalhes } from "../../components/RestauranteModal/RestauranteModal";
 import { Search } from "lucide-react";
@@ -38,7 +38,12 @@ export function Restaurantes() {
                 return (
                   <tr key={restaurante.restauranteId}>
                     <td>
-                      <DialogRoot
+                      <StyledLink
+                        to={`/restaurantes/${restaurante.restauranteId}`}
+                      >
+                        <Search className="h-3 w-3" />
+                      </StyledLink>
+                      {/* <DialogRoot
                         open={
                           selectedrestauranteId === restaurante.restauranteId
                         }
@@ -58,7 +63,7 @@ export function Restaurantes() {
                           }
                           restauranteId={restaurante.restauranteId}
                         />
-                      </DialogRoot>
+                      </DialogRoot> */}
                     </td>
                     <td>{restaurante.nome}</td>
                     <td>{restaurante.localizacao}</td>

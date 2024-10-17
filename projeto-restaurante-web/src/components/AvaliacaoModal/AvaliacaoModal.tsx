@@ -1,17 +1,16 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { reviewSchema } from "../../validation/reviewSchema";
+import { avaliacaoSchema } from "../../validation/validation";
 import { Overlay, Content, CloseButton, Form } from "./styled";
 
-export function AvalicaoModal({ review, restauranteId, closeModal }) {
+export function AvalicaoModal({ review, closeModal }) {
   const { register, handleSubmit, reset } = useForm({
-    resolver: zodResolver(reviewSchema),
+    resolver: zodResolver(avaliacaoSchema),
     defaultValues: review || {
       usuario: "",
       comentario: "",
       avaliacao: 0,
-      datahora: new Date().toISOString(),
     },
   });
 

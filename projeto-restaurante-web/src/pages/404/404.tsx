@@ -5,7 +5,7 @@ export function NotFound() {
     <Container>
       <Title>Página não encontrada</Title>
       <Text>
-        Voltar para o <StyledLink to="/">Dashboard</StyledLink>
+        Voltar para <StyledLink to="/">Restaurantes</StyledLink>
       </Text>
     </Container>
   );

@@ -17,7 +17,7 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled.p`
-  color: ${(props) => props.theme["gray-700"]};
+  color: ${(props) => props.theme["gray-300"]};
 `;
 
 export const StyledLink = styled(Link)`
