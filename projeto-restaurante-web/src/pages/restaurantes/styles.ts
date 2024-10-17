@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const RestauranteContainer = styled.main`
+export const MainContainer = styled.main`
   width: 100%;
   max-width: 1120px;
-  margin: 4rem auto 0;
+  margin: 6rem auto 0;
   padding: 0 1.5rem;
+  min-height: 80vh;
 `;
 
 export const RestauranteTable = styled.table`

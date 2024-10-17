@@ -119,6 +119,18 @@
       "localizacao": "Praça do Mercado, nº 2",
       "cozinha": "Amazonense",
       "restauranteId": "ac47372e-7c45-4a0a-86e4-42fbbc72d0b8"
+    },
+    {
+      "restauranteId": "7f840af3-0f8a-43bb-b7e7-157c32d972e4",
+      "nome": "Rsetaurante da Dona Laurinha",
+      "localizacao": "Avenida Pedro Cardoso Nº 30 ",
+      "cozinha": "Catarinense"
+    },
+    {
+      "restauranteId": "c2da1064-dc18-44a2-9027-578d808a8a9a",
+      "nome": "Restaurante do Wendell 21",
+      "localizacao": "asdafasdfsdfs",
+      "cozinha": "Catarinense"
     }
   ],
   "avaliacoes": [
@@ -129,6 +141,22 @@
       "avaliacao": 5,
       "id": "asdasdawasda252163",
       "datahora": "2024-10-15T13:45:30.123Z"
+    },
+    {
+      "restauranteId": "1a2b3c4d5e6f7g8h9i",
+      "usuario": "Ronaldp Elias",
+      "comentario": "Restaurante ótimo, recomendo demais!",
+      "avaliacao": 5,
+      "id": "asdasda545221wasda252163",
+      "datahora": "2024-10-14T13:45:30.123Z"
+    },
+    {
+      "restauranteId": "1a2b3c4d5e6f7g8h9i",
+      "usuario": "Oswaldo Cruz",
+      "comentario": "Não gostei do atendimento",
+      "avaliacao": 1,
+      "id": "asd4545asa9468678wasda63",
+      "datahora": "2024-10-16T13:45:30.123Z"
     },
     {
       "restauranteId": "ffe668e0-009a-4569-a3c5-90744813e38e",

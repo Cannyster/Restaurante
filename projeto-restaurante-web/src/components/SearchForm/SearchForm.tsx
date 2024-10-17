@@ -3,7 +3,7 @@ import { SearchFormContainer } from "./styles";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RestauranteContext } from "../../contexts/RestauranteContext";
+import { restauranteContext } from "../../contexts/restauranteContext";
 import { useContextSelector } from "use-context-selector";
 import { filtrarRestauranteSchema } from "../../validation/validation";
 
@@ -11,7 +11,7 @@ type SearchFormInputs = z.infer<typeof filtrarRestauranteSchema>;
 
 export function SearchForm() {
   const filtrarRestaurantes = useContextSelector(
-    RestauranteContext,
+    restauranteContext,
     (context) => {
       return context.filtrarRestaurantes;
     }

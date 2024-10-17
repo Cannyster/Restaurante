@@ -5,15 +5,13 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Avaliacao } from "../Avaliacao/Avaliacao";
 import { queryClient } from "../../lib/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContextSelector } from "use-context-selector";
 import { obterRestaurante } from "../../api/obter-restaurante";
 import { editarRestauranteSchema } from "../../validation/validation";
-import { RestauranteContext } from "../../contexts/RestauranteContext";
-import { SkeletonRestauranteModal } from "../SkeletonRestauranteModal";
-import { AvaliacaoBox, CloseButton, Content, Overlay } from "./styles";
+import { restauranteContext } from "../../contexts/restauranteContext";
+import { CloseButton, Content, Overlay } from "./styles";
 import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 
 type EditarRestauranteFormInputs = z.infer<typeof editarRestauranteSchema>;
@@ -27,7 +25,7 @@ export function RestauranteModalDetalhes({
   open,
 }: PropriedadesDetalhesRestaurante) {
   const setSelectedrestauranteId = useContextSelector(
-    RestauranteContext,
+    restauranteContext,
     (context) => context.setSelectedrestauranteId
   );
 
@@ -37,7 +35,7 @@ export function RestauranteModalDetalhes({
     setIsNotEditable((prevState) => !prevState);
   };
 
-  const { data: restaurante, isFetching } = useQuery({
+  const { data: restaurante } = useQuery({
     queryKey: ["restaurante", restauranteId],
     queryFn: () => obterRestaurante({ restauranteId }),
     staleTime: 1000 * 60 * 5, // 5 minutos de "freshness"
@@ -47,14 +45,14 @@ export function RestauranteModalDetalhes({
   });
 
   const editarRestaurante = useContextSelector(
-    RestauranteContext,
+    restauranteContext,
     (context) => {
       return context.editarRestauranteFn;
     }
   );
 
   const deletarRestaurante = useContextSelector(
-    RestauranteContext,
+    restauranteContext,
     (context) => {
       return context.deletarRestauranteFn;
     }
@@ -95,11 +93,6 @@ export function RestauranteModalDetalhes({
     setSelectedrestauranteId(null);
     await deletarRestaurante(restauranteId);
     reset();
-  }
-
-  //Aplicando SkeletonModal se os dados estiverem em  carregamento
-  if (isFetching) {
-    return <SkeletonRestauranteModal />;
   }
 
   return (

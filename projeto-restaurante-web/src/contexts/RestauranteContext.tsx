@@ -16,34 +16,38 @@ import {
   editarRestaurante,
   EditarRestauranteInput,
 } from "../api/editar-restaurante";
+
 export interface Restaurante {
   restauranteId: string;
   nome: string;
   localizacao: string;
   cozinha: string;
 }
-interface RestauranteContextType {
+
+export interface Avaliacao {
+  restauranteId: string;
+  usuario: string;
+  comentario: string;
+  avaliacao: string;
+  id: number;
+  datahora: string;
+}
+
+interface restauranteContextType {
   restaurantesCache: Restaurante[] | undefined;
   isFetching: boolean;
   filtrarRestaurantes: (query: string) => Promise<void>;
   criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<Restaurante>;
   editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<Restaurante>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
-  selectedrestauranteId: string | null;
-  setSelectedrestauranteId: (id: string | null) => void;
 }
 interface RestauranteProviderProps {
   children: ReactNode;
 }
 
-export const RestauranteContext = createContext({} as RestauranteContextType);
+export const restauranteContext = createContext({} as restauranteContextType);
 
 export function RestaurantesProvider({ children }: RestauranteProviderProps) {
-  //Estado Para Controlar Abertura e fechamento do modal de edição de restaurante
-  const [selectedrestauranteId, setSelectedrestauranteId] = useState<
-    string | null
-  >(null);
-
   const [buscaQuery, setBuscaQuery] = useState<string | undefined>(undefined);
 
   const filtrarRestaurantes = async (query: string) => {
@@ -105,7 +109,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   });
 
   return (
-    <RestauranteContext.Provider
+    <restauranteContext.Provider
       value={{
         restaurantesCache,
         isFetching,
@@ -113,11 +117,9 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
         criarRestauranteFn,
         deletarRestauranteFn,
         filtrarRestaurantes,
-        selectedrestauranteId,
-        setSelectedrestauranteId,
       }}
     >
       {children}
-    </RestauranteContext.Provider>
+    </restauranteContext.Provider>
   );
 }

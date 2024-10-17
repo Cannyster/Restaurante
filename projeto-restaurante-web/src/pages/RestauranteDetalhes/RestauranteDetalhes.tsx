@@ -1,51 +1,81 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AvalicaoModal } from "../../components/AvaliacaoModal/AvaliacaoModal";
-import { Content, ReviewButton, ReviewsContainer } from "./styled";
+import { useParams } from "react-router-dom";
+import { Vazio } from "../../components/Vazio/Vazio";
+import {
+  Content,
+  MainContainer,
+  ReviewButton,
+  ReviewsContainer,
+  // ReviewButton,
+  // ReviewsContainer,
+} from "./styles";
+import { obterRestaurante } from "../../api/obter-restaurante";
+import { queryClient } from "../../lib/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { obterAvaliacoes } from "../../api/obter-avaliacoes";
 
-export function RestauranteDetalhes({ restaurante }) {
-  const [reviews, setReviews] = useState(restaurante.avaliacoes || []);
-  const [selectedReview, setSelectedReview] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export function RestauranteDetalhes() {
+  const { restauranteId } = useParams();
 
-  const handleEditReview = (review) => {
-    setSelectedReview(review);
-    setIsModalOpen(true);
-  };
+  const { data: restaurante } = useQuery({
+    queryKey: ["restaurante", restauranteId],
+    queryFn: () => {
+      if (!restauranteId) throw new Error("ID do restaurante não encontrado.");
+      return obterRestaurante({ restauranteId });
+    },
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    enabled: !queryClient.getQueryData(["restaurante", restauranteId]),
+  });
 
-  const handleAddReview = () => {
-    setSelectedReview(null);
-    setIsModalOpen(true);
-  };
+  const { data: avaliacoes } = useQuery({
+    queryKey: ["avaliacoes", restauranteId],
+    queryFn: () => {
+      if (!restauranteId) throw new Error("ID do restaurante não encontrado.");
+      return obterAvaliacoes({ restauranteId });
+    },
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    enabled: !queryClient.getQueryData(["avaliacoes", restauranteId]),
+  });
 
   return (
-    <Content>
-      <h1>{restaurante.nome}</h1>
-      <p>{restaurante.localizacao}</p>
-      <p>{restaurante.cozinha}</p>
+    <MainContainer>
+      {restaurante ? (
+        <Content>
+          <h1>{`Restaurante: ${restaurante.nome}`}</h1>
+          <p>{`Id: ${restaurante.restauranteId}`}</p>
+          <p>{`Endereço: ${restaurante.localizacao}`}</p>
+          <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
 
-      <ReviewButton onClick={handleAddReview}>Adicionar Avaliação</ReviewButton>
+          <ReviewButton>Adicionar Avaliação</ReviewButton>
 
-      <ReviewsContainer>
-        {reviews.map((review) => (
-          <div key={review.id}>
-            <p>{review.comentario}</p>
-            <button onClick={() => handleEditReview(review)}>
-              Editar Avaliação
-            </button>
-          </div>
-        ))}
-      </ReviewsContainer>
+          <ReviewsContainer>
+            {avaliacoes != undefined ? (
+              avaliacoes.map((avaliacao) => {
+                return (
+                  <div key={avaliacao.id}>
+                    <p>{avaliacao.id}</p>
+                    <p>{avaliacao.comentario}</p>
+                    <p>{avaliacao.datahora}</p>
+                    <p>{avaliacao.usuario}</p>
+                    <p>{avaliacao.restauranteId}</p>
+                    <button>Editar Avaliação</button>
+                  </div>
+                );
+              })
+            ) : (
+              <Vazio />
+            )}
+          </ReviewsContainer>
 
-      {isModalOpen && (
-        <AvalicaoModal
-          review={selectedReview}
-          restauranteId={restaurante.id}
-          closeModal={() => setIsModalOpen(false)}
-        />
+          <Link to="/">Voltar para Restaurantes</Link>
+        </Content>
+      ) : (
+        "Restaurante não encontrado "
       )}
-
-      <Link to="/">Voltar para Restaurantes</Link>
-    </Content>
+    </MainContainer>
   );
 }

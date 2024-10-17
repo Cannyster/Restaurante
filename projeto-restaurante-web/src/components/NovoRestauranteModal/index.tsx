@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CloseButton, Content, Overlay } from "./styles";
 import { novoRestauranteFormSchema } from "../../validation/validation";
 import { useContextSelector } from "use-context-selector";
-import { RestauranteContext } from "../../contexts/RestauranteContext";
+import { restauranteContext } from "../../contexts/restauranteContext";
 // import { SelectMenu } from "../Select";
 
 type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
@@ -15,7 +15,7 @@ type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 export function NovoRestauranteModal() {
   // Usando o use-context-selector, para selecionar unicamente uma informação que deve ser acompanhada
   // assim vai evitar a renderização completa que eo padrão do react
-  const criarRestaurante = useContextSelector(RestauranteContext, (context) => {
+  const criarRestaurante = useContextSelector(restauranteContext, (context) => {
     return context.criarRestauranteFn;
   });
 

@@ -3,7 +3,7 @@ import { defaultTheme } from "./styles/themes/default";
 import { GlobalStyle } from "./styles/global";
 import { RouterProvider } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
-import { RestaurantesProvider } from "./contexts/RestauranteContext";
+import { RestaurantesProvider } from "./contexts/restauranteContext";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import { queryClient } from "./lib/react-query";

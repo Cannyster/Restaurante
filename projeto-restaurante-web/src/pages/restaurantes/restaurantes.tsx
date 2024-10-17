@@ -1,28 +1,27 @@
-import { SearchForm } from "../../components/SearchForm/index";
-import { RestauranteContext } from "../../contexts/RestauranteContext";
+import { SearchForm } from "../../components/SearchForm/SearchForm";
+import { restauranteContext } from "../../contexts/restauranteContext";
 import { useContextSelector } from "use-context-selector";
-import { RestauranteTable, StyledLink } from "./styles";
-import { DialogTrigger, Root as DialogRoot } from "@radix-ui/react-dialog";
-import { RestauranteModalDetalhes } from "../../components/RestauranteModal/RestauranteModal";
+import { MainContainer, RestauranteTable, StyledLink } from "./styles";
+// import { DialogTrigger, Root as DialogRoot } from "@radix-ui/react-dialog";
 import { Search } from "lucide-react";
 
 export function Restaurantes() {
-  const selectedrestauranteId = useContextSelector(
-    RestauranteContext,
-    (context) => context.selectedrestauranteId
-  );
+  // const selectedrestauranteId = useContextSelector(
+  //   restauranteContext,
+  //   (context) => context.selectedrestauranteId
+  // );
 
-  const setSelectedrestauranteId = useContextSelector(
-    RestauranteContext,
-    (context) => context.setSelectedrestauranteId
-  );
+  // const setSelectedrestauranteId = useContextSelector(
+  //   restauranteContext,
+  //   (context) => context.setSelectedrestauranteId
+  // );
 
-  const restaurantes = useContextSelector(RestauranteContext, (context) => {
+  const restaurantes = useContextSelector(restauranteContext, (context) => {
     return context.restaurantesCache;
   });
 
   return (
-    <div>
+    <MainContainer>
       <SearchForm />
 
       <RestauranteTable>
@@ -39,7 +38,7 @@ export function Restaurantes() {
                   <tr key={restaurante.restauranteId}>
                     <td>
                       <StyledLink
-                        to={`/restaurantes/${restaurante.restauranteId}`}
+                        to={`/restaurante/${restaurante.restauranteId}`}
                       >
                         <Search className="h-3 w-3" />
                       </StyledLink>
@@ -74,6 +73,6 @@ export function Restaurantes() {
             : undefined}
         </tbody>
       </RestauranteTable>
-    </div>
+    </MainContainer>
   );
 }

@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   background-color: ${(props) => props.theme["gray-900"]};
-  padding: 1.5rem 0 3rem 0;
+  padding: 1rem 0 2rem 0;
   width: 100%;
   position: fixed;
   top: 0;
@@ -36,3 +37,8 @@ export const NovoEventoButton = styled.button`
     transition: background-color 0.2s;
   }
 `;
+
+export const StyledLink = styled(Link)`
+  color: ${(props) => props.theme["gray-300"]};
+  text-decoration: none;
+`

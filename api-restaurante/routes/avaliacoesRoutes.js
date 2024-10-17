@@ -10,9 +10,9 @@ const avaliacaoSchema = z.object({
 export const avaliacoesRoutes = (server) => {
   const db = router.db; // Acessa o banco de dados JSON
 
-  server.get('/avaliacoes/:idrestaurante', (req, res) => {
-    const { idrestaurante } = req.params;
-    const avaliacoes = db.get('avaliacoes').filter({ restauranteId: idrestaurante }).value();
+  server.get('/avaliacoes/:restauranteId', (req, res) => {
+    const { restauranteId } = req.params;
+    const avaliacoes = db.get('avaliacoes').filter({ restauranteId: restauranteId }).value();
     
     if (avaliacoes.length === 0) {
       return res.status(404).json({ message: 'Nenhuma avaliação encontrada para este restaurante.' });

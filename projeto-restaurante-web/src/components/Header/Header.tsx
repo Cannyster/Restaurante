@@ -1,14 +1,22 @@
-import { HeaderContainer, HeaderContent, NovoEventoButton } from "./styles";
+import {
+  HeaderContainer,
+  HeaderContent,
+  NovoEventoButton,
+  StyledLink,
+} from "./styles";
 import { NovoRestauranteModal } from "../NovoRestauranteModal";
 import * as Dialog from "@radix-ui/react-dialog"; //https://www.radix-ui.com/primitives/docs/components/dialog
 import logoImg from "../../assets/logo.svg";
+import logo from "../../assets/logo-restaurante-thin.png";
 
 export function Header() {
   return (
     <header>
       <HeaderContainer>
         <HeaderContent>
-          <img src={logoImg} alt=""></img>
+          <StyledLink to={`/`}>
+            <img src={logo} alt=""></img>
+          </StyledLink>
 
           <Dialog.Root>
             <Dialog.DialogTrigger asChild>

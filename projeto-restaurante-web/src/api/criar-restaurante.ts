@@ -1,4 +1,4 @@
-import { Restaurante } from "../contexts/RestauranteContext";
+import { Restaurante } from "../contexts/restauranteContext";
 import { api } from "../lib/axios";
 
 export interface CriarRestauranteInput{
