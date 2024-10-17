@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Vazio } from "../../components/Vazio/Vazio";
+import { NovaAvaliacaoModal } from "../../components/AvaliacaoModal/NovaAvaliacaoModal";
 import {
+  AvaliacaoContainer,
   Content,
+  ContentFooter,
+  LocalButton,
   MainContainer,
-  ReviewButton,
-  ReviewsContainer,
 } from "./styles";
 import { obterRestaurante } from "../../api/obter-restaurante";
 import { queryClient } from "../../lib/react-query";
@@ -17,6 +18,7 @@ import {
   AvaliacaoProps,
 } from "../../contexts/restauranteContext";
 import { Avaliacao } from "../../components/Avaliacao/Avaliacao";
+import * as Dialog from "@radix-ui/react-dialog";
 
 export function RestauranteDetalhes() {
   const { restauranteId } = useParams();
@@ -60,9 +62,8 @@ export function RestauranteDetalhes() {
             <p>{`Endereço: ${restaurante.localizacao}`}</p>
             <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
 
-            <ReviewButton>Adicionar Avaliação</ReviewButton>
-
-            <ReviewsContainer>
+            <h1>Avaliações</h1>
+            <AvaliacaoContainer>
               {avaliacoes && avaliacoes.length > 0 ? (
                 avaliacoes.map((avaliacao) => (
                   <Avaliacao
@@ -78,9 +79,16 @@ export function RestauranteDetalhes() {
               ) : (
                 <Vazio />
               )}
-            </ReviewsContainer>
+            </AvaliacaoContainer>
 
-            <Link to="/">Voltar para Restaurantes</Link>
+            <ContentFooter>
+              <Dialog.Root>
+                <Dialog.DialogTrigger asChild>
+                  <LocalButton>Avaliar</LocalButton>
+                </Dialog.DialogTrigger>
+                <NovaAvaliacaoModal />
+              </Dialog.Root>
+            </ContentFooter>
           </Content>
         ) : (
           <h1>Restaurante não encontrado </h1>

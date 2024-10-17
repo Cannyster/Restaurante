@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 *{
@@ -24,3 +24,19 @@ body, input, textarea, button{
 }
 `;
 
+export const GlobalButton = styled.button`
+  height: 3rem;
+  width: 10rem;
+  border: 0;
+  background: ${(props) => props.theme["green-500"]};
+  color: ${(props) => props.theme.white};
+  font-weight: bold;
+  padding: 0 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme["green-700"]};
+    transition: background-color 0.2s;
+  }
+`

@@ -1,7 +1,7 @@
 import {
   HeaderContainer,
   HeaderContent,
-  NovoEventoButton,
+  NovoRestauranteButton,
   StyledLink,
 } from "./styles";
 import { NovoRestauranteModal } from "../NovoRestauranteModal";
@@ -17,9 +17,11 @@ export function Header() {
             <img src={logo} alt=""></img>
           </StyledLink>
 
+          <h1>Recomendação de Restaurantes</h1>
+
           <Dialog.Root>
             <Dialog.DialogTrigger asChild>
-              <NovoEventoButton>Novo Restaurante</NovoEventoButton>
+              <NovoRestauranteButton>Novo Restaurante</NovoRestauranteButton>
             </Dialog.DialogTrigger>
             <NovoRestauranteModal />
           </Dialog.Root>

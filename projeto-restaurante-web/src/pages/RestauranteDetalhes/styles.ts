@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { GlobalButton } from "../../styles/global";
 
 export const MainContainer = styled.main`
   width: 100%;
   max-width: 1120px;
-  margin: 4rem auto 0;
-  padding: 0 1.5rem;
-  min-height: 80vh;
+  margin: 1rem auto;
+  padding: 0  0 1.5rem 0;
+  min-height: 60vh;
 `;
 
 export const Content = styled.div`
@@ -14,6 +15,7 @@ export const Content = styled.div`
   border-radius: 8px;
   margin: 2rem;
   max-width: 800px;
+  align-content: space-between;
 
   h1 {
     font-size: 1.75rem;
@@ -29,7 +31,7 @@ export const Content = styled.div`
 
   a {
     display: inline-block;
-    margin-top: 1.5rem;
+    /* margin-top: 1.5rem; */
     color: ${(props) => props.theme["green-500"]};
     text-decoration: none;
 
@@ -39,22 +41,17 @@ export const Content = styled.div`
   }
 `;
 
-export const ReviewButton = styled.button`
-  background-color: ${(props) => props.theme["green-500"]};
-  color: white;
-  padding: 1rem 2rem;
-  margin-top: 1.5rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
+export const ContentFooter = styled.div`
+  display: flex;
+justify-content: flex-end;
 
-  &:hover {
-    background-color: ${(props) => props.theme["green-700"]};
-  }
+`
+
+export const LocalButton = styled(GlobalButton)`
+  margin-top: 2rem;
 `;
 
-export const ReviewsContainer = styled.div`
+export const AvaliacaoContainer = styled.div`
   border: 1px solid ${(props) => props.theme["gray-400"]};
   border-radius: 6px;
   margin-top: 1rem;

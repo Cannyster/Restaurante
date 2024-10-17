@@ -22,7 +22,7 @@ export const HeaderContent = styled.div`
   align-items: center;
 `;
 
-export const NovoEventoButton = styled.button`
+export const NovoRestauranteButton = styled.button`
   height: 50px;
   border: 0;
   background: ${(props) => props.theme["green-500"]};
