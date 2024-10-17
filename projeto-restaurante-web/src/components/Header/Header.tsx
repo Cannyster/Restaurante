@@ -5,8 +5,7 @@ import {
   StyledLink,
 } from "./styles";
 import { NovoRestauranteModal } from "../NovoRestauranteModal";
-import * as Dialog from "@radix-ui/react-dialog"; //https://www.radix-ui.com/primitives/docs/components/dialog
-import logoImg from "../../assets/logo.svg";
+import * as Dialog from "@radix-ui/react-dialog";
 import logo from "../../assets/logo-restaurante-thin.png";
 
 export function Header() {

@@ -5,11 +5,14 @@ export interface ObterAvaliacoesInput{
   restauranteId: string;
 }
 
-export async function obterAvaliacoes(restauranteID: ObterAvaliacoesInput){
-  const response = await api.get<Avaliacao[]>(`/avaliacoes/${restauranteID}`, {
+export async function obterAvaliacoes(restauranteID: ObterAvaliacoesInput): Promise<Avaliacao[]>{
+  //Precisei converte aqui em String pois ao ser chamado por algum motivo ela esta sendo convertida em Object
+  //console.log(`chamada da API - id extraído da url: ${id}`, typeof id); // Aqui será um objeto
+  const id = restauranteID.restauranteId.toString() 
+  //console.log(`chamada da API - id extraído da url: ${id}`, typeof id); // Aqui será uma string
+
+  const response = await api.get<Avaliacao[]>(`/avaliacoes/${id}`, {
   });
-  
-  console.log(response.data);
   
   return response.data
 }

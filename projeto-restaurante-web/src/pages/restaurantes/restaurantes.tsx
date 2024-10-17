@@ -4,6 +4,7 @@ import { useContextSelector } from "use-context-selector";
 import { MainContainer, RestauranteTable, StyledLink } from "./styles";
 // import { DialogTrigger, Root as DialogRoot } from "@radix-ui/react-dialog";
 import { Search } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 export function Restaurantes() {
   // const selectedrestauranteId = useContextSelector(
@@ -21,28 +22,30 @@ export function Restaurantes() {
   });
 
   return (
-    <MainContainer>
-      <SearchForm />
+    <>
+      <Helmet title="Principal" />
+      <MainContainer>
+        <SearchForm />
 
-      <RestauranteTable>
-        <tbody>
-          <tr>
-            <td></td>
-            <td>Nome</td>
-            <td>Localização</td>
-            <td>Tipo Cozinha</td>
-          </tr>
-          {restaurantes !== undefined
-            ? restaurantes.map((restaurante) => {
-                return (
-                  <tr key={restaurante.restauranteId}>
-                    <td>
-                      <StyledLink
-                        to={`/restaurante/${restaurante.restauranteId}`}
-                      >
-                        <Search className="h-3 w-3" />
-                      </StyledLink>
-                      {/* <DialogRoot
+        <RestauranteTable>
+          <tbody>
+            <tr>
+              <td></td>
+              <td>Nome</td>
+              <td>Localização</td>
+              <td>Tipo Cozinha</td>
+            </tr>
+            {restaurantes !== undefined
+              ? restaurantes.map((restaurante) => {
+                  return (
+                    <tr key={restaurante.restauranteId}>
+                      <td>
+                        <StyledLink
+                          to={`/restaurante/${restaurante.restauranteId}`}
+                        >
+                          <Search className="h-3 w-3" />
+                        </StyledLink>
+                        {/* <DialogRoot
                         open={
                           selectedrestauranteId === restaurante.restauranteId
                         }
@@ -63,16 +66,17 @@ export function Restaurantes() {
                           restauranteId={restaurante.restauranteId}
                         />
                       </DialogRoot> */}
-                    </td>
-                    <td>{restaurante.nome}</td>
-                    <td>{restaurante.localizacao}</td>
-                    <td>{restaurante.cozinha}</td>
-                  </tr>
-                );
-              })
-            : undefined}
-        </tbody>
-      </RestauranteTable>
-    </MainContainer>
+                      </td>
+                      <td>{restaurante.nome}</td>
+                      <td>{restaurante.localizacao}</td>
+                      <td>{restaurante.cozinha}</td>
+                    </tr>
+                  );
+                })
+              : undefined}
+          </tbody>
+        </RestauranteTable>
+      </MainContainer>
+    </>
   );
 }

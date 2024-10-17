@@ -14,7 +14,7 @@ export function App() {
     <HelmetProvider>
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyle />
-        <Helmet titleTemplate="%s | Restaurantes" />
+        <Helmet titleTemplate="Restaurantes | %s" />
         <Toaster
           position="top-left"
           closeButton
