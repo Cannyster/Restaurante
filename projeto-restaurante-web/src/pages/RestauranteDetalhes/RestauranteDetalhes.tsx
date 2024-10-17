@@ -12,12 +12,16 @@ import { queryClient } from "../../lib/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { obterAvaliacoes } from "../../api/obter-avaliacoes";
 import { Helmet } from "react-helmet-async";
-import { Avaliacao, Restaurante } from "../../contexts/restauranteContext";
+import {
+  RestauranteProps,
+  AvaliacaoProps,
+} from "../../contexts/restauranteContext";
+import { Avaliacao } from "../../components/Avaliacao/Avaliacao";
 
 export function RestauranteDetalhes() {
   const { restauranteId } = useParams();
 
-  const { data: restaurante } = useQuery<Restaurante>({
+  const { data: restaurante } = useQuery<RestauranteProps>({
     queryKey: ["restaurante", restauranteId],
     queryFn: () => {
       if (!restauranteId) throw new Error("ID do restaurante não encontrado.");
@@ -29,7 +33,7 @@ export function RestauranteDetalhes() {
     enabled: !queryClient.getQueryData(["restaurante", restauranteId]),
   });
 
-  const { data: avaliacoes } = useQuery<Avaliacao[]>({
+  const { data: avaliacoes } = useQuery<AvaliacaoProps[]>({
     queryKey: ["avaliacoes", restauranteId],
     queryFn: () => {
       if (!restauranteId) throw new Error("ID do restaurante não encontrado.");
@@ -59,19 +63,18 @@ export function RestauranteDetalhes() {
             <ReviewButton>Adicionar Avaliação</ReviewButton>
 
             <ReviewsContainer>
-              {avaliacoes != undefined ? (
-                avaliacoes.map((avaliacao) => {
-                  return (
-                    <div key={avaliacao.id}>
-                      <p>{avaliacao.id}</p>
-                      <p>{avaliacao.comentario}</p>
-                      <p>{avaliacao.datahora}</p>
-                      <p>{avaliacao.usuario}</p>
-                      <p>{avaliacao.restauranteId}</p>
-                      <button>Editar Avaliação</button>
-                    </div>
-                  );
-                })
+              {avaliacoes && avaliacoes.length > 0 ? (
+                avaliacoes.map((avaliacao) => (
+                  <Avaliacao
+                    key={avaliacao.id}
+                    id={avaliacao.id}
+                    restauranteId={avaliacao.restauranteId}
+                    usuario={avaliacao.usuario}
+                    comentario={avaliacao.comentario}
+                    avaliacao={avaliacao.avaliacao}
+                    datahora={avaliacao.datahora}
+                  />
+                ))
               ) : (
                 <Vazio />
               )}

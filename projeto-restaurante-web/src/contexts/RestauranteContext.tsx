@@ -17,28 +17,32 @@ import {
   EditarRestauranteInput,
 } from "../api/editar-restaurante";
 
-export interface Restaurante {
+export interface RestauranteProps {
   restauranteId: string;
   nome: string;
   localizacao: string;
   cozinha: string;
 }
 
-export interface Avaliacao {
+export interface AvaliacaoProps {
   restauranteId: string;
   usuario: string;
   comentario: string;
-  avaliacao: string;
-  id: number;
+  avaliacao: number;
+  id: string;
   datahora: string;
 }
 
 interface restauranteContextType {
-  restaurantesCache: Restaurante[] | undefined;
+  restaurantesCache: RestauranteProps[] | undefined;
   isFetching: boolean;
   filtrarRestaurantes: (query: string) => Promise<void>;
-  criarRestauranteFn: (dados: CriarRestauranteInput) => Promise<Restaurante>;
-  editarRestauranteFn: (dados: EditarRestauranteInput) => Promise<Restaurante>;
+  criarRestauranteFn: (
+    dados: CriarRestauranteInput
+  ) => Promise<RestauranteProps>;
+  editarRestauranteFn: (
+    dados: EditarRestauranteInput
+  ) => Promise<RestauranteProps>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
 }
 interface RestauranteProviderProps {
@@ -54,14 +58,14 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     setBuscaQuery(query);
   };
 
-  const { data: restaurantesCache, isFetching } = useQuery<Restaurante[]>({
+  const { data: restaurantesCache, isFetching } = useQuery<RestauranteProps[]>({
     queryKey: ["restaurantes", buscaQuery],
     queryFn: () => obterRestaurantes(buscaQuery),
     enabled: true,
   });
 
   const { mutateAsync: criarRestauranteFn } = useMutation<
-    Restaurante,
+    RestauranteProps,
     Error,
     CriarRestauranteInput
   >({
@@ -77,7 +81,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   });
 
   const { mutateAsync: editarRestauranteFn } = useMutation<
-    Restaurante,
+    RestauranteProps,
     Error,
     EditarRestauranteInput
   >({

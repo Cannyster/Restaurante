@@ -15,7 +15,7 @@ import { CloseButton, Content, Overlay } from "./styles";
 import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 
 type EditarRestauranteFormInputs = z.infer<typeof editarRestauranteSchema>;
-export interface PropriedadesDetalhesRestaurante {
+export interface DetalhesRestauranteProps {
   restauranteId: string;
   open: boolean;
 }
@@ -23,7 +23,7 @@ export interface PropriedadesDetalhesRestaurante {
 export function RestauranteModalDetalhes({
   restauranteId,
   open,
-}: PropriedadesDetalhesRestaurante) {
+}: DetalhesRestauranteProps) {
   const setSelectedrestauranteId = useContextSelector(
     restauranteContext,
     (context) => context.setSelectedrestauranteId

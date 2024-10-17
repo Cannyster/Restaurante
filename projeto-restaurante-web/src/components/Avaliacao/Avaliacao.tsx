@@ -4,20 +4,12 @@ import {
   CommentBox,
   CommentContent,
   AuthorAndTime,
-  Footer,
   Header,
+  CommentFooter,
 } from "./styles";
+import { AvaliacaoProps } from "../../contexts/restauranteContext";
 
-interface AvaliacoesProps {
-  id: string;
-  restauranteId: string;
-  usuario: string;
-  comentario: string;
-  avaliacao: number;
-  datahora: string;
-}
-
-export function Avaliacao(dados: AvaliacoesProps) {
+export function Avaliacao(dados: AvaliacaoProps) {
   return (
     <Comment>
       <CommentBox>
@@ -31,8 +23,10 @@ export function Avaliacao(dados: AvaliacoesProps) {
             </AuthorAndTime>
           </Header>
           <p>{dados.comentario}</p>
+          <CommentFooter>
+            <p>{dados.avaliacao}</p>
+          </CommentFooter>
         </CommentContent>
-        <Footer></Footer>
       </CommentBox>
     </Comment>
   );

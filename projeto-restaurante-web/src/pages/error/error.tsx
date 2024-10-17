@@ -12,7 +12,7 @@ export function ErrorPage() {
       </Text>
       <ErrorDetails>{error?.message || JSON.stringify(error)}</ErrorDetails>
       <Text>
-        Voltar para o <StyledLink to="/">Dashboard</StyledLink>
+        Voltar para o <StyledLink to="/">Página Principal</StyledLink>
       </Text>
     </Container>
   );

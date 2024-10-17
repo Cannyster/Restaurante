@@ -17,11 +17,11 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled.p`
-  color: ${({ theme }) => theme.colors.accentForeground || "#333"};
+  color: ${(props) => props.theme["gray-300"]};
 `;
 
 export const ErrorDetails = styled.pre`
-  background-color: #f8f9fa;
+  background: ${(props) => props.theme["gray-100"]};
   color: #d6336c; /* Exemplo de cor para erro */
   padding: 1rem;
   border-radius: 0.5rem;
