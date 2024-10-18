@@ -1,60 +1,35 @@
-import * as z from "zod";
-import { toast } from "sonner";
-import { X } from "phosphor-react";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import * as Dialog from "@radix-ui/react-dialog";
-import { queryClient } from "../../lib/react-query";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useContextSelector } from "use-context-selector";
-import { obterRestaurante } from "../../api/obter-restaurante";
-import { editarRestauranteSchema } from "../../validation/validation";
-import { RestauranteContext } from "../../contexts/RestauranteContext";
-import { CloseButton, Content, Overlay } from "./styles";
-import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
+import {
+  RestauranteContext,
+  RestauranteProps,
+} from '../../contexts/RestauranteContext';
+import { editarRestauranteSchema } from '../../validation/validation';
+import { useContextSelector } from 'use-context-selector';
+import { CloseButton, Content, Overlay } from './styles';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { GlobalButton } from '../../styles/global';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useForm } from 'react-hook-form';
+import { X } from 'phosphor-react';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
+import * as z from 'zod';
 
 type EditarRestauranteFormInputs = z.infer<typeof editarRestauranteSchema>;
 export interface DetalhesRestauranteProps {
-  restauranteId: string;
-  open: boolean;
+  restaurante: RestauranteProps;
+  openCloseModal: () => void;
+  refetchRestaurantes: () => void;
 }
 
 export function ModalRestaurante({
-  restauranteId,
-  open,
+  restaurante,
+  openCloseModal,
+  refetchRestaurantes,
 }: DetalhesRestauranteProps) {
-  const setSelectedrestauranteId = useContextSelector(
-    RestauranteContext,
-    (context) => context.setSelectedrestauranteId
-  );
-
-  const [isNotEditable, setIsNotEditable] = useState(true);
-
-  const toggleEdit = () => {
-    setIsNotEditable((prevState) => !prevState);
-  };
-
-  const { data: restaurante } = useQuery({
-    queryKey: ["restaurante", restauranteId],
-    queryFn: () => obterRestaurante({ restauranteId }),
-    staleTime: 1000 * 60 * 5, // 5 minutos de "freshness"
-    gcTime: 1000 * 60 * 10, // 10 minutos de cache
-    refetchOnWindowFocus: false, // Evita refetch ao focar a janela do navegador
-    enabled: open && !queryClient.getQueryData(["restaurante", restauranteId]), // Apenas requisita se os dados não estão no cache
-  });
-
   const editarRestaurante = useContextSelector(
     RestauranteContext,
     (context) => {
       return context.editarRestauranteFn;
-    }
-  );
-
-  const deletarRestaurante = useContextSelector(
-    RestauranteContext,
-    (context) => {
-      return context.deletarRestauranteFn;
     }
   );
 
@@ -65,80 +40,76 @@ export function ModalRestaurante({
     reset,
   } = useForm<EditarRestauranteFormInputs>({
     resolver: zodResolver(editarRestauranteSchema),
-    defaultValues({
-      restauranteId: restaurante.restauranteId || "",
-      nome: restaurante.nome || "",
-      localizacao: restaurante.localizacao || "",
-      cozinha: restaurante.cozinha || "",
-    })
+    defaultValues: {
+      restauranteId: restaurante.restauranteId || '',
+      nome: restaurante.nome || '',
+      localizacao: restaurante.localizacao || '',
+      cozinha: restaurante.cozinha || '',
+    },
   });
 
-  if (Object.keys(errors).length > 0) {
-    console.log("Erros no formulário:", errors); // Log de erros
-  }
-
   useEffect(() => {
-    if (open && restaurante) {
-      console.log("Restaurante data:", restaurante); // Adicione este log para debugar
+    if (restaurante) {
       reset({
-        restauranteId: restaurante.restauranteId || "",
-        nome: restaurante.nome || "",
-        localizacao: restaurante.localizacao || "",
-        cozinha: restaurante.cozinha || "",
+        restauranteId: restaurante.restauranteId || '',
+        nome: restaurante.nome || '',
+        localizacao: restaurante.localizacao || '',
+        cozinha: restaurante.cozinha || '',
       });
     }
   }, [open, restaurante, reset]);
 
-  async function handleEditarRestaurante(dados: EditarRestauranteFormInputs) {
-    await editarRestaurante(dados);
+  function LimparFomulário() {
+    reset();
   }
 
-  async function handleDeletarRestaurante(
-    restauranteId: DeletarRestauranteInput
-  ) {
-    setSelectedrestauranteId(null);
-    await deletarRestaurante(restauranteId);
-    reset();
+  function cancelar() {
+    LimparFomulário();
+    openCloseModal();
+  }
+
+  async function handleEditarRestaurante(dados: EditarRestauranteFormInputs) {
+    await editarRestaurante(dados);
+    refetchRestaurantes();
+    openCloseModal();
   }
 
   return (
     <Dialog.Portal>
       <Overlay />
-      <Content onPointerDownOutside={!isNotEditable ? toggleEdit : undefined}>
+      <Content onPointerDownOutside={LimparFomulário}>
         <Dialog.Title>Detalhes Do Restaurante</Dialog.Title>
         <Dialog.DialogDescription>
-          Restaurante Id: {restauranteId}
+          Restaurante Id: {restaurante.restauranteId}
         </Dialog.DialogDescription>
 
-        <CloseButton onClick={!isNotEditable ? toggleEdit : undefined}>
+        <CloseButton onClick={LimparFomulário}>
           <X size={24} />
         </CloseButton>
 
         <form onSubmit={handleSubmit(handleEditarRestaurante)}>
           <input
             type="hidden"
-            value={restauranteId}
-            {...register("restauranteId")}
+            value={restaurante.restauranteId}
+            {...register('restauranteId')}
           />
           <input
             type="Text"
             placeholder="Nome do Restaurante"
             required
-            {...register("nome")}
+            {...register('nome')}
             onBlur={() => errors.nome && toast.error(errors.nome.message)}
-            disabled={isNotEditable}
           />
           <input
             type="Text"
             placeholder="Localização Do Restaurante"
             required
-            {...register("localizacao")}
+            {...register('localizacao')}
             onBlur={() =>
               errors.localizacao && toast.error(errors.localizacao.message)
             }
-            disabled={isNotEditable}
           />
-          <select {...register("cozinha")} disabled={isNotEditable} required>
+          <select {...register('cozinha')} required>
             <option value="Baiana">Baiana</option>
             <option value="Mineira">Mineira</option>
             <option value="Goiana">Goiana</option>
@@ -149,34 +120,12 @@ export function ModalRestaurante({
             <option value="Amazonense">Amazonense</option>
           </select>
           <div>
-            {isNotEditable ? (
-              <>
-                <button type="button" onClick={toggleEdit}>
-                  Editar
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleDeletarRestaurante({ restauranteId })}
-                >
-                  Excluir
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  onClick={() => console.log()}
-                >
-                  Salvar
-                </button>
-
-                <button type="button" onClick={toggleEdit}>
-                  Cancelar
-                </button>
-              </>
-            )}
+            <GlobalButton type="button" onClick={cancelar}>
+              Cancelar
+            </GlobalButton>
+            <GlobalButton type="submit" disabled={isSubmitting}>
+              Salvar
+            </GlobalButton>
           </div>
         </form>
       </Content>

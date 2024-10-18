@@ -68,3 +68,35 @@ export const AvaliacaoContainer = styled.div`
     border-radius: 10px;
   }
 `;
+
+export const RestauranteContainer = styled.div`
+  /* border: 1px solid ${(props) => props.theme['gray-400']}; */
+  border-radius: 6px;
+  margin-top: 1rem;
+  height: 200px;
+
+  padding: 1rem 0.5rem 1rem 0;
+  width: 37.5rem;
+
+  /* h1 {
+    text-align: center;
+  } */
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${(props) => props.theme['gray-800']};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => props.theme['gray-600']};
+    border-radius: 10px;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

@@ -1,41 +1,53 @@
 import {
   AvaliacaoContainer,
+  ButtonContainer,
   ContentFooter,
   LocalButton,
   MainContainer,
+  RestauranteContainer,
 } from './styles';
-import { ModalNovaAvaliacao } from '../../components/ModalNovaAvaliacao/ModalNovaAvaliacao';
 import {
   RestauranteProps,
   AvaliacaoProps,
+  RestauranteContext,
 } from '../../contexts/RestauranteContext';
+import { ModalNovaAvaliacao } from '../../components/ModalNovaAvaliacao/ModalNovaAvaliacao';
+import { ModalRestaurante } from '../../components/ModalRestaurante/ModalRestaurante';
+import { DeletarRestauranteInput } from '../../api/deletar-restaurante';
 import { AvaliacaoEstrelas } from '../../components/Estrela/Estrela';
 import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
 import { obterRestaurante } from '../../api/obter-restaurante';
 import { obterAvaliacoes } from '../../api/obter-avaliacoes';
+import { useContextSelector } from 'use-context-selector';
 import { Vazio } from '../../components/Vazio/Vazio';
 import { queryClient } from '../../lib/react-query';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useMemo, useState } from 'react';
 
 export function RestauranteDetalhes() {
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [openModalRestaurante, setopenModalRestaurante] = useState(false);
+  const [openModalAvaliacao, setModalAvaliacao] = useState(false);
+
   const { restauranteId } = useParams();
 
-  const { data: restaurante } = useQuery<RestauranteProps>({
-    queryKey: ['restaurante', restauranteId],
-    queryFn: () => {
-      if (!restauranteId) throw new Error('ID do restaurante não encontrado.');
-      return obterRestaurante({ restauranteId });
-    },
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-    refetchOnWindowFocus: false,
-    enabled: !queryClient.getQueryData(['restaurante', restauranteId]),
-  });
+  const { data: restaurante, refetch: refetchRestaurante } =
+    useQuery<RestauranteProps>({
+      queryKey: ['restaurante', restauranteId],
+      queryFn: () => {
+        if (!restauranteId)
+          throw new Error('ID do restaurante não encontrado.');
+        return obterRestaurante({ restauranteId });
+      },
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+      refetchOnWindowFocus: false,
+      enabled: !queryClient.getQueryData(['restaurante', restauranteId]),
+    });
 
   const { data: avaliacoes, refetch: refetchAvaliacoes } = useQuery<
     AvaliacaoProps[]
@@ -51,7 +63,18 @@ export function RestauranteDetalhes() {
     enabled: !queryClient.getQueryData(['avaliacoes', restauranteId]),
   });
 
-  // Função para calcular a média de avaliações
+  const deletarRestaurante = useContextSelector(
+    RestauranteContext,
+    (context) => {
+      return context.deletarRestauranteFn;
+    }
+  );
+
+  async function handleDeletarRestaurante(restauranteId: string) {
+    await deletarRestaurante({ restauranteId });
+    navigate('/');
+  }
+
   const calcularMedia = (avaliacoes: AvaliacaoProps[]): number => {
     if (!avaliacoes || avaliacoes.length === 0) return 0;
     const total = avaliacoes.reduce((acc, { avaliacao }) => acc + avaliacao, 0);
@@ -64,8 +87,12 @@ export function RestauranteDetalhes() {
     [avaliacoes]
   );
 
-  function openCloseModal() {
-    setOpen((state) => !state);
+  function openCloseModalRestaurante() {
+    setopenModalRestaurante((state) => !state);
+  }
+
+  function openCloseModalAvaliacao() {
+    setModalAvaliacao((state) => !state);
   }
 
   return (
@@ -74,11 +101,37 @@ export function RestauranteDetalhes() {
       <MainContainer>
         {restaurante ? (
           <>
-            <h2>{`${restaurante.nome}`}</h2>
-            <p>{`Endereço: ${restaurante.localizacao}`}</p>
-            <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
-            <AvaliacaoEstrelas media={mediaAvaliacoes} />
+            <RestauranteContainer>
+              <h2>{`${restaurante.nome}`}</h2>
+              <p>{`Endereço: ${restaurante.localizacao}`}</p>
+              <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
+              <AvaliacaoEstrelas media={mediaAvaliacoes} />
+              <ButtonContainer>
+                <LocalButton
+                  type="button"
+                  onClick={() =>
+                    handleDeletarRestaurante(restaurante.restauranteId)
+                  }
+                >
+                  Excluir
+                </LocalButton>
 
+                <Dialog.Root
+                  open={openModalRestaurante}
+                  onOpenChange={openCloseModalRestaurante}
+                >
+                  <Dialog.DialogTrigger asChild>
+                    <LocalButton>Editar</LocalButton>
+                  </Dialog.DialogTrigger>
+                  <ModalRestaurante
+                    key={restaurante.restauranteId}
+                    restaurante={restaurante}
+                    refetchRestaurantes={refetchRestaurante}
+                    openCloseModal={openCloseModalRestaurante}
+                  />
+                </Dialog.Root>
+              </ButtonContainer>
+            </RestauranteContainer>
             <AvaliacaoContainer>
               <h1>Avaliações</h1>
 
@@ -96,7 +149,10 @@ export function RestauranteDetalhes() {
             </AvaliacaoContainer>
 
             <ContentFooter>
-              <Dialog.Root open={open} onOpenChange={openCloseModal}>
+              <Dialog.Root
+                open={openModalAvaliacao}
+                onOpenChange={openCloseModalAvaliacao}
+              >
                 <Dialog.DialogTrigger asChild>
                   <LocalButton>Avaliar</LocalButton>
                 </Dialog.DialogTrigger>
@@ -104,7 +160,7 @@ export function RestauranteDetalhes() {
                   key={restaurante.restauranteId}
                   restauranteId={restaurante.restauranteId}
                   refetchAvaliacoes={refetchAvaliacoes}
-                  openCloseModal={openCloseModal}
+                  openCloseModal={openCloseModalAvaliacao}
                 />
               </Dialog.Root>
             </ContentFooter>
