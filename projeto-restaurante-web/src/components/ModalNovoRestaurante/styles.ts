@@ -1,6 +1,5 @@
-import * as Dialog from "@radix-ui/react-dialog"; //https://www.radix-ui.com/primitives/docs/components/dialog
-import styled from "styled-components";
-
+import * as Dialog from '@radix-ui/react-dialog'; //https://www.radix-ui.com/primitives/docs/components/dialog
+import styled from 'styled-components';
 
 export const Overlay = styled(Dialog.Overlay)`
   position: fixed;
@@ -14,7 +13,7 @@ export const Content = styled(Dialog.Content)`
   min-width: 32rem;
   border-radius: 6px;
   padding: 2.5rem 3rem;
-  background: ${(props) => props.theme["gray-800"]};
+  background: ${(props) => props.theme['gray-800']};
 
   position: fixed;
   //Hackzinho para centralizar itens na tela
@@ -32,19 +31,19 @@ export const Content = styled(Dialog.Content)`
     input {
       border-radius: 6px;
       border: 0;
-      background: ${(props) => props.theme["gray-900"]};
-      color: ${(props) => props.theme["gray-300"]};
+      background: ${(props) => props.theme['gray-900']};
+      color: ${(props) => props.theme['gray-300']};
       padding: 1rem;
 
       &::placeholder {
-        color: ${(props) => props.theme["gray-500"]};
+        color: ${(props) => props.theme['gray-500']};
       }
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
       height: 58px;
       border: 0;
-      background: ${(props) => props.theme["green-500"]};
+      background: ${(props) => props.theme['green-500']};
       color: ${(props) => props.theme.white};
       font-weight: bold;
       padding: 0 1.25rem;
@@ -58,30 +57,30 @@ export const Content = styled(Dialog.Content)`
       }
 
       &:not(:disabled):hover {
-        background: ${(props) => props.theme["green-700"]};
+        background: ${(props) => props.theme['green-700']};
         transition: background-color 0.2s;
       }
     }
 
-    select{
+    select {
       border-radius: 6px;
       border: 0;
-      background: ${(props) => props.theme["gray-900"]};
-      color: ${(props) => props.theme["gray-300"]};
+      background: ${(props) => props.theme['gray-900']};
+      color: ${(props) => props.theme['gray-300']};
       padding: 1.5rem;
 
       &::placeholder {
-        color: ${(props) => props.theme["gray-500"]};
+        color: ${(props) => props.theme['gray-500']};
       }
 
       &:disabled {
         opacity: 0.7;
         cursor: not-allowed;
-        background: ${(props) => props.theme["gray-700"]};
+        background: ${(props) => props.theme['gray-700']};
       }
 
-      option{
-        color: ${(props) => props.theme["gray-300"]};
+      option {
+        color: ${(props) => props.theme['gray-300']};
       }
     }
   }
@@ -95,5 +94,5 @@ export const CloseButton = styled(Dialog.Close)`
   right: 1.5rem;
   line-height: 0;
   cursor: pointer;
-  color: ${(props) => props.theme["gray-500"]};
+  color: ${(props) => props.theme['gray-500']};
 `;

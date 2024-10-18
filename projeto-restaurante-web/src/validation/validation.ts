@@ -1,36 +1,42 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 export const novoRestauranteFormSchema = z.object({
-    nome: z.string().min(5, 'O Nome deve ter pelo menos 5 caracteres.'),
-    localizacao: z.string().min(5, 'A Localização deve ter pelo menos 5 caracteres.'),
-    cozinha: z.string(),
+  nome: z.string().min(5, 'O Nome deve ter pelo menos 5 caracteres.'),
+  localizacao: z
+    .string()
+    .min(5, 'A Localização deve ter pelo menos 5 caracteres.'),
+  cozinha: z.string(),
 });
 
 export const editarRestauranteSchema = novoRestauranteFormSchema.extend({
-    restauranteId: z.string()
+  restauranteId: z.string(),
 });
 
 export const filtrarRestauranteSchema = z.object({
-    query: z.string(),
-  });
+  query: z.string(),
+});
 
 export const avaliacaoSchema = z.object({
-    usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
-    comentario:  z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
-    avaliacao: z.number(),
-    restauranteId: z.string(),
+  usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
+  comentario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
+  avaliacao: z.number(),
+  restauranteId: z.string(),
 });
 
 export const novaAvaliacaoSchema = z.object({
-    usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
-    comentario:  z.string().min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
-    avaliacao: z.number().min(1).max(5),
-    restauranteId: z.string(),
+  usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
+  comentario: z
+    .string()
+    .min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
+  avaliacao: z.number().min(1).max(5),
+  restauranteId: z.string(),
 });
 
 export const editarAvaliacaoSchema = z.object({
-    usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
-    comentario:  z.string().min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
-    avaliacao: z.number().min(1).max(5),
-    id: z.string(),
+  usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
+  comentario: z
+    .string()
+    .min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
+  avaliacao: z.number().min(1).max(5),
+  id: z.string(),
 });

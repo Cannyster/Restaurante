@@ -1,27 +1,27 @@
-import { toast } from 'sonner';
-import { ReactNode, useState } from 'react';
-import { queryClient } from '../lib/react-query';
-import { createContext } from 'use-context-selector';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { obterRestaurantes } from '../api/obter-restaurantes';
 import {
   deletarRestaurante,
   DeletarRestauranteInput,
 } from '../api/deletar-restaurante';
 import {
-  criarRestaurante,
-  CriarRestauranteInput,
-} from '../api/criar-restaurante';
-import {
   editarRestaurante,
   EditarRestauranteInput,
 } from '../api/editar-restaurante';
-import { criarAvaliacao, CriarAvaliacaoInput } from '../api/criar-avaliacao';
+import {
+  criarRestaurante,
+  CriarRestauranteInput,
+} from '../api/criar-restaurante';
 import {
   deletarAvaliacao,
   DeletarAvaliacaoInput,
 } from '../api/deletar-avaliacao';
 import { editarAvaliacao, EditarAvaliacaoInput } from '../api/editar-avaliacao';
+import { criarAvaliacao, CriarAvaliacaoInput } from '../api/criar-avaliacao';
+import { obterRestaurantes } from '../api/obter-restaurantes';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createContext } from 'use-context-selector';
+import { queryClient } from '../lib/react-query';
+import { ReactNode, useState } from 'react';
+import { toast } from 'sonner';
 
 export interface RestauranteProps {
   restauranteId: string;
@@ -39,7 +39,7 @@ export interface AvaliacaoProps {
   datahora: string;
 }
 
-interface restauranteContextType {
+interface RestauranteContextType {
   restaurantesCache: RestauranteProps[] | undefined;
   isFetching: boolean;
   filtrarRestaurantes: (query: string) => Promise<void>;
@@ -58,7 +58,7 @@ interface RestauranteProviderProps {
   children: ReactNode;
 }
 
-export const restauranteContext = createContext({} as restauranteContextType);
+export const RestauranteContext = createContext({} as RestauranteContextType);
 
 export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   const [buscaQuery, setBuscaQuery] = useState<string | undefined>(undefined);
@@ -169,7 +169,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   });
 
   return (
-    <restauranteContext.Provider
+    <RestauranteContext.Provider
       value={{
         restaurantesCache,
         isFetching,
@@ -183,6 +183,6 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
       }}
     >
       {children}
-    </restauranteContext.Provider>
+    </RestauranteContext.Provider>
   );
 }

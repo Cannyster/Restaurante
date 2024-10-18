@@ -1,13 +1,13 @@
-import * as z from 'zod';
-import { toast } from 'sonner';
-import { X } from 'phosphor-react';
-import { useForm } from 'react-hook-form';
-import * as Dialog from '@radix-ui/react-dialog';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CloseButton, Content, Overlay } from './styles';
 import { novoRestauranteFormSchema } from '../../validation/validation';
+import { RestauranteContext } from '../../contexts/RestauranteContext';
 import { useContextSelector } from 'use-context-selector';
-import { restauranteContext } from '../../contexts/restauranteContext';
+import { CloseButton, Content, Overlay } from './styles';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useForm } from 'react-hook-form';
+import { X } from 'phosphor-react';
+import { toast } from 'sonner';
+import * as z from 'zod';
 // import { SelectMenu } from "../Select";
 
 type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
@@ -15,7 +15,7 @@ type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 export function ModalNovoRestaurante() {
   // Usando o use-context-selector, para selecionar unicamente uma informação que deve ser acompanhada
   // assim vai evitar a renderização completa que eo padrão do react
-  const criarRestaurante = useContextSelector(restauranteContext, (context) => {
+  const criarRestaurante = useContextSelector(RestauranteContext, (context) => {
     return context.criarRestauranteFn;
   });
 

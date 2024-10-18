@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Comment = styled.div`
-  background: ${(props) => props.theme["gray-800"]};
+  background: ${(props) => props.theme['gray-800']};
   margin-top: 0.5rem;
   padding: 0.5rem 1rem;
   display: flex;
@@ -15,14 +15,14 @@ export const CommentBox = styled.div`
 `;
 
 export const CommentContent = styled.div`
-  background: ${(props) => props.theme["gray-700"]};
+  background: ${(props) => props.theme['gray-700']};
   border-radius: 8px;
   padding: 1rem;
-  color: ${(props) => props.theme["gray-100"]};
+  color: ${(props) => props.theme['gray-100']};
 
   p {
     margin-top: 1rem;
-    color: ${(props) => props.theme["gray-300"]};
+    color: ${(props) => props.theme['gray-300']};
     font-size: 0.875rem;
     line-height: 1.6;
   }
@@ -30,16 +30,15 @@ export const CommentContent = styled.div`
   button {
     background: transparent;
     border: 0;
-    color: ${(props) => props.theme["gray-400"]};
+    color: ${(props) => props.theme['gray-400']};
     cursor: pointer;
     line-height: 0;
     border-radius: 4px;
 
     &:hover {
-      color: ${(props) => props.theme["red-500"]};
+      color: ${(props) => props.theme['red-500']};
     }
   }
-
 `;
 
 export const AuthorAndTime = styled.div`
@@ -53,13 +52,13 @@ export const AuthorAndTime = styled.div`
   strong {
     display: inline;
     font-size: 1rem;
-    color: ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme['gray-100']};
   }
 
   time {
     display: inline;
     font-size: 0.875rem;
-    color: ${(props) => props.theme["gray-400"]};
+    color: ${(props) => props.theme['gray-400']};
   }
 `;
 
@@ -76,18 +75,18 @@ export const CommentFooter = styled.footer`
   button {
     background: transparent;
     border: 0;
-    color: ${(props) => props.theme["gray-400"]};
+    color: ${(props) => props.theme['gray-400']};
     cursor: pointer;
     display: flex;
     align-items: center;
 
     &:hover {
-      color: ${(props) => props.theme["red-300"]};
+      color: ${(props) => props.theme['red-300']};
     }
 
     span::before {
       padding: 0 0.25rem;
-      content: "•";
+      content: '•';
     }
   }
 `;
@@ -103,10 +102,9 @@ export const ButtonBox = styled.div`
   display: flex;
   gap: 1rem;
 
-  Search{
+  Search {
     &:hover {
-      color: ${(props) => props.theme["green-300"]};
+      color: ${(props) => props.theme['green-300']};
     }
   }
-
-`
+`;

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const MainContainer = styled.main`
   width: 100%;
@@ -18,7 +18,7 @@ export const RestauranteTable = styled.table`
 
   td {
     padding: 1.25rem 2rem;
-    background: ${(props) => props.theme["gray-700"]};
+    background: ${(props) => props.theme['gray-700']};
 
     &:first-child {
       border-top-left-radius: 6px;
@@ -35,28 +35,28 @@ export const RestauranteTable = styled.table`
 export const RestauranteItem = styled.main`
   width: 50%;
   align-items: center;
-  
-  div{
-      padding: 1rem 2rem;
+
+  div {
+    padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
-    background: ${(props) => props.theme["gray-700"]};
+    background: ${(props) => props.theme['gray-700']};
     margin-top: 1rem;
     border: 1rem;
     border-color: red;
   }
 
-  p{
-    margin: 0.5rem 0 0.5rem 0; 
+  p {
+    margin: 0.5rem 0 0.5rem 0;
   }
 `;
 
 export const StyledLink = styled(Link)`
-  color: ${(props) => props.theme["gray-300"]};
+  color: ${(props) => props.theme['gray-300']};
   text-decoration: none;
 
   &:hover {
-      color: ${(props) => props.theme["green-300"]};
+    color: ${(props) => props.theme['green-300']};
   }
-`
+`;

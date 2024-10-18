@@ -1,4 +1,4 @@
-import { FooterContainer, FooterLinks, FooterText } from "./styles";
+import { FooterContainer, FooterLinks, FooterText } from './styles';
 
 export function Footer() {
   return (

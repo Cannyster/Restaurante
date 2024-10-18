@@ -1,5 +1,5 @@
-import clipboard from "../../assets/clipboard.png";
-import { Container } from "./styles";
+import clipboard from '../../assets/clipboard.png';
+import { Container } from './styles';
 
 export function Vazio() {
   return (

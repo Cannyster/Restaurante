@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MainPage = styled.main`
   /* Ajuste criado apenas para facilitar de mante o Header eo Footer nos devidos locais */

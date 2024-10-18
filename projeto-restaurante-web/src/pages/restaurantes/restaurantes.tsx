@@ -1,12 +1,12 @@
-import { SearchForm } from '../../components/SearchForm/SearchForm';
-import { restauranteContext } from '../../contexts/restauranteContext';
-import { useContextSelector } from 'use-context-selector';
+import { RestauranteContext } from '../../contexts/RestauranteContext';
 import { MainContainer, RestauranteTable, StyledLink } from './styles';
-import { Search } from 'lucide-react';
+import { SearchForm } from '../../components/SearchForm/SearchForm';
+import { useContextSelector } from 'use-context-selector';
 import { Helmet } from 'react-helmet-async';
+import { Search } from 'lucide-react';
 
 export function Restaurantes() {
-  const restaurantes = useContextSelector(restauranteContext, (context) => {
+  const restaurantes = useContextSelector(RestauranteContext, (context) => {
     return context.restaurantesCache;
   });
 

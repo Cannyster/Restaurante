@@ -1,4 +1,4 @@
-import { Title, Text, Container, StyledLink } from "./styles";
+import { Title, Text, Container, StyledLink } from './styles';
 
 export function NotFound() {
   return (

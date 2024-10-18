@@ -1,25 +1,25 @@
-import { useParams } from 'react-router-dom';
-import { Vazio } from '../../components/Vazio/Vazio';
-import { ModalNovaAvaliacao } from '../../components/ModalNovaAvaliacao/ModalNovaAvaliacao';
 import {
   AvaliacaoContainer,
   ContentFooter,
   LocalButton,
   MainContainer,
 } from './styles';
-import { obterRestaurante } from '../../api/obter-restaurante';
-import { queryClient } from '../../lib/react-query';
-import { useQuery } from '@tanstack/react-query';
-import { obterAvaliacoes } from '../../api/obter-avaliacoes';
-import { Helmet } from 'react-helmet-async';
+import { ModalNovaAvaliacao } from '../../components/ModalNovaAvaliacao/ModalNovaAvaliacao';
 import {
   RestauranteProps,
   AvaliacaoProps,
-} from '../../contexts/restauranteContext';
-import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
-import * as Dialog from '@radix-ui/react-dialog';
-import { useState } from 'react';
+} from '../../contexts/RestauranteContext';
 import { AvaliacaoEstrelas } from '../../components/Estrela/Estrela';
+import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
+import { obterRestaurante } from '../../api/obter-restaurante';
+import { obterAvaliacoes } from '../../api/obter-avaliacoes';
+import { Vazio } from '../../components/Vazio/Vazio';
+import { queryClient } from '../../lib/react-query';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useMemo, useState } from 'react';
 
 export function RestauranteDetalhes() {
   const [open, setOpen] = useState(false);
@@ -43,10 +43,6 @@ export function RestauranteDetalhes() {
     queryKey: ['avaliacoes', restauranteId],
     queryFn: () => {
       if (!restauranteId) throw new Error('ID do restaurante não encontrado.');
-      console.log(
-        `chamada da useQuery - id extraído da url: ${restauranteId}`,
-        typeof restauranteId
-      );
       return obterAvaliacoes({ restauranteId });
     },
     staleTime: 1000 * 60 * 5,
@@ -54,6 +50,19 @@ export function RestauranteDetalhes() {
     refetchOnWindowFocus: false,
     enabled: !queryClient.getQueryData(['avaliacoes', restauranteId]),
   });
+
+  // Função para calcular a média de avaliações
+  const calcularMedia = (avaliacoes: AvaliacaoProps[]): number => {
+    if (!avaliacoes || avaliacoes.length === 0) return 0;
+    const total = avaliacoes.reduce((acc, { avaliacao }) => acc + avaliacao, 0);
+    return total / avaliacoes.length;
+  };
+
+  // Usando useMemo para evitar recálculo desnecessário
+  const mediaAvaliacoes = useMemo(
+    () => calcularMedia(avaliacoes || []),
+    [avaliacoes]
+  );
 
   function openCloseModal() {
     setOpen((state) => !state);
@@ -68,7 +77,7 @@ export function RestauranteDetalhes() {
             <h2>{`${restaurante.nome}`}</h2>
             <p>{`Endereço: ${restaurante.localizacao}`}</p>
             <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
-            <AvaliacaoEstrelas media={5} />
+            <AvaliacaoEstrelas media={mediaAvaliacoes} />
 
             <AvaliacaoContainer>
               <h1>Avaliações</h1>

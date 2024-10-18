@@ -1,12 +1,12 @@
-import * as Dialog from '@radix-ui/react-dialog';
+import { RestauranteContext } from '../../contexts/RestauranteContext';
+import { novaAvaliacaoSchema } from '../../validation/validation';
+import { useContextSelector } from 'use-context-selector';
 import { Overlay, Content, CloseButton } from './styled';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useForm } from 'react-hook-form';
 import { X } from 'phosphor-react';
 import { toast } from 'sonner';
-import { novaAvaliacaoSchema } from '../../validation/validation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useContextSelector } from 'use-context-selector';
-import { restauranteContext } from '../../contexts/restauranteContext';
 import * as z from 'zod';
 
 type NovoAvaliacaoFormInputs = z.infer<typeof novaAvaliacaoSchema>;
@@ -21,7 +21,7 @@ export function ModalNovaAvaliacao({
   openCloseModal,
   refetchAvaliacoes,
 }: DetalhesAvaliacaoProps & { refetchAvaliacoes: () => void }) {
-  const criarAvaliacao = useContextSelector(restauranteContext, (context) => {
+  const criarAvaliacao = useContextSelector(RestauranteContext, (context) => {
     return context.criarAvaliacaoFn;
   });
 

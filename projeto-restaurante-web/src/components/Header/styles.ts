@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
-  background-color: ${(props) => props.theme["gray-900"]};
+  background-color: ${(props) => props.theme['gray-900']};
   padding: 0.5rem 0 0.5rem 0;
   width: 100%;
   position: fixed;
@@ -24,7 +24,7 @@ export const HeaderContent = styled.div`
 export const NovoRestauranteButton = styled.button`
   height: 50px;
   border: 0;
-  background: ${(props) => props.theme["green-500"]};
+  background: ${(props) => props.theme['green-500']};
   color: ${(props) => props.theme.white};
   font-weight: bold;
   padding: 0 1.25rem;
@@ -32,12 +32,12 @@ export const NovoRestauranteButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: ${(props) => props.theme["green-700"]};
+    background: ${(props) => props.theme['green-700']};
     transition: background-color 0.2s;
   }
 `;
 
 export const StyledLink = styled(Link)`
-  color: ${(props) => props.theme["gray-300"]};
+  color: ${(props) => props.theme['gray-300']};
   text-decoration: none;
-`
+`;

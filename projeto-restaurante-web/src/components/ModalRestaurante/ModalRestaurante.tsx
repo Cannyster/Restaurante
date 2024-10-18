@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContextSelector } from "use-context-selector";
 import { obterRestaurante } from "../../api/obter-restaurante";
 import { editarRestauranteSchema } from "../../validation/validation";
-import { restauranteContext } from "../../contexts/restauranteContext";
+import { RestauranteContext } from "../../contexts/RestauranteContext";
 import { CloseButton, Content, Overlay } from "./styles";
 import { DeletarRestauranteInput } from "../../api/deletar-restaurante";
 
@@ -25,7 +25,7 @@ export function ModalRestaurante({
   open,
 }: DetalhesRestauranteProps) {
   const setSelectedrestauranteId = useContextSelector(
-    restauranteContext,
+    RestauranteContext,
     (context) => context.setSelectedrestauranteId
   );
 
@@ -45,14 +45,14 @@ export function ModalRestaurante({
   });
 
   const editarRestaurante = useContextSelector(
-    restauranteContext,
+    RestauranteContext,
     (context) => {
       return context.editarRestauranteFn;
     }
   );
 
   const deletarRestaurante = useContextSelector(
-    restauranteContext,
+    RestauranteContext,
     (context) => {
       return context.deletarRestauranteFn;
     }

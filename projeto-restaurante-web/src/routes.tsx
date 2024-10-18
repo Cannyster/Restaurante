@@ -1,25 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
-import { NotFound } from "./pages/404/404";
-import { Restaurantes } from "./pages/Restaurantes/Restaurantes";
-import { ErrorPage } from "./pages/error/Error";
-import { PageLayout } from "./pages/_layouts/PageLayout";
-import { RestauranteDetalhes } from "./pages/RestauranteDetalhes/RestauranteDetalhes";
+import { RestauranteDetalhes } from './pages/RestauranteDetalhes/RestauranteDetalhes';
+import { Restaurantes } from './pages/Restaurantes/Restaurantes';
+import { PageLayout } from './pages/_layouts/pageLayout';
+import { createBrowserRouter } from 'react-router-dom';
+import { ErrorPage } from './pages/error/error';
+import { NotFound } from './pages/404/404';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <PageLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <Restaurantes /> },
+      { path: '/', element: <Restaurantes /> },
       {
-        path: "restaurante/:restauranteId",
+        path: 'restaurante/:restauranteId',
         element: <RestauranteDetalhes />,
       },
     ],
   },
   {
-    path: "*",
+    path: '*',
     element: <NotFound />,
   },
 ]);

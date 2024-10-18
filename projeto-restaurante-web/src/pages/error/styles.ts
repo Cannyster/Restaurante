@@ -1,6 +1,6 @@
 // ErrorPage.jsx
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -17,12 +17,12 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled.p`
-  color: ${(props) => props.theme["gray-300"]};
+  color: ${(props) => props.theme['gray-300']};
 `;
 
 export const ErrorDetails = styled.pre`
-  background: ${(props) => props.theme["gray-100"]};
-  color: #d6336c; /* Exemplo de cor para erro */
+  background: ${(props) => props.theme['gray-100']};
+  color: ${(props) => props.theme['red-500']};
   padding: 1rem;
   border-radius: 0.5rem;
   max-width: 600px;
@@ -31,11 +31,9 @@ export const ErrorDetails = styled.pre`
 `;
 
 export const StyledLink = styled(Link)`
-  color: #0284c7; /* sky-600 */
+  color: #0284c7;
 
   &:hover {
-    color: #38bdf8; /* sky-400 (dark mode equivalent) */
+    color: #38bdf8;
   }
 `;
-
-

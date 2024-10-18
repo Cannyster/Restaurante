@@ -1,5 +1,3 @@
-import { formatarData } from '../../utils/formatter';
-import * as Dialog from '@radix-ui/react-dialog';
 import {
   Comment,
   CommentBox,
@@ -11,14 +9,16 @@ import {
 } from './styles';
 import {
   AvaliacaoProps,
-  restauranteContext,
-} from '../../contexts/restauranteContext';
+  RestauranteContext,
+} from '../../contexts/RestauranteContext';
+import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
+import { useContextSelector } from 'use-context-selector';
+import { AvaliacaoEstrelas } from '../Estrela/Estrela';
+import { formatarData } from '../../utils/formatter';
+import * as Dialog from '@radix-ui/react-dialog';
 import { Trash } from 'phosphor-react';
 import { Search } from 'lucide-react';
-import { useContextSelector } from 'use-context-selector';
-import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
 import { useState } from 'react';
-import { AvaliacaoEstrelas } from '../Estrela/Estrela';
 
 interface AvaliacaoComponentProps {
   avaliacao: AvaliacaoProps;
@@ -31,7 +31,7 @@ export function Avaliacao({
 }: AvaliacaoComponentProps) {
   const [open, setOpen] = useState(false);
 
-  const deletarAvaliacao = useContextSelector(restauranteContext, (context) => {
+  const deletarAvaliacao = useContextSelector(RestauranteContext, (context) => {
     return context.deletarAvaliacaoFn;
   });
 

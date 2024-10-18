@@ -1,17 +1,17 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { Overlay, Content, CloseButton } from './styled';
-import { X } from 'phosphor-react';
-import { toast } from 'sonner';
-import { editarAvaliacaoSchema } from '../../validation/validation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useContextSelector } from 'use-context-selector';
 import {
   AvaliacaoProps,
-  restauranteContext,
-} from '../../contexts/restauranteContext';
-import * as z from 'zod';
+  RestauranteContext,
+} from '../../contexts/RestauranteContext';
+import { editarAvaliacaoSchema } from '../../validation/validation';
+import { useContextSelector } from 'use-context-selector';
+import { Overlay, Content, CloseButton } from './styled';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useForm } from 'react-hook-form';
+import { X } from 'phosphor-react';
 import { useEffect } from 'react';
+import { toast } from 'sonner';
+import * as z from 'zod';
 
 type EditarAvaliacaoFormInputs = z.infer<typeof editarAvaliacaoSchema>;
 
@@ -26,7 +26,7 @@ export function ModalAvaliacao({
   openCloseModal,
   refetchAvaliacoes,
 }: AvaliacaoModalProps) {
-  const editarAvaliacao = useContextSelector(restauranteContext, (context) => {
+  const editarAvaliacao = useContextSelector(RestauranteContext, (context) => {
     return context.editarAvaliacaoFn;
   });
 

@@ -1,6 +1,6 @@
 // NotFound.jsx
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -17,12 +17,12 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled.p`
-  color: ${(props) => props.theme["gray-300"]};
+  color: ${(props) => props.theme['gray-300']};
 `;
 
 export const StyledLink = styled(Link)`
   color: #0284c7; /* sky-600 */
-  
+
   &:hover {
     color: #38bdf8; /* sky-400 (dark mode equivalent) */
   }

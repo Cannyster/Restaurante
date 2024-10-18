@@ -1,17 +1,17 @@
-import { MagnifyingGlass } from "phosphor-react";
-import { SearchFormContainer } from "./styles";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { restauranteContext } from "../../contexts/restauranteContext";
-import { useContextSelector } from "use-context-selector";
-import { filtrarRestauranteSchema } from "../../validation/validation";
+import { RestauranteContext } from '../../contexts/RestauranteContext';
+import { filtrarRestauranteSchema } from '../../validation/validation';
+import { useContextSelector } from 'use-context-selector';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { MagnifyingGlass } from 'phosphor-react';
+import { SearchFormContainer } from './styles';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 type SearchFormInputs = z.infer<typeof filtrarRestauranteSchema>;
 
 export function SearchForm() {
   const filtrarRestaurantes = useContextSelector(
-    restauranteContext,
+    RestauranteContext,
     (context) => {
       return context.filtrarRestaurantes;
     }
@@ -34,7 +34,7 @@ export function SearchForm() {
       <input
         type="text"
         placeholder="Busque um Restaurante"
-        {...register("query")}
+        {...register('query')}
       />
       <button type="submit" disabled={isSubmitting}>
         <MagnifyingGlass size={20} />
