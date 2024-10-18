@@ -1,18 +1,20 @@
 import { novoRestauranteFormSchema } from '../../validation/validation';
 import { RestauranteContext } from '../../contexts/RestauranteContext';
 import { useContextSelector } from 'use-context-selector';
-import { CloseButton, Content, Overlay } from './styles';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as Dialog from '@radix-ui/react-dialog';
+import { GlobalButton } from '../../styles/global';
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { X } from 'phosphor-react';
+import { MainContainer } from './styles';
 import { toast } from 'sonner';
 import * as z from 'zod';
-// import { SelectMenu } from "../Select";
 
 type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 
-export function ModalNovoRestaurante() {
+export function RestauranteNovo() {
+  const navigate = useNavigate();
+
   const criarRestaurante = useContextSelector(RestauranteContext, (context) => {
     return context.criarRestauranteFn;
   });
@@ -21,35 +23,19 @@ export function ModalNovoRestaurante() {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-    reset,
-    setValue,
   } = useForm<NovoRestauranteFormInputs>({
     resolver: zodResolver(novoRestauranteFormSchema),
   });
 
-  //console.log(errors)
-
-  function LimparFomulário() {
-    reset();
-    setValue('nome', '');
-    setValue('localizacao', '');
-    setValue('cozinha', '');
-  }
-
   async function handleCriarNovoRestaurante(dados: NovoRestauranteFormInputs) {
     criarRestaurante(dados);
+    navigate('/');
   }
 
   return (
-    <Dialog.Portal>
-      <Overlay />
-      <Content onPointerDownOutside={LimparFomulário}>
-        <Dialog.DialogTitle>Novo Restaurante</Dialog.DialogTitle>
-
-        <CloseButton onClick={LimparFomulário}>
-          <X size={24} />
-        </CloseButton>
-
+    <>
+      <Helmet title="Novo" />
+      <MainContainer>
         <form onSubmit={handleSubmit(handleCriarNovoRestaurante)}>
           <input
             type="Text"
@@ -69,8 +55,6 @@ export function ModalNovoRestaurante() {
             }
           />
 
-          {/* <SelectMenu {...register("cozinha")} required /> */}
-
           <select {...register('cozinha')} required>
             <option value="" hidden>
               Tipo de Cozinha
@@ -85,11 +69,11 @@ export function ModalNovoRestaurante() {
             <option defaultValue="Amazonense">Amazonense</option>
           </select>
 
-          <button type="submit" disabled={isSubmitting}>
+          <GlobalButton type="submit" disabled={isSubmitting}>
             Cadastrar
-          </button>
+          </GlobalButton>
         </form>
-      </Content>
-    </Dialog.Portal>
+      </MainContainer>
+    </>
   );
 }

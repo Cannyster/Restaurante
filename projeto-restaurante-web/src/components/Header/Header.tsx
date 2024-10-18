@@ -19,12 +19,16 @@ export function Header() {
 
           <h1>Recomendação de Restaurantes</h1>
 
-          <Dialog.Root>
+          <StyledLink to={`/restaurante/novo`}>
+            <NovoRestauranteButton>Novo Restaurante</NovoRestauranteButton>
+          </StyledLink>
+
+          {/* <Dialog.Root>
             <Dialog.DialogTrigger asChild>
               <NovoRestauranteButton>Novo Restaurante</NovoRestauranteButton>
             </Dialog.DialogTrigger>
             <ModalNovoRestaurante />
-          </Dialog.Root>
+          </Dialog.Root> */}
         </HeaderContent>
       </HeaderContainer>
     </header>

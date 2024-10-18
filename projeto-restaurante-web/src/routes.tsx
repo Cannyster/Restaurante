@@ -1,4 +1,5 @@
 import { RestauranteDetalhes } from './pages/RestauranteDetalhes/RestauranteDetalhes';
+import { RestauranteNovo } from './pages/RestauranteNovo/RestauranteNovo';
 import { Restaurantes } from './pages/Restaurantes/Restaurantes';
 import { PageLayout } from './pages/_layouts/pageLayout';
 import { createBrowserRouter } from 'react-router-dom';
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: 'restaurante/:restauranteId',
         element: <RestauranteDetalhes />,
+      },
+      {
+        path: 'restaurante/novo',
+        element: <RestauranteNovo />,
       },
     ],
   },
