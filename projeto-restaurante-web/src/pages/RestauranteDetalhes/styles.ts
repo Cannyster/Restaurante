@@ -2,20 +2,12 @@ import styled from "styled-components";
 import { GlobalButton } from "../../styles/global";
 
 export const MainContainer = styled.main`
-  width: 100%;
-  max-width: 1120px;
-  margin: 1rem auto;
-  padding: 0  0 1.5rem 0;
-  min-height: 60vh;
-`;
-
-export const Content = styled.div`
-  padding: 2rem;
-  background-color: ${(props) => props.theme["gray-800"]};
-  border-radius: 8px;
-  margin: 2rem;
+  display: flex;
+  flex-direction: column ;
   max-width: 800px;
-  align-content: space-between;
+  margin: 9rem auto 1rem auto;
+  min-height: 80vh;
+  justify-content: space-evenly;
 
   h1 {
     font-size: 1.75rem;
@@ -42,7 +34,7 @@ export const Content = styled.div`
 `;
 
 export const ContentFooter = styled.div`
-  display: flex;
+  display: flex; 
 justify-content: flex-end;
 
 `
@@ -55,9 +47,15 @@ export const AvaliacaoContainer = styled.div`
   border: 1px solid ${(props) => props.theme["gray-400"]};
   border-radius: 6px;
   margin-top: 1rem;
-  max-height: 300px;
+  height: 400px;
   overflow-y: auto;
-  padding-right: 0.5rem;
+  padding: 1rem 0.5rem 1rem 0;
+  width: 37.5rem;
+  
+
+  h1{
+    text-align: center;
+  }
   
 
   &::-webkit-scrollbar {

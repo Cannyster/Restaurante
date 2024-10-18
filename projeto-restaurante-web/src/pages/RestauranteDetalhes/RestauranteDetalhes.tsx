@@ -3,7 +3,6 @@ import { Vazio } from "../../components/Vazio/Vazio";
 import { NovaAvaliacaoModal } from "../../components/NovaAvaliacaoModal/NovaAvaliacaoModal";
 import {
   AvaliacaoContainer,
-  Content,
   ContentFooter,
   LocalButton,
   MainContainer,
@@ -58,14 +57,14 @@ export function RestauranteDetalhes() {
       <Helmet title="Detalhes" />
       <MainContainer>
         {restaurante ? (
-          <Content>
-            <h1>{`Restaurante: ${restaurante.nome}`}</h1>
-            <p>{`Id: ${restaurante.restauranteId}`}</p>
+          <>
+            <h2>{`${restaurante.nome}`}</h2>
             <p>{`Endereço: ${restaurante.localizacao}`}</p>
             <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
 
-            <h1>Avaliações</h1>
             <AvaliacaoContainer>
+              <h1>Avaliações</h1>
+
               {avaliacoes && avaliacoes.length > 0 ? (
                 avaliacoes.map((avaliacao) => (
                   <Avaliacao
@@ -92,10 +91,11 @@ export function RestauranteDetalhes() {
                 <NovaAvaliacaoModal
                   key={restaurante.restauranteId}
                   restauranteId={restaurante.restauranteId}
+                  refetchAvaliacoes={refetchAvaliacoes}
                 />
               </Dialog.Root>
             </ContentFooter>
-          </Content>
+          </>
         ) : (
           <h1>Restaurante não encontrado </h1>
         )}

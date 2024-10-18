@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 export const MainContainer = styled.main`
   width: 100%;
   max-width: 1120px;
-  margin: 6rem auto 0;
-  padding: 0 1.5rem;
+  margin: 9rem auto 0;
+  padding: 1rem 1.5rem;
   min-height: 80vh;
+  padding-bottom: 4rem;
 `;
 
 export const RestauranteTable = styled.table`
@@ -36,7 +37,7 @@ export const RestauranteItem = styled.main`
   align-items: center;
   
   div{
-    padding: 1rem 2rem;
+      padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -54,4 +55,8 @@ export const RestauranteItem = styled.main`
 export const StyledLink = styled(Link)`
   color: ${(props) => props.theme["gray-300"]};
   text-decoration: none;
+
+  &:hover {
+      color: ${(props) => props.theme["green-300"]};
+  }
 `

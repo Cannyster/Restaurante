@@ -15,7 +15,10 @@ interface DetalhesAvaliacaoProps {
   restauranteId: string;
 }
 
-export function NovaAvaliacaoModal({ restauranteId }: DetalhesAvaliacaoProps) {
+export function NovaAvaliacaoModal({
+  restauranteId,
+  refetchAvaliacoes,
+}: DetalhesAvaliacaoProps & { refetchAvaliacoes: () => void }) {
   const criarAvaliacao = useContextSelector(restauranteContext, (context) => {
     return context.criarAvaliacaoFn;
   });
@@ -36,6 +39,7 @@ export function NovaAvaliacaoModal({ restauranteId }: DetalhesAvaliacaoProps) {
   async function handleCriarNovaAvaliacao(dados: NovoAvaliacaoFormInputs) {
     const { usuario, avaliacao, comentario, restauranteId } = dados;
     await criarAvaliacao({ usuario, avaliacao, comentario, restauranteId });
+    refetchAvaliacoes();
   }
 
   return (
@@ -44,7 +48,7 @@ export function NovaAvaliacaoModal({ restauranteId }: DetalhesAvaliacaoProps) {
       <Content onPointerDownOutside={LimparFomulário}>
         <Dialog.DialogTitle>Nova Avaliação</Dialog.DialogTitle>
         <Dialog.DialogDescription>
-          Nós conte como foi sua experiência
+          Nos conte como foi sua experiência
         </Dialog.DialogDescription>
 
         <CloseButton onClick={LimparFomulário}>

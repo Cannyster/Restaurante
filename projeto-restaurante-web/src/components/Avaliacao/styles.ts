@@ -82,7 +82,7 @@ export const CommentFooter = styled.footer`
     align-items: center;
 
     &:hover {
-      color: ${(props) => props.theme["green-300"]};
+      color: ${(props) => props.theme["red-300"]};
     }
 
     span::before {
