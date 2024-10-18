@@ -13,7 +13,6 @@ import {
 } from "../../contexts/restauranteContext";
 import { Trash } from "phosphor-react";
 import { useContextSelector } from "use-context-selector";
-import { DeletarAvaliacaoInput } from "../../api/deletar-avaliacao";
 
 export function Avaliacao({
   id,
@@ -22,13 +21,15 @@ export function Avaliacao({
   avaliacao,
   datahora,
   restauranteId,
-}: AvaliacaoProps) {
+  refetchAvaliacoes,
+}: AvaliacaoProps & { refetchAvaliacoes: () => void }) {
   const deletarAvaliacao = useContextSelector(restauranteContext, (context) => {
     return context.deletarAvaliacaoFn;
   });
 
-  async function handleDeletarAvaliacao(id: DeletarAvaliacaoInput) {
-    await deletarAvaliacao(id);
+  async function handleDeletarAvaliacao() {
+    await deletarAvaliacao({ id });
+    refetchAvaliacoes();
   }
 
   return (
@@ -44,7 +45,7 @@ export function Avaliacao({
           <p>{comentario}</p>
           <CommentFooter>
             <p>{avaliacao}</p>
-            <button onClick={() => handleDeletarAvaliacao(id)}>
+            <button onClick={handleDeletarAvaliacao}>
               <Trash size={30}></Trash>
             </button>
           </CommentFooter>

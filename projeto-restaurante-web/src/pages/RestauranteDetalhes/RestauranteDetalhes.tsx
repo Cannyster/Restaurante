@@ -35,7 +35,9 @@ export function RestauranteDetalhes() {
     enabled: !queryClient.getQueryData(["restaurante", restauranteId]),
   });
 
-  const { data: avaliacoes } = useQuery<AvaliacaoProps[]>({
+  const { data: avaliacoes, refetch: refetchAvaliacoes } = useQuery<
+    AvaliacaoProps[]
+  >({
     queryKey: ["avaliacoes", restauranteId],
     queryFn: () => {
       if (!restauranteId) throw new Error("ID do restaurante não encontrado.");
@@ -74,6 +76,7 @@ export function RestauranteDetalhes() {
                     comentario={avaliacao.comentario}
                     avaliacao={avaliacao.avaliacao}
                     datahora={avaliacao.datahora}
+                    refetchAvaliacoes={refetchAvaliacoes}
                   />
                 ))
               ) : (
