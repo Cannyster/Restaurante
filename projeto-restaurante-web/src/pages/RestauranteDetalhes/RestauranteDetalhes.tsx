@@ -18,8 +18,10 @@ import {
 } from '../../contexts/restauranteContext';
 import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useState } from 'react';
 
 export function RestauranteDetalhes() {
+  const [open, setOpen] = useState(false);
   const { restauranteId } = useParams();
 
   const { data: restaurante } = useQuery<RestauranteProps>({
@@ -52,6 +54,10 @@ export function RestauranteDetalhes() {
     enabled: !queryClient.getQueryData(['avaliacoes', restauranteId]),
   });
 
+  function openCloseModal() {
+    setOpen((state) => !state);
+  }
+
   return (
     <>
       <Helmet title="Detalhes" />
@@ -79,7 +85,7 @@ export function RestauranteDetalhes() {
             </AvaliacaoContainer>
 
             <ContentFooter>
-              <Dialog.Root>
+              <Dialog.Root open={open} onOpenChange={openCloseModal}>
                 <Dialog.DialogTrigger asChild>
                   <LocalButton>Avaliar</LocalButton>
                 </Dialog.DialogTrigger>
@@ -87,6 +93,7 @@ export function RestauranteDetalhes() {
                   key={restaurante.restauranteId}
                   restauranteId={restaurante.restauranteId}
                   refetchAvaliacoes={refetchAvaliacoes}
+                  openCloseModal={openCloseModal}
                 />
               </Dialog.Root>
             </ContentFooter>

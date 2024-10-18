@@ -17,11 +17,13 @@ type EditarAvaliacaoFormInputs = z.infer<typeof editarAvaliacaoSchema>;
 
 interface AvaliacaoModalProps {
   avaliacao: AvaliacaoProps;
+  openCloseModal: () => void;
   refetchAvaliacoes: () => void;
 }
 
 export function ModalAvaliacao({
   avaliacao,
+  openCloseModal,
   refetchAvaliacoes,
 }: AvaliacaoModalProps) {
   const editarAvaliacao = useContextSelector(restauranteContext, (context) => {
@@ -64,6 +66,7 @@ export function ModalAvaliacao({
     await editarAvaliacao(dados);
     refetchAvaliacoes();
     LimparFomulário();
+    openCloseModal();
   }
 
   return (

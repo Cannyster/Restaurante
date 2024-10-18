@@ -1,22 +1,24 @@
-import * as Dialog from "@radix-ui/react-dialog";
-import { Overlay, Content, CloseButton } from "./styled";
-import { X } from "phosphor-react";
-import { toast } from "sonner";
-import { novaAvaliacaoSchema } from "../../validation/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useContextSelector } from "use-context-selector";
-import { restauranteContext } from "../../contexts/restauranteContext";
-import * as z from "zod";
+import * as Dialog from '@radix-ui/react-dialog';
+import { Overlay, Content, CloseButton } from './styled';
+import { X } from 'phosphor-react';
+import { toast } from 'sonner';
+import { novaAvaliacaoSchema } from '../../validation/validation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useContextSelector } from 'use-context-selector';
+import { restauranteContext } from '../../contexts/restauranteContext';
+import * as z from 'zod';
 
 type NovoAvaliacaoFormInputs = z.infer<typeof novaAvaliacaoSchema>;
 
 interface DetalhesAvaliacaoProps {
   restauranteId: string;
+  openCloseModal: () => void;
 }
 
 export function ModalNovaAvaliacao({
   restauranteId,
+  openCloseModal,
   refetchAvaliacoes,
 }: DetalhesAvaliacaoProps & { refetchAvaliacoes: () => void }) {
   const criarAvaliacao = useContextSelector(restauranteContext, (context) => {
@@ -40,6 +42,7 @@ export function ModalNovaAvaliacao({
     const { usuario, avaliacao, comentario, restauranteId } = dados;
     await criarAvaliacao({ usuario, avaliacao, comentario, restauranteId });
     refetchAvaliacoes();
+    openCloseModal();
   }
 
   return (
@@ -59,14 +62,14 @@ export function ModalNovaAvaliacao({
           <input
             type="hidden"
             value={restauranteId}
-            {...register("restauranteId")}
+            {...register('restauranteId')}
           />
 
           <input
             type="text"
             placeholder="Nome do Usuário"
             required
-            {...register("usuario")}
+            {...register('usuario')}
             onBlur={() => errors.usuario && toast.error(errors.usuario.message)}
           />
 
@@ -74,7 +77,7 @@ export function ModalNovaAvaliacao({
             type="text"
             placeholder="Comentários"
             required
-            {...register("comentario")}
+            {...register('comentario')}
             onBlur={() =>
               errors.comentario && toast.error(errors.comentario.message)
             }
@@ -84,7 +87,7 @@ export function ModalNovaAvaliacao({
             type="text"
             placeholder="Nota da Avaliação - 1 a 5"
             required
-            {...register("avaliacao", { valueAsNumber: true })}
+            {...register('avaliacao', { valueAsNumber: true })}
             onBlur={() =>
               errors.avaliacao && toast.error(errors.avaliacao.message)
             }

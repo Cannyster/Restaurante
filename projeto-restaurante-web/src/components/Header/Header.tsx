@@ -3,10 +3,10 @@ import {
   HeaderContent,
   NovoRestauranteButton,
   StyledLink,
-} from "./styles";
-import { NovoRestauranteModal } from "../NovoRestauranteModal";
-import * as Dialog from "@radix-ui/react-dialog";
-import logo from "../../assets/logo-restaurante-thin.png";
+} from './styles';
+import { ModalNovoRestaurante } from '../ModalNovoRestaurante/ModalNovoRestaurante';
+import * as Dialog from '@radix-ui/react-dialog';
+import logo from '../../assets/logo-restaurante-thin.png';
 
 export function Header() {
   return (
@@ -23,7 +23,7 @@ export function Header() {
             <Dialog.DialogTrigger asChild>
               <NovoRestauranteButton>Novo Restaurante</NovoRestauranteButton>
             </Dialog.DialogTrigger>
-            <NovoRestauranteModal />
+            <ModalNovoRestaurante />
           </Dialog.Root>
         </HeaderContent>
       </HeaderContainer>

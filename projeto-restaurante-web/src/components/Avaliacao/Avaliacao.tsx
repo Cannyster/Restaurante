@@ -17,6 +17,7 @@ import { Trash } from 'phosphor-react';
 import { Search } from 'lucide-react';
 import { useContextSelector } from 'use-context-selector';
 import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
+import { useState } from 'react';
 
 interface AvaliacaoComponentProps {
   avaliacao: AvaliacaoProps;
@@ -27,6 +28,8 @@ export function Avaliacao({
   avaliacao,
   refetchAvaliacoes,
 }: AvaliacaoComponentProps) {
+  const [open, setOpen] = useState(false);
+
   const deletarAvaliacao = useContextSelector(restauranteContext, (context) => {
     return context.deletarAvaliacaoFn;
   });
@@ -35,6 +38,10 @@ export function Avaliacao({
     const { id } = avaliacao;
     await deletarAvaliacao({ id });
     refetchAvaliacoes();
+  }
+
+  function openCloseModal() {
+    setOpen((state) => !state);
   }
 
   return (
@@ -51,7 +58,7 @@ export function Avaliacao({
           <CommentFooter>
             <p>{avaliacao.avaliacao}</p>
             <ButtonBox>
-              <Dialog.Root>
+              <Dialog.Root open={open} onOpenChange={openCloseModal}>
                 <Dialog.DialogTrigger asChild>
                   <button>
                     <Search size={25} />
@@ -60,6 +67,7 @@ export function Avaliacao({
                 <ModalAvaliacao
                   avaliacao={avaliacao}
                   refetchAvaliacoes={refetchAvaliacoes}
+                  openCloseModal={openCloseModal}
                 />
               </Dialog.Root>
               <button onClick={handleDeletarAvaliacao}>

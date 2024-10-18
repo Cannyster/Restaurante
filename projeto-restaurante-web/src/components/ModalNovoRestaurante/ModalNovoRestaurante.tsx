@@ -1,18 +1,18 @@
-import * as z from "zod";
-import { toast } from "sonner";
-import { X } from "phosphor-react";
-import { useForm } from "react-hook-form";
-import * as Dialog from "@radix-ui/react-dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CloseButton, Content, Overlay } from "./styles";
-import { novoRestauranteFormSchema } from "../../validation/validation";
-import { useContextSelector } from "use-context-selector";
-import { restauranteContext } from "../../contexts/restauranteContext";
+import * as z from 'zod';
+import { toast } from 'sonner';
+import { X } from 'phosphor-react';
+import { useForm } from 'react-hook-form';
+import * as Dialog from '@radix-ui/react-dialog';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CloseButton, Content, Overlay } from './styles';
+import { novoRestauranteFormSchema } from '../../validation/validation';
+import { useContextSelector } from 'use-context-selector';
+import { restauranteContext } from '../../contexts/restauranteContext';
 // import { SelectMenu } from "../Select";
 
 type NovoRestauranteFormInputs = z.infer<typeof novoRestauranteFormSchema>;
 
-export function NovoRestauranteModal() {
+export function ModalNovoRestaurante() {
   // Usando o use-context-selector, para selecionar unicamente uma informação que deve ser acompanhada
   // assim vai evitar a renderização completa que eo padrão do react
   const criarRestaurante = useContextSelector(restauranteContext, (context) => {
@@ -33,9 +33,9 @@ export function NovoRestauranteModal() {
 
   function LimparFomulário() {
     reset();
-    setValue("nome", "");
-    setValue("localizacao", "");
-    setValue("cozinha", "");
+    setValue('nome', '');
+    setValue('localizacao', '');
+    setValue('cozinha', '');
   }
 
   async function handleCriarNovoRestaurante(dados: NovoRestauranteFormInputs) {
@@ -57,7 +57,7 @@ export function NovoRestauranteModal() {
             type="Text"
             placeholder="Nome do Restaurante"
             required
-            {...register("nome")}
+            {...register('nome')}
             onBlur={() => errors.nome && toast.error(errors.nome.message)}
           />
 
@@ -65,7 +65,7 @@ export function NovoRestauranteModal() {
             type="Text"
             placeholder="Localização Do Restaurante"
             required
-            {...register("localizacao")}
+            {...register('localizacao')}
             onBlur={() =>
               errors.localizacao && toast.error(errors.localizacao.message)
             }
@@ -73,7 +73,7 @@ export function NovoRestauranteModal() {
 
           {/* <SelectMenu {...register("cozinha")} required /> */}
 
-          <select {...register("cozinha")} required>
+          <select {...register('cozinha')} required>
             <option value="" hidden>
               Tipo de Cozinha
             </option>

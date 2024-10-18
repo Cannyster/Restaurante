@@ -20,7 +20,7 @@ export interface DetalhesRestauranteProps {
   open: boolean;
 }
 
-export function RestauranteModalDetalhes({
+export function ModalRestaurante({
   restauranteId,
   open,
 }: DetalhesRestauranteProps) {

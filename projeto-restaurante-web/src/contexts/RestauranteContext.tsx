@@ -1,27 +1,27 @@
-import { toast } from "sonner";
-import { ReactNode, useState } from "react";
-import { queryClient } from "../lib/react-query";
-import { createContext } from "use-context-selector";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { obterRestaurantes } from "../api/obter-restaurantes";
+import { toast } from 'sonner';
+import { ReactNode, useState } from 'react';
+import { queryClient } from '../lib/react-query';
+import { createContext } from 'use-context-selector';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { obterRestaurantes } from '../api/obter-restaurantes';
 import {
   deletarRestaurante,
   DeletarRestauranteInput,
-} from "../api/deletar-restaurante";
+} from '../api/deletar-restaurante';
 import {
   criarRestaurante,
   CriarRestauranteInput,
-} from "../api/criar-restaurante";
+} from '../api/criar-restaurante';
 import {
   editarRestaurante,
   EditarRestauranteInput,
-} from "../api/editar-restaurante";
-import { criarAvaliacao, CriarAvaliacaoInput } from "../api/criar-avaliacao";
+} from '../api/editar-restaurante';
+import { criarAvaliacao, CriarAvaliacaoInput } from '../api/criar-avaliacao';
 import {
   deletarAvaliacao,
   DeletarAvaliacaoInput,
-} from "../api/deletar-avaliacao";
-import { editarAvaliacao, EditarAvaliacaoInput } from "../api/editar-avaliacao";
+} from '../api/deletar-avaliacao';
+import { editarAvaliacao, EditarAvaliacaoInput } from '../api/editar-avaliacao';
 
 export interface RestauranteProps {
   restauranteId: string;
@@ -62,13 +62,12 @@ export const restauranteContext = createContext({} as restauranteContextType);
 
 export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   const [buscaQuery, setBuscaQuery] = useState<string | undefined>(undefined);
-
   const filtrarRestaurantes = async (query: string) => {
     setBuscaQuery(query);
   };
 
   const { data: restaurantesCache, isFetching } = useQuery<RestauranteProps[]>({
-    queryKey: ["restaurantes", buscaQuery],
+    queryKey: ['restaurantes', buscaQuery],
     queryFn: () => obterRestaurantes(buscaQuery),
     enabled: true,
   });
@@ -80,12 +79,12 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   >({
     mutationFn: criarRestaurante,
     onSuccess: () => {
-      toast.success("Restaurante Criado com sucesso");
-      queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
+      toast.success('Restaurante Criado com sucesso');
+      queryClient.invalidateQueries({ queryKey: ['restaurantes'] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
-      toast.error("Falha na Criação do Restaurante");
+      toast.error('Falha na Criação do Restaurante');
     },
   });
 
@@ -96,12 +95,12 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   >({
     mutationFn: editarRestaurante,
     onSuccess: () => {
-      toast.success("Restaurante alterado com sucesso");
-      queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
+      toast.success('Restaurante alterado com sucesso');
+      queryClient.invalidateQueries({ queryKey: ['restaurantes'] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
-      toast.error("Falha na alteração do Restaurante");
+      toast.error('Falha na alteração do Restaurante');
     },
   });
 
@@ -112,12 +111,12 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   >({
     mutationFn: deletarRestaurante,
     onSuccess: () => {
-      toast.success("Restaurante Excluído com sucesso");
-      queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
+      toast.success('Restaurante Excluído com sucesso');
+      queryClient.invalidateQueries({ queryKey: ['restaurantes'] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
-      toast.error("Falha na exclusão do Restaurante");
+      toast.error('Falha na exclusão do Restaurante');
     },
   });
 
@@ -128,12 +127,12 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   >({
     mutationFn: criarAvaliacao,
     onSuccess: () => {
-      toast.success("Avaliacação Criada com sucesso");
+      toast.success('Avaliacação Criada com sucesso');
       // queryClient.invalidateQueries({ queryKey: ["avaliacoes"] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
-      toast.error("Falha na Criação da Avaliacação");
+      toast.error('Falha na Criação da Avaliacação');
     },
   });
 
@@ -144,12 +143,12 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   >({
     mutationFn: editarAvaliacao,
     onSuccess: () => {
-      toast.success("Avaliação alterada com sucesso");
+      toast.success('Avaliação alterada com sucesso');
       // queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
-      toast.error("Falha na alteração da Avaliação");
+      toast.error('Falha na alteração da Avaliação');
     },
   });
 
@@ -160,12 +159,12 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   >({
     mutationFn: deletarAvaliacao,
     onSuccess: () => {
-      toast.success("Avaliação Excluída com sucesso");
+      toast.success('Avaliação Excluída com sucesso');
       // queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
     },
     onError: (error) => {
       console.log(`Erro: ${error}`);
-      toast.error("Falha na exclusão do Restaurante");
+      toast.error('Falha na exclusão do Restaurante');
     },
   });
 
