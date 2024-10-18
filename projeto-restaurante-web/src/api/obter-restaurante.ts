@@ -1,4 +1,4 @@
-import { Restaurante } from "../contexts/restauranteContext";
+import { RestauranteProps } from "../contexts/restauranteContext";
 import { api } from "../lib/axios";
 
 export interface ObterRestauranteInput{
@@ -6,6 +6,6 @@ export interface ObterRestauranteInput{
 }
 
 export async function obterRestaurante({restauranteId}: ObterRestauranteInput){
-    const response = await api.get<Restaurante>(`/restaurantes/${restauranteId}`)
+    const response = await api.get<RestauranteProps>(`/restaurantes/${restauranteId}`)
     return response.data
 }

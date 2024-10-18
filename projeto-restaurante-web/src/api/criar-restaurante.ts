@@ -1,4 +1,4 @@
-import { Restaurante } from "../contexts/restauranteContext";
+import { RestauranteProps } from "../contexts/restauranteContext";
 import { api } from "../lib/axios";
 
 export interface CriarRestauranteInput{
@@ -10,8 +10,8 @@ export interface CriarRestauranteInput{
 export async function criarRestaurante({
     nome, 
     localizacao,
-    cozinha}: CriarRestauranteInput): Promise<Restaurante>{
-    const response = await api.post<Restaurante>(`/restaurantes`, {
+    cozinha}: CriarRestauranteInput): Promise<RestauranteProps>{
+    const response = await api.post<RestauranteProps>(`/restaurantes`, {
         nome,
         localizacao,
         cozinha

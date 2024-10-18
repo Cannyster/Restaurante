@@ -68,7 +68,14 @@ export const restaurantesRoutes = (server) => {
 
   server.delete('/restaurantes/:restauranteId', (req, res) => {
     const { restauranteId } = req.params;
-    db.get('restaurantes').remove({ id: restauranteId }).write();
+    const restauranteRemovido = db.get('restaurantes').remove({ id: restauranteId }).write();
+  
+    if (!restauranteRemovido.length) {
+      return res.status(404).json({ message: 'Restaurante não encontrado.' });
+    }
+  
+    db.get('avaliacoes').remove({ restauranteId: restauranteId }).write();
+  
     res.status(204).send();
   });
 };

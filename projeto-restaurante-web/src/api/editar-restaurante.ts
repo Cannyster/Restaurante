@@ -1,4 +1,4 @@
-import { Restaurante } from "../contexts/restauranteContext";
+import { RestauranteProps } from "../contexts/restauranteContext";
 import { api } from "../lib/axios";
 
 export interface EditarRestauranteInput{
@@ -12,8 +12,8 @@ export async function editarRestaurante({
     restauranteId, 
     nome, 
     localizacao, 
-    cozinha}: EditarRestauranteInput): Promise<Restaurante>{
-        const response = await api.put<Restaurante>(`/restaurantes/${restauranteId}`, {
+    cozinha}: EditarRestauranteInput): Promise<RestauranteProps>{
+        const response = await api.put<RestauranteProps>(`/restaurantes/${restauranteId}`, {
             nome, 
             localizacao, 
             cozinha})

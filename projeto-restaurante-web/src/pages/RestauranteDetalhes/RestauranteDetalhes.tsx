@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Vazio } from "../../components/Vazio/Vazio";
-import { NovaAvaliacaoModal } from "../../components/AvaliacaoModal/NovaAvaliacaoModal";
+import { NovaAvaliacaoModal } from "../../components/NovaAvaliacaoModal/NovaAvaliacaoModal";
 import {
   AvaliacaoContainer,
   Content,
@@ -86,7 +86,10 @@ export function RestauranteDetalhes() {
                 <Dialog.DialogTrigger asChild>
                   <LocalButton>Avaliar</LocalButton>
                 </Dialog.DialogTrigger>
-                <NovaAvaliacaoModal />
+                <NovaAvaliacaoModal
+                  key={restaurante.restauranteId}
+                  restauranteId={restaurante.restauranteId}
+                />
               </Dialog.Root>
             </ContentFooter>
           </Content>

@@ -11,11 +11,13 @@ import * as z from "zod";
 
 type NovoAvaliacaoFormInputs = z.infer<typeof novaAvaliacaoSchema>;
 
-export function NovaAvaliacaoModal() {
-  // Usando o use-context-selector, para selecionar unicamente uma informação que deve ser acompanhada
-  // assim vai evitar a renderização completa que eo padrão do react
+interface DetalhesAvaliacaoProps {
+  restauranteId: string;
+}
+
+export function NovaAvaliacaoModal({ restauranteId }: DetalhesAvaliacaoProps) {
   const criarAvaliacao = useContextSelector(restauranteContext, (context) => {
-    return context.criarRestauranteFn;
+    return context.criarAvaliacaoFn;
   });
 
   const {
@@ -23,23 +25,17 @@ export function NovaAvaliacaoModal() {
     handleSubmit,
     formState: { isSubmitting, errors },
     reset,
-    setValue,
   } = useForm<NovoAvaliacaoFormInputs>({
     resolver: zodResolver(novaAvaliacaoSchema),
   });
 
-  //console.log(errors)
-
   function LimparFomulário() {
     reset();
-    setValue("usuario", "");
-    setValue("comentario", "");
-    setValue("avaliacao", "");
-    setValue("restauranteId", "");
   }
 
   async function handleCriarNovaAvaliacao(dados: NovoAvaliacaoFormInputs) {
-    criarAvaliacao(dados);
+    const { usuario, avaliacao, comentario, restauranteId } = dados;
+    await criarAvaliacao({ usuario, avaliacao, comentario, restauranteId });
   }
 
   return (
@@ -47,6 +43,9 @@ export function NovaAvaliacaoModal() {
       <Overlay />
       <Content onPointerDownOutside={LimparFomulário}>
         <Dialog.DialogTitle>Nova Avaliação</Dialog.DialogTitle>
+        <Dialog.DialogDescription>
+          Nós conte como foi sua experiência
+        </Dialog.DialogDescription>
 
         <CloseButton onClick={LimparFomulário}>
           <X size={24} />
@@ -54,7 +53,13 @@ export function NovaAvaliacaoModal() {
 
         <form onSubmit={handleSubmit(handleCriarNovaAvaliacao)}>
           <input
-            type="Text"
+            type="hidden"
+            value={restauranteId}
+            {...register("restauranteId")}
+          />
+
+          <input
+            type="text"
             placeholder="Nome do Usuário"
             required
             {...register("usuario")}
@@ -62,7 +67,7 @@ export function NovaAvaliacaoModal() {
           />
 
           <input
-            type="Text"
+            type="text"
             placeholder="Comentários"
             required
             {...register("comentario")}
@@ -73,9 +78,9 @@ export function NovaAvaliacaoModal() {
 
           <input
             type="text"
-            placeholder="Nota da Avaliação"
+            placeholder="Nota da Avaliação - 1 a 5"
             required
-            {...register("avaliacao")}
+            {...register("avaliacao", { valueAsNumber: true })}
             onBlur={() =>
               errors.avaliacao && toast.error(errors.avaliacao.message)
             }

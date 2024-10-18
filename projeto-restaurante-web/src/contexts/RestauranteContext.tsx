@@ -16,6 +16,12 @@ import {
   editarRestaurante,
   EditarRestauranteInput,
 } from "../api/editar-restaurante";
+import { criarAvaliacao, CriarAvaliacaoInput } from "../api/criar-avaliacao";
+import {
+  deletarAvaliacao,
+  DeletarAvaliacaoInput,
+} from "../api/deletar-avaliacao";
+import { editarAvaliacao, EditarAvaliacaoInput } from "../api/editar-avaliacao";
 
 export interface RestauranteProps {
   restauranteId: string;
@@ -44,6 +50,9 @@ interface restauranteContextType {
     dados: EditarRestauranteInput
   ) => Promise<RestauranteProps>;
   deletarRestauranteFn: (dados: DeletarRestauranteInput) => Promise<void>;
+  criarAvaliacaoFn: (dados: CriarAvaliacaoInput) => Promise<AvaliacaoProps>;
+  editarAvaliacaoFn: (dados: EditarAvaliacaoInput) => Promise<AvaliacaoProps>;
+  deletarAvaliacaoFn: (dados: DeletarAvaliacaoInput) => Promise<void>;
 }
 interface RestauranteProviderProps {
   children: ReactNode;
@@ -112,6 +121,54 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
     },
   });
 
+  const { mutateAsync: criarAvaliacaoFn } = useMutation<
+    AvaliacaoProps,
+    Error,
+    CriarAvaliacaoInput
+  >({
+    mutationFn: criarAvaliacao,
+    onSuccess: () => {
+      toast.success("Avaliacação Criada com sucesso");
+      // queryClient.invalidateQueries({ queryKey: ["avaliacoes"] });
+    },
+    onError: (error) => {
+      console.log(`Erro: ${error}`);
+      toast.error("Falha na Criação da Avaliacação");
+    },
+  });
+
+  const { mutateAsync: editarAvaliacaoFn } = useMutation<
+    AvaliacaoProps,
+    Error,
+    EditarAvaliacaoInput
+  >({
+    mutationFn: editarAvaliacao,
+    onSuccess: () => {
+      toast.success("Avaliação alterada com sucesso");
+      // queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
+    },
+    onError: (error) => {
+      console.log(`Erro: ${error}`);
+      toast.error("Falha na alteração da Avaliação");
+    },
+  });
+
+  const { mutateAsync: deletarAvaliacaoFn } = useMutation<
+    void,
+    Error,
+    DeletarAvaliacaoInput
+  >({
+    mutationFn: deletarAvaliacao,
+    onSuccess: () => {
+      toast.success("Avaliação Excluída com sucesso");
+      // queryClient.invalidateQueries({ queryKey: ["restaurantes"] });
+    },
+    onError: (error) => {
+      console.log(`Erro: ${error}`);
+      toast.error("Falha na exclusão do Restaurante");
+    },
+  });
+
   return (
     <restauranteContext.Provider
       value={{
@@ -121,6 +178,9 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
         criarRestauranteFn,
         deletarRestauranteFn,
         filtrarRestaurantes,
+        criarAvaliacaoFn,
+        editarAvaliacaoFn,
+        deletarAvaliacaoFn,
       }}
     >
       {children}

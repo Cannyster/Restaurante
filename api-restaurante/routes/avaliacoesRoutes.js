@@ -3,8 +3,9 @@ import { z } from 'zod';
 
 const avaliacaoSchema = z.object({
   restauranteId: z.string().min(1, 'ID do restaurante é obrigatório'),
-  nota: z.number().min(1, 'Nota deve ser no mínimo 1').max(5, 'Nota deve ser no máximo 5'),
-  comentario: z.string(),
+  avaliacao: z.number().min(1, 'deve ser no mínimo 1').max(5, 'deve ser no máximo 5'),
+  comentario: z.string().min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
+  usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
 });
 
 export const avaliacoesRoutes = (server) => {
@@ -12,7 +13,10 @@ export const avaliacoesRoutes = (server) => {
 
   server.get('/avaliacoes/:restauranteId', (req, res) => {
     const { restauranteId } = req.params;
-    const avaliacoes = db.get('avaliacoes').filter({ restauranteId: restauranteId }).value();
+    const avaliacoes = db.get('avaliacoes')
+    .filter({ restauranteId: restauranteId })
+    .orderBy('datahora', 'desc')
+    .value();
     
     if (avaliacoes.length === 0) {
       return res.status(204).json({ message: 'Nenhuma avaliação encontrada para este restaurante.' });
@@ -22,8 +26,10 @@ export const avaliacoesRoutes = (server) => {
   });
 
   server.post('/avaliacoes', (req, res) => {
+    console.log(`analise da requisição: ${req}`)
     const validacaoResultado = avaliacaoSchema.safeParse(req.body);
     if (!validacaoResultado.success) {
+      console.log('erro na validação dos dados')
       return res.status(400).json({ errors: validacaoResultado.error.format() });
     }
     
