@@ -67,7 +67,7 @@ export const CommentFooter = styled.footer`
   display: flex;
   top: 0;
   bottom: 0;
-  justify-content: flex-start;
+  justify-content: space-between;
 
   p {
     margin: 0 0 0 0;

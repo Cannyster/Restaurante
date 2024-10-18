@@ -7,24 +7,46 @@ import {
   Header,
   CommentFooter,
 } from "./styles";
-import { AvaliacaoProps } from "../../contexts/restauranteContext";
+import {
+  AvaliacaoProps,
+  restauranteContext,
+} from "../../contexts/restauranteContext";
+import { Trash } from "phosphor-react";
+import { useContextSelector } from "use-context-selector";
+import { DeletarAvaliacaoInput } from "../../api/deletar-avaliacao";
 
-export function Avaliacao(dados: AvaliacaoProps) {
+export function Avaliacao({
+  id,
+  usuario,
+  comentario,
+  avaliacao,
+  datahora,
+  restauranteId,
+}: AvaliacaoProps) {
+  const deletarAvaliacao = useContextSelector(restauranteContext, (context) => {
+    return context.deletarAvaliacaoFn;
+  });
+
+  async function handleDeletarAvaliacao(id: DeletarAvaliacaoInput) {
+    await deletarAvaliacao(id);
+  }
+
   return (
     <Comment>
       <CommentBox>
         <CommentContent>
           <Header>
             <AuthorAndTime>
-              <strong>{dados.usuario}</strong>
-              <time title="11 de maio as 08:13" dateTime="2022-05-11 08:13:30">
-                {formatarData.format(new Date(dados.datahora))}
-              </time>
+              <strong>{usuario}</strong>
+              <time>{formatarData.format(new Date(datahora))}</time>
             </AuthorAndTime>
           </Header>
-          <p>{dados.comentario}</p>
+          <p>{comentario}</p>
           <CommentFooter>
-            <p>{dados.avaliacao}</p>
+            <p>{avaliacao}</p>
+            <button onClick={() => handleDeletarAvaliacao(id)}>
+              <Trash size={30}></Trash>
+            </button>
           </CommentFooter>
         </CommentContent>
       </CommentBox>
