@@ -2,7 +2,6 @@ import { uuidv4, router } from '../config.js';
 import { z } from 'zod';
 
 const avaliacaoSchema = z.object({
-  restauranteId: z.string().min(1, 'ID do restaurante é obrigatório'),
   avaliacao: z.number().min(1, 'deve ser no mínimo 1').max(5, 'deve ser no máximo 5'),
   comentario: z.string().min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
   usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),

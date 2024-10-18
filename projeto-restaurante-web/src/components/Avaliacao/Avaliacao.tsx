@@ -1,4 +1,5 @@
-import { formatarData } from "../../utils/formatter";
+import { formatarData } from '../../utils/formatter';
+import * as Dialog from '@radix-ui/react-dialog';
 import {
   Comment,
   CommentBox,
@@ -6,28 +7,32 @@ import {
   AuthorAndTime,
   Header,
   CommentFooter,
-} from "./styles";
+  ButtonBox,
+} from './styles';
 import {
   AvaliacaoProps,
   restauranteContext,
-} from "../../contexts/restauranteContext";
-import { Trash } from "phosphor-react";
-import { useContextSelector } from "use-context-selector";
+} from '../../contexts/restauranteContext';
+import { Trash } from 'phosphor-react';
+import { Search } from 'lucide-react';
+import { useContextSelector } from 'use-context-selector';
+import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
+
+interface AvaliacaoComponentProps {
+  avaliacao: AvaliacaoProps;
+  refetchAvaliacoes: () => void;
+}
 
 export function Avaliacao({
-  id,
-  usuario,
-  comentario,
   avaliacao,
-  datahora,
-  restauranteId,
   refetchAvaliacoes,
-}: AvaliacaoProps & { refetchAvaliacoes: () => void }) {
+}: AvaliacaoComponentProps) {
   const deletarAvaliacao = useContextSelector(restauranteContext, (context) => {
     return context.deletarAvaliacaoFn;
   });
 
   async function handleDeletarAvaliacao() {
+    const { id } = avaliacao;
     await deletarAvaliacao({ id });
     refetchAvaliacoes();
   }
@@ -38,16 +43,29 @@ export function Avaliacao({
         <CommentContent>
           <Header>
             <AuthorAndTime>
-              <strong>{usuario}</strong>
-              <time>{formatarData.format(new Date(datahora))}</time>
+              <strong>{avaliacao.usuario}</strong>
+              <time>{formatarData.format(new Date(avaliacao.datahora))}</time>
             </AuthorAndTime>
           </Header>
-          <p>{comentario}</p>
+          <p>{avaliacao.comentario}</p>
           <CommentFooter>
-            <p>{avaliacao}</p>
-            <button onClick={handleDeletarAvaliacao}>
-              <Trash size={30}></Trash>
-            </button>
+            <p>{avaliacao.avaliacao}</p>
+            <ButtonBox>
+              <Dialog.Root>
+                <Dialog.DialogTrigger asChild>
+                  <button>
+                    <Search size={25} />
+                  </button>
+                </Dialog.DialogTrigger>
+                <ModalAvaliacao
+                  avaliacao={avaliacao}
+                  refetchAvaliacoes={refetchAvaliacoes}
+                />
+              </Dialog.Root>
+              <button onClick={handleDeletarAvaliacao}>
+                <Trash size={30}></Trash>
+              </button>
+            </ButtonBox>
           </CommentFooter>
         </CommentContent>
       </CommentBox>

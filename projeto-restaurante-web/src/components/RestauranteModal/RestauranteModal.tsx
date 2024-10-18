@@ -65,6 +65,12 @@ export function RestauranteModalDetalhes({
     reset,
   } = useForm<EditarRestauranteFormInputs>({
     resolver: zodResolver(editarRestauranteSchema),
+    defaultValues({
+      restauranteId: restaurante.restauranteId || "",
+      nome: restaurante.nome || "",
+      localizacao: restaurante.localizacao || "",
+      cozinha: restaurante.cozinha || "",
+    })
   });
 
   if (Object.keys(errors).length > 0) {

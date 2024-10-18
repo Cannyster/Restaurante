@@ -98,3 +98,15 @@ export const Header = styled.header`
   align-items: center;
   margin-bottom: 0.5rem;
 `;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  Search{
+    &:hover {
+      color: ${(props) => props.theme["green-300"]};
+    }
+  }
+
+`

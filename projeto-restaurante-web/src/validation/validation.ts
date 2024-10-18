@@ -27,3 +27,10 @@ export const novaAvaliacaoSchema = z.object({
     avaliacao: z.number().min(1).max(5),
     restauranteId: z.string(),
 });
+
+export const editarAvaliacaoSchema = z.object({
+    usuario: z.string().min(5, 'O nome deve ter pelo menos 5 caracteres.'),
+    comentario:  z.string().min(5, 'O comentário deve ter pelo menos 5 caracteres.'),
+    avaliacao: z.number().min(1).max(5),
+    id: z.string(),
+});

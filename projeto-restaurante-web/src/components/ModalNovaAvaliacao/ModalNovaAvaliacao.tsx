@@ -15,7 +15,7 @@ interface DetalhesAvaliacaoProps {
   restauranteId: string;
 }
 
-export function NovaAvaliacaoModal({
+export function ModalNovaAvaliacao({
   restauranteId,
   refetchAvaliacoes,
 }: DetalhesAvaliacaoProps & { refetchAvaliacoes: () => void }) {
