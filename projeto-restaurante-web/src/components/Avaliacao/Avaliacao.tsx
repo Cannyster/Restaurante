@@ -13,6 +13,7 @@ import {
 } from '../../contexts/RestauranteContext';
 import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
 import { useContextSelector } from 'use-context-selector';
+import { ModalDelete } from '../ModalDelete/ModalDelete';
 import { AvaliacaoEstrelas } from '../Estrela/Estrela';
 import { formatarData } from '../../utils/formatter';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -30,19 +31,23 @@ export function Avaliacao({
   refetchAvaliacoes,
 }: AvaliacaoComponentProps) {
   const [open, setOpen] = useState(false);
+  const [openModalExclusao, setModalExclusao] = useState(false);
 
   const deletarAvaliacao = useContextSelector(RestauranteContext, (context) => {
     return context.deletarAvaliacaoFn;
   });
 
-  async function handleDeletarAvaliacao() {
-    const { id } = avaliacao;
+  async function handleDeletarAvaliacao(id: string) {
+    // const { id } = avaliacao;
     await deletarAvaliacao({ id });
     refetchAvaliacoes();
   }
 
   function openCloseModal() {
     setOpen((state) => !state);
+  }
+  function openCloseModalExclusao() {
+    setModalExclusao((state) => !state);
   }
 
   return (
@@ -71,9 +76,23 @@ export function Avaliacao({
                   openCloseModal={openCloseModal}
                 />
               </Dialog.Root>
-              <button onClick={handleDeletarAvaliacao}>
-                <Trash size={30}></Trash>
-              </button>
+
+              <Dialog.Root
+                open={openModalExclusao}
+                onOpenChange={openCloseModalExclusao}
+              >
+                <Dialog.DialogTrigger asChild>
+                  <button>
+                    <Trash size={30}></Trash>
+                  </button>
+                </Dialog.DialogTrigger>
+                <ModalDelete
+                  itemId={avaliacao.id}
+                  textoExclusao={'esta Avaliação'}
+                  deleteFunction={handleDeletarAvaliacao}
+                  openCloseModal={openCloseModalExclusao}
+                />
+              </Dialog.Root>
             </ButtonBox>
           </CommentFooter>
         </CommentContent>

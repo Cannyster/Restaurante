@@ -13,7 +13,7 @@ import {
 } from '../../contexts/RestauranteContext';
 import { ModalNovaAvaliacao } from '../../components/ModalNovaAvaliacao/ModalNovaAvaliacao';
 import { ModalRestaurante } from '../../components/ModalRestaurante/ModalRestaurante';
-import { DeletarRestauranteInput } from '../../api/deletar-restaurante';
+import { ModalDelete } from '../../components/ModalDelete/ModalDelete';
 import { AvaliacaoEstrelas } from '../../components/Estrela/Estrela';
 import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
 import { obterRestaurante } from '../../api/obter-restaurante';
@@ -32,6 +32,7 @@ export function RestauranteDetalhes() {
   const navigate = useNavigate();
   const [openModalRestaurante, setopenModalRestaurante] = useState(false);
   const [openModalAvaliacao, setModalAvaliacao] = useState(false);
+  const [openModalExclusao, setModalExclusao] = useState(false);
 
   const { restauranteId } = useParams();
 
@@ -95,6 +96,10 @@ export function RestauranteDetalhes() {
     setModalAvaliacao((state) => !state);
   }
 
+  function openCloseModalExclusao() {
+    setModalExclusao((state) => !state);
+  }
+
   return (
     <>
       <Helmet title="Detalhes" />
@@ -107,14 +112,20 @@ export function RestauranteDetalhes() {
               <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
               <AvaliacaoEstrelas media={mediaAvaliacoes} />
               <ButtonContainer>
-                <LocalButton
-                  type="button"
-                  onClick={() =>
-                    handleDeletarRestaurante(restaurante.restauranteId)
-                  }
+                <Dialog.Root
+                  open={openModalExclusao}
+                  onOpenChange={openCloseModalExclusao}
                 >
-                  Excluir
-                </LocalButton>
+                  <Dialog.DialogTrigger asChild>
+                    <LocalButton type="button">Excluir</LocalButton>
+                  </Dialog.DialogTrigger>
+                  <ModalDelete
+                    itemId={restaurante.restauranteId}
+                    textoExclusao={'este Restaurante'}
+                    deleteFunction={handleDeletarRestaurante}
+                    openCloseModal={openCloseModalExclusao}
+                  />
+                </Dialog.Root>
 
                 <Dialog.Root
                   open={openModalRestaurante}

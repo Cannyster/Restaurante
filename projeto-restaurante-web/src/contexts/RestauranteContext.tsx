@@ -62,15 +62,23 @@ export const RestauranteContext = createContext({} as RestauranteContextType);
 
 export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   const [buscaQuery, setBuscaQuery] = useState<string | undefined>(undefined);
+
+  const { data: restaurantesCache, isFetching } = useQuery<RestauranteProps[]>({
+    queryKey: ['restaurantes'],
+    queryFn: () => obterRestaurantes(),
+    enabled: true,
+  });
+
+  const restaurantesFiltrados = restaurantesCache?.filter(
+    (restaurante) =>
+      buscaQuery
+        ? restaurante.nome.toLowerCase().includes(buscaQuery.toLowerCase()) // Filtra se a busca não for vazia
+        : true // Mostra todos se não houver termo de busca
+  );
+
   const filtrarRestaurantes = async (query: string) => {
     setBuscaQuery(query);
   };
-
-  const { data: restaurantesCache, isFetching } = useQuery<RestauranteProps[]>({
-    queryKey: ['restaurantes', buscaQuery],
-    queryFn: () => obterRestaurantes(buscaQuery),
-    enabled: true,
-  });
 
   const { mutateAsync: criarRestauranteFn } = useMutation<
     RestauranteProps,
@@ -171,7 +179,7 @@ export function RestaurantesProvider({ children }: RestauranteProviderProps) {
   return (
     <RestauranteContext.Provider
       value={{
-        restaurantesCache,
+        restaurantesCache: restaurantesFiltrados,
         isFetching,
         editarRestauranteFn,
         criarRestauranteFn,
