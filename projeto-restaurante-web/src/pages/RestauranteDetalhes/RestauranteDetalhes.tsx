@@ -19,6 +19,7 @@ import {
 import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useState } from 'react';
+import { AvaliacaoEstrelas } from '../../components/Estrela/Estrela';
 
 export function RestauranteDetalhes() {
   const [open, setOpen] = useState(false);
@@ -67,6 +68,7 @@ export function RestauranteDetalhes() {
             <h2>{`${restaurante.nome}`}</h2>
             <p>{`Endereço: ${restaurante.localizacao}`}</p>
             <p>{`Tipo Cozinha: ${restaurante.cozinha}`}</p>
+            <AvaliacaoEstrelas media={5} />
 
             <AvaliacaoContainer>
               <h1>Avaliações</h1>

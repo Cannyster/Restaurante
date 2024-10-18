@@ -18,6 +18,7 @@ import { Search } from 'lucide-react';
 import { useContextSelector } from 'use-context-selector';
 import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
 import { useState } from 'react';
+import { AvaliacaoEstrelas } from '../Estrela/Estrela';
 
 interface AvaliacaoComponentProps {
   avaliacao: AvaliacaoProps;
@@ -56,7 +57,7 @@ export function Avaliacao({
           </Header>
           <p>{avaliacao.comentario}</p>
           <CommentFooter>
-            <p>{avaliacao.avaliacao}</p>
+            <AvaliacaoEstrelas media={avaliacao.avaliacao} />
             <ButtonBox>
               <Dialog.Root open={open} onOpenChange={openCloseModal}>
                 <Dialog.DialogTrigger asChild>
