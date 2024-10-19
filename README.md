@@ -2,6 +2,11 @@
 
 Este é um projeto web para visualização e avaliação de restaurantes, desenvolvido utilizando React, TypeScript, JSON Server, e outras ferramentas modernas como Vite para o ambiente de desenvolvimento. O projeto faz uso de diversas bibliotecas e frameworks para proporcionar uma experiência de usuário agradável e uma base de código escalável e organizada.
 
+## Capturas de tela
+
+[Demo #1](demo/demo_01.png) - [Demo #2](demo/demo_02.png) - [Demo #3](demo/demo_03.png) - [Demo #4](demo/demo_04.png) - [Demo #5](demo/demo_05.png)  - [Demo #1](demo/demo_06.png) - [Demo #2](demo/demo_07.png) - [Demo #3](demo/demo_08.png) - [Demo #4](demo/demo_09.png) - [Demo #5](demo/demo_10.png)
+
+
 ## Tecnologias Utilizadas
 
 - **React**: Biblioteca JavaScript para construção de interfaces de usuário.
@@ -33,15 +38,15 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
 
 2. **Instale as dependências**:
 
-   npm install
+   dentro de cada pasta das pastas api-restaurante e projeto-restaurante-web execute o comando:  `yarn` ou `npm install`
 
 3. **Inicie o JSON Server** (simulando uma API):
 
-   npx json-server --watch db.json --port 3000
+   dentro da pasta api-restaurante execute o seguinte comando: `yarn run start` ou `npm run start`
 
 4. **Inicie o servidor de desenvolvimento**:
 
-   npm run dev
+   dentro da pasta projeto-restaurante-web execute o seguinte comando: `yarn run dev` ou `npm run dev`
 
 5. **Acesse o projeto**:
    
@@ -63,3 +68,7 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
 - `react-router-dom`: Gerenciamento de rotas.
 - `styled-components`: Estilização com componentes.
 - `eslint` e `prettier`: Para manter a qualidade do código e garantir consistência no formato.
+
+## Autor
+
+* Jhonanthan Campos Xavier - [LinkedIn](https://www.linkedin.com/in/jhonanthan-campos-xavier-0905a5141/)
