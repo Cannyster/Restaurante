@@ -1,10 +1,16 @@
+import {
+  DialogCloseButton,
+  DialogContent,
+  DialogOverlay,
+  GlobalForm,
+} from '../../styles/global';
 import { RestauranteContext } from '../../contexts/RestauranteContext';
-import { Overlay, Content, CloseButton, LocalButton } from './styled';
 import { novaAvaliacaoSchema } from '../../validation/validation';
 import { useContextSelector } from 'use-context-selector';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
+import { LocalButton } from './styled';
 import { X } from 'phosphor-react';
 import { toast } from 'sonner';
 import * as z from 'zod';
@@ -47,18 +53,18 @@ export function ModalNovaAvaliacao({
 
   return (
     <Dialog.Portal>
-      <Overlay />
-      <Content onPointerDownOutside={LimparFomulário}>
+      <DialogOverlay />
+      <DialogContent onPointerDownOutside={LimparFomulário}>
         <Dialog.DialogTitle>Nova Avaliação</Dialog.DialogTitle>
         <Dialog.DialogDescription>
           Nos conte como foi sua experiência
         </Dialog.DialogDescription>
 
-        <CloseButton onClick={LimparFomulário}>
+        <DialogCloseButton onClick={LimparFomulário}>
           <X size={24} />
-        </CloseButton>
+        </DialogCloseButton>
 
-        <form onSubmit={handleSubmit(handleCriarNovaAvaliacao)}>
+        <GlobalForm onSubmit={handleSubmit(handleCriarNovaAvaliacao)}>
           <input
             type="hidden"
             value={restauranteId}
@@ -96,8 +102,8 @@ export function ModalNovaAvaliacao({
           <LocalButton type="submit" disabled={isSubmitting}>
             Cadastrar
           </LocalButton>
-        </form>
-      </Content>
+        </GlobalForm>
+      </DialogContent>
     </Dialog.Portal>
   );
 }

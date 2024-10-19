@@ -1,10 +1,5 @@
-import {
-  ButtonContainer,
-  CloseButton,
-  Content,
-  LocalButton,
-  Overlay,
-} from './styles';
+import { ButtonContainer, DialogLocalContent, LocalButton } from './styles';
+import { DialogCloseButton, DialogOverlay } from '../../styles/global';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from 'phosphor-react';
 
@@ -28,14 +23,14 @@ export function ModalDelete({
 
   return (
     <Dialog.Portal>
-      <Overlay />
-      <Content>
+      <DialogOverlay />
+      <DialogLocalContent>
         <h2>Confirmar Exclusão</h2>
         <p>Você tem certeza de que deseja excluir {textoExclusao} ?</p>
 
-        <CloseButton>
+        <DialogCloseButton>
           <X size={24} />
-        </CloseButton>
+        </DialogCloseButton>
 
         <ButtonContainer>
           <LocalButton type="button" onClick={openCloseModal}>
@@ -45,7 +40,7 @@ export function ModalDelete({
             Confirmar
           </LocalButton>
         </ButtonContainer>
-      </Content>
+      </DialogLocalContent>
     </Dialog.Portal>
   );
 }

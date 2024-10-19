@@ -1,12 +1,17 @@
 import {
+  DialogCloseButton,
+  DialogContent,
+  DialogOverlay,
+  GlobalButton,
+  GlobalForm,
+} from '../../styles/global';
+import {
   RestauranteContext,
   RestauranteProps,
 } from '../../contexts/RestauranteContext';
 import { editarRestauranteSchema } from '../../validation/validation';
 import { useContextSelector } from 'use-context-selector';
-import { CloseButton, Content, Overlay } from './styles';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GlobalButton } from '../../styles/global';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 import { X } from 'phosphor-react';
@@ -76,18 +81,18 @@ export function ModalRestaurante({
 
   return (
     <Dialog.Portal>
-      <Overlay />
-      <Content onPointerDownOutside={LimparFomulário}>
+      <DialogOverlay />
+      <DialogContent onPointerDownOutside={LimparFomulário}>
         <Dialog.Title>Detalhes Do Restaurante</Dialog.Title>
         <Dialog.DialogDescription>
           Restaurante Id: {restaurante.restauranteId}
         </Dialog.DialogDescription>
 
-        <CloseButton onClick={LimparFomulário}>
+        <DialogCloseButton onClick={LimparFomulário}>
           <X size={24} />
-        </CloseButton>
+        </DialogCloseButton>
 
-        <form onSubmit={handleSubmit(handleEditarRestaurante)}>
+        <GlobalForm onSubmit={handleSubmit(handleEditarRestaurante)}>
           <input
             type="hidden"
             value={restaurante.restauranteId}
@@ -127,8 +132,8 @@ export function ModalRestaurante({
               Salvar
             </GlobalButton>
           </div>
-        </form>
-      </Content>
+        </GlobalForm>
+      </DialogContent>
     </Dialog.Portal>
   );
 }

@@ -1,13 +1,19 @@
 import {
+  DialogCloseButton,
+  DialogContent,
+  DialogOverlay,
+  GlobalForm,
+} from '../../styles/global';
+import {
   AvaliacaoProps,
   RestauranteContext,
 } from '../../contexts/RestauranteContext';
-import { Overlay, Content, CloseButton, LocalButton } from './styled';
 import { editarAvaliacaoSchema } from '../../validation/validation';
 import { useContextSelector } from 'use-context-selector';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
+import { LocalButton } from './styled';
 import { X } from 'phosphor-react';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
@@ -71,16 +77,16 @@ export function ModalAvaliacao({
 
   return (
     <Dialog.Portal>
-      <Overlay />
-      <Content onPointerDownOutside={LimparFomulário}>
+      <DialogOverlay />
+      <DialogContent onPointerDownOutside={LimparFomulário}>
         <Dialog.DialogTitle>Alterar Avaliação</Dialog.DialogTitle>
         <Dialog.Description>Id: {avaliacao.id}</Dialog.Description>
 
-        <CloseButton onClick={LimparFomulário}>
+        <DialogCloseButton onClick={LimparFomulário}>
           <X size={24} />
-        </CloseButton>
+        </DialogCloseButton>
 
-        <form onSubmit={handleSubmit(handleEditarAvaliacao)}>
+        <GlobalForm onSubmit={handleSubmit(handleEditarAvaliacao)}>
           <input type="hidden" value={avaliacao.id} {...register('id')} />
 
           <input
@@ -114,8 +120,8 @@ export function ModalAvaliacao({
           <LocalButton type="submit" disabled={isSubmitting}>
             Salvar
           </LocalButton>
-        </form>
-      </Content>
+        </GlobalForm>
+      </DialogContent>
     </Dialog.Portal>
   );
 }
