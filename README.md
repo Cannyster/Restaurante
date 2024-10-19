@@ -4,7 +4,7 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
 
 ## Capturas de tela
 
-[Demo #1](demo/demo_01.png) - [Demo #2](demo/demo_02.png) - [Demo #3](demo/demo_03.png) - [Demo #4](demo/demo_04.png) - [Demo #5](demo/demo_05.png)  - [Demo #1](demo/demo_06.png) - [Demo #2](demo/demo_07.png) - [Demo #3](demo/demo_08.png) - [Demo #4](demo/demo_09.png) - [Demo #5](demo/demo_10.png)
+[Demo #1](demo/demo_01.png) - [Demo #2](demo/demo_02.png) - [Demo #3](demo/demo_03.png) - [Demo #4](demo/demo_04.png) - [Demo #5](demo/demo_05.png)  - [Demo #6](demo/demo_06.png) - [Demo #7](demo/demo_07.png) - [Demo #8](demo/demo_08.png) - [Demo #9](demo/demo_09.png) - [Demo #10](demo/demo_10.png)
 
 
 ## Tecnologias Utilizadas
