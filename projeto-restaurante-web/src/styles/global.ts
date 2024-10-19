@@ -19,8 +19,9 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const GlobalButton = styled.button`
-  height: 3rem;
-  width: 10rem;
+  font-size: 1.2rem;
+  height: 3.5rem;
+  width: 15rem;
   border: 0;
   background: ${(props) => props.theme['yellow-800']};
   color: ${(props) => props.theme.white};
@@ -31,7 +32,7 @@ export const GlobalButton = styled.button`
 
   :focus {
     outline: 0;
-    box-shadow: 0 0 0 2px ${(props) => props.theme['green-300']};
+    box-shadow: 0 0 0 2px ${(props) => props.theme['yellow-300']};
   }
 
   &:not(:disabled):hover {

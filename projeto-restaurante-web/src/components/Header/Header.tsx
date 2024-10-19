@@ -1,12 +1,15 @@
 import {
   HeaderContainer,
   HeaderContent,
-  NovoRestauranteButton,
+  LocalButton,
   StyledLink,
+  ContainerVoid,
 } from './styles';
 import logo from '../../assets/logo-restaurante-thin.png';
+import { useLocation } from 'react-router-dom';
 
 export function Header() {
+  const location = useLocation();
   return (
     <header>
       <HeaderContainer>
@@ -17,9 +20,13 @@ export function Header() {
 
           <h1>Recomendação de Restaurantes</h1>
 
-          <StyledLink to={`/restaurante/novo`}>
-            <NovoRestauranteButton>Novo Restaurante</NovoRestauranteButton>
-          </StyledLink>
+          {location.pathname === '/' ? (
+            <StyledLink to={`/restaurante/novo`}>
+              <LocalButton>Novo Restaurante</LocalButton>
+            </StyledLink>
+          ) : (
+            <ContainerVoid>Novo Restaurante</ContainerVoid>
+          )}
         </HeaderContent>
       </HeaderContainer>
     </header>

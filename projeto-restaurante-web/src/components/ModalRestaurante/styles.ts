@@ -52,31 +52,6 @@ export const Content = styled(Dialog.Content)`
       gap: 0.5rem;
     }
 
-    button[type='submit'],
-    button[type='button'] {
-      display: inline;
-      width: 50%;
-      height: 58px;
-      border: 0;
-      background: ${(props) => props.theme['green-500']};
-      color: ${(props) => props.theme.white};
-      font-weight: bold;
-      padding: 0 1.25rem;
-      border-radius: 6px;
-      margin-top: 0.5rem;
-      cursor: pointer;
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      &:not(:disabled):hover {
-        background: ${(props) => props.theme['green-700']};
-        transition: background-color 0.2s;
-      }
-    }
-
     select {
       border-radius: 6px;
       border: 0;

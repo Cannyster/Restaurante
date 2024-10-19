@@ -31,7 +31,7 @@ export function ModalDelete({
       <Overlay />
       <Content>
         <h2>Confirmar Exclusão</h2>
-        <p>Você tem certeza de que deseja excluir {textoExclusao}?</p>
+        <p>Você tem certeza de que deseja excluir {textoExclusao} ?</p>
 
         <CloseButton>
           <X size={24} />

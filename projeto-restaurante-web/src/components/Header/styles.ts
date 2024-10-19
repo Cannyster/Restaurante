@@ -1,3 +1,4 @@
+import { GlobalButton } from '../../styles/global';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,23 +22,18 @@ export const HeaderContent = styled.div`
   align-items: center;
 `;
 
-export const NovoRestauranteButton = styled.button`
-  height: 50px;
-  border: 0;
-  background: ${(props) => props.theme['green-500']};
-  color: ${(props) => props.theme.white};
-  font-weight: bold;
-  padding: 0 1.25rem;
-  border-radius: 6px;
-  cursor: pointer;
-
-  &:hover {
-    background: ${(props) => props.theme['green-700']};
-    transition: background-color 0.2s;
-  }
-`;
-
 export const StyledLink = styled(Link)`
   color: ${(props) => props.theme['gray-300']};
   text-decoration: none;
+`;
+
+export const LocalButton = styled(GlobalButton)`
+  height: 50px;
+  width: 13rem;
+`;
+
+export const ContainerVoid = styled.div`
+  color: ${(props) => props.theme['gray-900']};
+  height: 50px;
+  width: 13rem;
 `;

@@ -26,8 +26,8 @@ export const SearchFormContainer = styled.form`
     border: 0;
     padding: 1rem;
     background: transparent;
-    border: 1px solid ${(props) => props.theme['green-300']};
-    color: ${(props) => props.theme['green-300']};
+    border: 1px solid ${(props) => props.theme['yellow-800']};
+    color: ${(props) => props.theme['yellow-800']};
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
@@ -38,8 +38,8 @@ export const SearchFormContainer = styled.form`
     }
 
     &:not(:disabled):hover {
-      background-color: ${(props) => props.theme['green-500']};
-      border-color: ${(props) => props.theme['green-300']};
+      background-color: ${(props) => props.theme['yellow-700']};
+      border-color: ${(props) => props.theme['yellow-300']};
       color: ${(props) => props.theme.white};
       transition:
         background-color 0.2s,

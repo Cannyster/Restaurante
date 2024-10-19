@@ -8,12 +8,6 @@ export const MainContainer = styled.main`
   min-height: 80vh;
   justify-content: space-evenly;
 
-  position: fixed;
-  //Hackzinho para centralizar itens na tela
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); //-50% no eixo X, -50% no eixo Y
-
   form {
     margin-top: 2rem;
 

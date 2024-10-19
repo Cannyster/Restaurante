@@ -1,3 +1,4 @@
+import { GlobalButton } from '../../styles/global';
 import * as Dialog from '@radix-ui/react-dialog'; //https://www.radix-ui.com/primitives/docs/components/dialog
 import styled from 'styled-components';
 
@@ -40,28 +41,6 @@ export const Content = styled(Dialog.Content)`
       }
     }
 
-    button[type='submit'] {
-      height: 58px;
-      border: 0;
-      background: ${(props) => props.theme['green-500']};
-      color: ${(props) => props.theme.white};
-      font-weight: bold;
-      padding: 0 1.25rem;
-      border-radius: 6px;
-      margin-top: 1.5rem;
-      cursor: pointer;
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      &:not(:disabled):hover {
-        background: ${(props) => props.theme['green-700']};
-        transition: background-color 0.2s;
-      }
-    }
-
     select {
       border-radius: 6px;
       border: 0;
@@ -95,4 +74,9 @@ export const CloseButton = styled(Dialog.Close)`
   line-height: 0;
   cursor: pointer;
   color: ${(props) => props.theme['gray-500']};
+`;
+
+export const LocalButton = styled(GlobalButton)`
+  width: 100%;
+  margin-top: 2rem;
 `;

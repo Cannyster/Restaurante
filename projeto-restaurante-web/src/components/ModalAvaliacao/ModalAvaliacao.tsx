@@ -2,9 +2,9 @@ import {
   AvaliacaoProps,
   RestauranteContext,
 } from '../../contexts/RestauranteContext';
+import { Overlay, Content, CloseButton, LocalButton } from './styled';
 import { editarAvaliacaoSchema } from '../../validation/validation';
 import { useContextSelector } from 'use-context-selector';
-import { Overlay, Content, CloseButton } from './styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
@@ -111,9 +111,9 @@ export function ModalAvaliacao({
             }
           />
 
-          <button type="submit" disabled={isSubmitting}>
+          <LocalButton type="submit" disabled={isSubmitting}>
             Salvar
-          </button>
+          </LocalButton>
         </form>
       </Content>
     </Dialog.Portal>

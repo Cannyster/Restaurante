@@ -38,10 +38,6 @@ export const ContentFooter = styled.div`
   justify-content: flex-end;
 `;
 
-export const LocalButton = styled(GlobalButton)`
-  margin-top: 2rem;
-`;
-
 export const AvaliacaoContainer = styled.div`
   border: 1px solid ${(props) => props.theme['gray-400']};
   border-radius: 6px;
@@ -99,4 +95,8 @@ export const RestauranteContainer = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const LocalButton = styled(GlobalButton)`
+  margin-top: 2rem;
 `;

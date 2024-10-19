@@ -21,6 +21,7 @@ import { obterAvaliacoes } from '../../api/obter-avaliacoes';
 import { useContextSelector } from 'use-context-selector';
 import { Vazio } from '../../components/Vazio/Vazio';
 import { queryClient } from '../../lib/react-query';
+import { GlobalButton } from '../../styles/global';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -165,7 +166,7 @@ export function RestauranteDetalhes() {
                 onOpenChange={openCloseModalAvaliacao}
               >
                 <Dialog.DialogTrigger asChild>
-                  <LocalButton>Avaliar</LocalButton>
+                  <GlobalButton>Avaliar</GlobalButton>
                 </Dialog.DialogTrigger>
                 <ModalNovaAvaliacao
                   key={restaurante.restauranteId}
