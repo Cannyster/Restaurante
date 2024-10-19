@@ -12,9 +12,9 @@ import {
   RestauranteContext,
 } from '../../contexts/RestauranteContext';
 import { ModalNovaAvaliacao } from '../../components/ModalNovaAvaliacao/ModalNovaAvaliacao';
+import { AvaliacaoEstrelas } from '../../components/AvaliacaoEstrelas/AvaliacaoEstrelas';
 import { ModalRestaurante } from '../../components/ModalRestaurante/ModalRestaurante';
 import { ModalDelete } from '../../components/ModalDelete/ModalDelete';
-import { AvaliacaoEstrelas } from '../../components/Estrela/Estrela';
 import { Avaliacao } from '../../components/Avaliacao/Avaliacao';
 import { obterRestaurante } from '../../api/obter-restaurante';
 import { obterAvaliacoes } from '../../api/obter-avaliacoes';

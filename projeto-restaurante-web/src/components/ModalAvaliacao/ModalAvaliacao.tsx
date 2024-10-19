@@ -8,7 +8,7 @@ import {
   AvaliacaoProps,
   RestauranteContext,
 } from '../../contexts/RestauranteContext';
-import { editarAvaliacaoSchema } from '../../validation/validation';
+import { editarAvaliacaoSchema } from '../../validation/validationSchemas';
 import { useContextSelector } from 'use-context-selector';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';

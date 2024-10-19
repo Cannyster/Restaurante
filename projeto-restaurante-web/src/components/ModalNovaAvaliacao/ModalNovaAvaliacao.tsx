@@ -4,8 +4,8 @@ import {
   DialogOverlay,
   GlobalForm,
 } from '../../styles/global';
+import { novaAvaliacaoSchema } from '../../validation/validationSchemas';
 import { RestauranteContext } from '../../contexts/RestauranteContext';
-import { novaAvaliacaoSchema } from '../../validation/validation';
 import { useContextSelector } from 'use-context-selector';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';

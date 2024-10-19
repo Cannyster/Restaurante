@@ -1,5 +1,5 @@
+import { filtrarRestauranteSchema } from '../../validation/validationSchemas';
 import { RestauranteContext } from '../../contexts/RestauranteContext';
-import { filtrarRestauranteSchema } from '../../validation/validation';
 import { useContextSelector } from 'use-context-selector';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MagnifyingGlass } from 'phosphor-react';

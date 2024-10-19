@@ -34,10 +34,6 @@ export const CommentContent = styled.div`
     cursor: pointer;
     line-height: 0;
     border-radius: 4px;
-
-    &:hover {
-      color: ${(props) => props.theme['red-500']};
-    }
   }
 `;
 
@@ -80,10 +76,6 @@ export const CommentFooter = styled.footer`
     display: flex;
     align-items: center;
 
-    &:hover {
-      color: ${(props) => props.theme['red-300']};
-    }
-
     span::before {
       padding: 0 0.25rem;
       content: '•';
@@ -101,10 +93,16 @@ export const Header = styled.header`
 export const ButtonBox = styled.div`
   display: flex;
   gap: 1rem;
+`;
 
-  Search {
-    &:hover {
-      color: ${(props) => props.theme['green-300']};
-    }
+export const RedButton = styled.button`
+  &:hover {
+    color: ${(props) => props.theme['red-300']};
+  }
+`;
+
+export const YellowButton = styled.button`
+  &:hover {
+    color: ${(props) => props.theme['yellow-700']};
   }
 `;

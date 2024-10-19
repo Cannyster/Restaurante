@@ -1,4 +1,4 @@
-import { novoRestauranteFormSchema } from '../../validation/validation';
+import { novoRestauranteFormSchema } from '../../validation/validationSchemas';
 import { RestauranteContext } from '../../contexts/RestauranteContext';
 import { Content, LocalButton, MainContainer } from './styles';
 import { useContextSelector } from 'use-context-selector';

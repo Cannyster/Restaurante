@@ -1,11 +1,5 @@
 import { uuidv4, router } from "../config.js";
-import { z } from "zod";
-
-const restauranteSchema = z.object({
-  nome: z.string().min(1, "Nome é obrigatório"),
-  localizacao: z.string().min(1, "Localização é obrigatória"),
-  cozinha: z.string().min(1, "Tipo de cozinha é obrigatório"),
-});
+import { restauranteSchema } from "../validation/validationSchemas.js";
 
 export const restaurantesRoutes = (server) => {
   const db = router.db;

@@ -6,15 +6,17 @@ import {
   Header,
   CommentFooter,
   ButtonBox,
+  RedButton,
+  YellowButton,
 } from './styles';
 import {
   AvaliacaoProps,
   RestauranteContext,
 } from '../../contexts/RestauranteContext';
+import { AvaliacaoEstrelas } from '../AvaliacaoEstrelas/AvaliacaoEstrelas';
 import { ModalAvaliacao } from '../ModalAvaliacao/ModalAvaliacao';
 import { useContextSelector } from 'use-context-selector';
 import { ModalDelete } from '../ModalDelete/ModalDelete';
-import { AvaliacaoEstrelas } from '../Estrela/Estrela';
 import { formatarData } from '../../utils/formatter';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Trash } from 'phosphor-react';
@@ -66,9 +68,9 @@ export function Avaliacao({
             <ButtonBox>
               <Dialog.Root open={open} onOpenChange={openCloseModal}>
                 <Dialog.DialogTrigger asChild>
-                  <button>
+                  <YellowButton>
                     <Search size={25} />
-                  </button>
+                  </YellowButton>
                 </Dialog.DialogTrigger>
                 <ModalAvaliacao
                   avaliacao={avaliacao}
@@ -82,9 +84,9 @@ export function Avaliacao({
                 onOpenChange={openCloseModalExclusao}
               >
                 <Dialog.DialogTrigger asChild>
-                  <button>
+                  <RedButton>
                     <Trash size={30}></Trash>
-                  </button>
+                  </RedButton>
                 </Dialog.DialogTrigger>
                 <ModalDelete
                   itemId={avaliacao.id}

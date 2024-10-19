@@ -2,15 +2,15 @@ import {
   DialogCloseButton,
   DialogContent,
   DialogOverlay,
-  GlobalButton,
   GlobalForm,
 } from '../../styles/global';
 import {
   RestauranteContext,
   RestauranteProps,
 } from '../../contexts/RestauranteContext';
-import { editarRestauranteSchema } from '../../validation/validation';
+import { editarRestauranteSchema } from '../../validation/validationSchemas';
 import { useContextSelector } from 'use-context-selector';
+import { ButtonContainer, LocalButton } from './styles';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
@@ -124,14 +124,14 @@ export function ModalRestaurante({
             <option value="Pernanbucana">Pernanbucana</option>
             <option value="Amazonense">Amazonense</option>
           </select>
-          <div>
-            <GlobalButton type="button" onClick={cancelar}>
+          <ButtonContainer>
+            <LocalButton type="button" onClick={cancelar}>
               Cancelar
-            </GlobalButton>
-            <GlobalButton type="submit" disabled={isSubmitting}>
+            </LocalButton>
+            <LocalButton type="submit" disabled={isSubmitting}>
               Salvar
-            </GlobalButton>
-          </div>
+            </LocalButton>
+          </ButtonContainer>
         </GlobalForm>
       </DialogContent>
     </Dialog.Portal>

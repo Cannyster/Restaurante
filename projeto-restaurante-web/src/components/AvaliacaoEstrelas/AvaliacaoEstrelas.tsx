@@ -5,7 +5,6 @@ interface AvaliacaoEstrelasProps {
 }
 
 export function AvaliacaoEstrelas({ media }: AvaliacaoEstrelasProps) {
-  // Array de 5 posições
   const estrelas = Array.from({ length: 5 }, (_, index) => index + 1);
 
   return (
@@ -14,7 +13,6 @@ export function AvaliacaoEstrelas({ media }: AvaliacaoEstrelasProps) {
         <FaStar
           key={estrela}
           size={20}
-          // De acordo com a posição da estela se a posição for menor que a média vai ficar Amarelo se não cinza claro
           color={estrela <= media ? '#f9a825' : '#e4e5e9'}
         />
       ))}
