@@ -1,12 +1,12 @@
 import * as z from "zod";
 
-const restauranteSchema = z.object({
+export const restauranteSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
   localizacao: z.string().min(1, "Localização é obrigatória"),
   cozinha: z.string().min(1, "Tipo de cozinha é obrigatório"),
 });
 
-const avaliacaoSchema = z.object({
+export const avaliacaoSchema = z.object({
   avaliacao: z
     .number()
     .min(1, "deve ser no mínimo 1")
