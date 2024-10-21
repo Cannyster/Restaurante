@@ -4,8 +4,7 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
 
 ## Capturas de tela
 
-[Demo #1](demo/demo_01.png) - [Demo #2](demo/demo_02.png) - [Demo #3](demo/demo_03.png) - [Demo #4](demo/demo_04.png) - [Demo #5](demo/demo_05.png)  - [Demo #6](demo/demo_06.png) - [Demo #7](demo/demo_07.png) - [Demo #8](demo/demo_08.png) - [Demo #9](demo/demo_09.png) - [Demo #10](demo/demo_10.png)
-
+[Demo #1](demo/demo_01.png) - [Demo #2](demo/demo_02.png) - [Demo #3](demo/demo_03.png) - [Demo #4](demo/demo_04.png) - [Demo #5](demo/demo_05.png) - [Demo #6](demo/demo_06.png) - [Demo #7](demo/demo_07.png) - [Demo #8](demo/demo_08.png) - [Demo #9](demo/demo_09.png) - [Demo #10](demo/demo_10.png)
 
 ## Tecnologias Utilizadas
 
@@ -29,16 +28,18 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
 - **Avaliações de Restaurantes**: Para cada restaurante, é possível visualizar, adicionar e editar avaliações.
 - **Modais para Edição e Adição**: Usando Radix UI para modais, o projeto permite ao usuário adicionar ou editar avaliações em formulários validados com React Hook Form e Zod.
 
-
 ## Como Rodar o Projeto
 
 1. **Clone o repositório**:
 
-   git clone [https://github.com/seu-usuario/projeto-restaurante-web.git](https://github.com/Cannyster/Restaurante.git)
+   Na sua IDE, execute um dos seguinte comandos para realizar o clone do projeto em seu repositório local:
+
+   Usando URL HTTPS: git clone https://github.com/Cannyster/Restaurante.git  
+   Usando URL SSH : git clone git@github.com:Cannyster/Restaurante.git
 
 2. **Instale as dependências**:
 
-   dentro de cada pasta das pastas api-restaurante e projeto-restaurante-web execute o comando:  `yarn` ou `npm install`
+   dentro de cada pasta das pastas api-restaurante e projeto-restaurante-web execute o comando: `yarn` ou `npm install`
 
 3. **Inicie o JSON Server** (simulando uma API):
 
@@ -49,7 +50,7 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
    dentro da pasta projeto-restaurante-web execute o seguinte comando: `yarn run dev` ou `npm run dev`
 
 5. **Acesse o projeto**:
-   
+
    Abra seu navegador e acesse `http://localhost:5173`.
 
 ## Scripts Disponíveis
@@ -71,4 +72,4 @@ Este é um projeto web para visualização e avaliação de restaurantes, desenv
 
 ## Autor
 
-* Jhonanthan Campos Xavier - [LinkedIn](https://www.linkedin.com/in/jhonanthan-campos-xavier-0905a5141/)
+- Jhonanthan Campos Xavier - [LinkedIn](https://www.linkedin.com/in/jhonanthan-campos-xavier-0905a5141/)
